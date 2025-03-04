@@ -1,0 +1,57 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+# 기본적인 OS/IDE 관련 파일
+.idea/
+.DS_Store
+Thumbs.db
+
+# Gradle 관련 빌드 파일 (백엔드)
+backend/.gradle/
+backend/build/
+backend/out/
+backend/target/
+backend/*.iml
+
+# Node.js 관련 빌드 파일 (프론트엔드)
+frontend/node_modules/
+frontend/build/
+frontend/.next/
+frontend/.cache/
+
+# 환경 설정 파일 (보안 이슈 방지)
+.env
+backend/.env
+frontend/.env
+backend/src/main/resources/application-*.yml
+backend/src/main/resources/application-*.properties
+
+# Docker 관련 불필요한 파일
+docker-compose.override.yml
+docker-compose.override.yaml
+docker-compose.debug.yml
+docker-compose.debug.yaml
+**/Dockerfile~
+**/.dockerignore
+
+# 로그 파일
+logs/
+*.log
+backend/logs/
+frontend/logs/
+
+# 기타 설정 파일
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# IntelliJ IDEA, VSCode 설정 파일
+.vscode/
+*.sublime-workspace
+*.swp
