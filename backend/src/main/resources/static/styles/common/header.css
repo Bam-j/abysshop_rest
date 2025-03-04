@@ -1,0 +1,35 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.825rem 1rem;
+}
+
+.square-logo img {
+  margin-top: 0.625rem;
+  margin-left: 0.625rem;
+  margin-bottom: 0.625rem;
+  object-fit: scale-down;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#header-logo {
+  width: 70%;
+  height: 70%;
+}
+
+.action-menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin-top: 0.625rem;
+  margin-right: 0.625rem;
+  padding: 0;
+}
+
+.action-menu li {
+  margin-left: 0.5rem;
+}

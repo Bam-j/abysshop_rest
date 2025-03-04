@@ -1,0 +1,22 @@
+section {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+#add-product-form label,
+#add-product-form input,
+#add-product-form textarea,
+#add-product-form div,
+#add-product-form button {
+  margin-top: 0.5rem;
+}
+
+#add-product-form > button {
+  width: 200px;
+}

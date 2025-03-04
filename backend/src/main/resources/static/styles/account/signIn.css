@@ -1,0 +1,58 @@
+body {
+  background-color: var(--third-color);
+}
+
+main {
+  background-color: #fff;
+  margin: 0.5rem auto;
+  padding: 0;
+  border-radius: 10px;
+  width: 500px;
+  height: 425px;
+}
+
+aside a {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mark-logo > img {
+  width: 300px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid #6ab4ff;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 3px solid #165fe9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input, button {
+  width: 200px;
+}
+
+#sign-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form > input, form > button {
+  margin-top: 1rem;
+}

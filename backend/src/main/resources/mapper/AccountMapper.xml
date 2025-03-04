@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joo.abysshop.mapper.mybatis.AccountMapper">
+  <resultMap id="accountEntityResultMap" type="com.joo.abysshop.entity.account.AccountEntity">
+    <result property="username" column="username"/>
+    <result property="nickname" column="nickname"/>
+    <result property="password" column="password"/>
+  </resultMap>
+
+  <select id="findByUsername" parameterType="java.lang.String"
+    resultMap="accountEntityResultMap">
+    SELECT username, nickname, password
+    FROM users_table
+    WHERE username = #{username}
+  </select>
+
+  <select id="findByNickname" parameterType="java.lang.String"
+    resultType="com.joo.abysshop.entity.account.AccountEntity"
+    resultMap="accountEntityResultMap">
+    SELECT *
+    FROM users_table
+    WHERE nickname = #{nickname}
+  </select>
+
+  <insert id="insertUser" parameterType="com.joo.abysshop.entity.account.SignUpEntity">
+    INSERT INTO users_table (username, nickname, password, user_type, points)
+    VALUES (#{username}, #{nickname}, #{password}, 'user', 0)
+  </insert>
+
+  <update id="updateNickname">
+    UPDATE users_table
+    SET nickname = #{newNickname}
+    WHERE user_id = #{userId}
+  </update>
+
+  <update id="updatePassword">
+    UPDATE users_table
+    SET password = #{newNickname}
+    WHERE user_id = #{userId}
+  </update>
+
+  <delete id="deleteUser" parameterType="java.lang.Long">
+    DELETE
+    FROM users_table
+    WHERE user_id = #{userId}
+  </delete>
+</mapper>

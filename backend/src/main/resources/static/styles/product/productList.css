@@ -1,0 +1,40 @@
+section {
+  margin: 0.625rem;
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+section > h2 {
+  color: #052e57;
+}
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+  margin-bottom: 1.25rem;
+  justify-content: center;
+}
+
+.item {
+  /* 상품 카드 크기 유동적 flex: 0 0 calc(25% - 20px); */
+  width: 150px;
+  margin: 0.25rem 0.25rem;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.item a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: normal;
+  font-style: inherit;
+}
+
+.item img {
+  width: 128px;
+  height: 128px;
+}

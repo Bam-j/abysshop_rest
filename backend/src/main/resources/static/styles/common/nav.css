@@ -1,0 +1,22 @@
+ul li {
+  position: relative;
+  margin: 0.625rem;
+}
+
+/*
+ul li::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50px;
+  width: 2px;
+  background-color: #ccc;
+}
+ */
+
+/* nav 메뉴 클릭시 Bold 처리하는 CSS */
+.nav-link.active {
+  font-weight: bold;
+}

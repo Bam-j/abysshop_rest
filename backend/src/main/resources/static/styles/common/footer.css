@@ -1,0 +1,38 @@
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.825rem 1rem;
+}
+
+.square-logo img {
+  margin-top: 0.625rem;
+  margin-left: 0.625rem;
+  margin-bottom: 0.625rem;
+  object-fit: scale-down;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.address-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0.625rem;
+}
+
+#server-address,
+#discord-address {
+  padding: 0 0.625rem;
+}
+
+#server-address:hover,
+#server-address:active,
+#discord-address:hover,
+#discord-address:active {
+  cursor: pointer;  !important;
+  font-weight: bold;  !important;
+}

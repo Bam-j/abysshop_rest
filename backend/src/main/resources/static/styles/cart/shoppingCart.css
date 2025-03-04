@@ -1,0 +1,17 @@
+.cart-content {
+  margin: 0 0.825rem;
+}
+
+#cart-table {
+  margin-top: 0.5rem;
+}
+
+.quantity-controller {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#quantity {
+  margin: 0;
+}

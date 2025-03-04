@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joo.abysshop.mapper.mybatis.ProductMapper">
+  <resultMap id="productEntityResultMap" type="com.joo.abysshop.entity.product.ProductEntity">
+    <result property="productId" column="product_id"/>
+    <result property="productName" column="product_name"/>
+    <result property="price" column="price"/>
+    <result property="description" column="description"/>
+  </resultMap>
+
+  <resultMap id="productIdResultMap" type="com.joo.abysshop.entity.product.ProductEntity">
+    <result property="productId" column="product_id"/>
+    <result property="productName" column="product_name"/>
+  </resultMap>
+
+  <resultMap id="productImageEntityResultMap"
+    type="com.joo.abysshop.entity.product.ProductImageEntity">
+    <result property="imageId" column="image_id"/>
+    <result property="productId" column="product_id"/>
+    <result property="originalFileName" column="originalFileName"/>
+  </resultMap>
+
+  <select id="findAllProducts" resultType="java.util.List" resultMap="productEntityResultMap">
+    SELECT *
+    FROM products_table;
+  </select>
+
+  <select id="findById" parameterType="java.lang.Long"
+    resultType="com.joo.abysshop.entity.product.ProductEntity"
+    resultMap="productEntityResultMap">
+    SELECT *
+    FROM products_table
+    WHERE product_id = #{productId}
+  </select>
+
+  <select id="findProductIdByProductName" parameterType="java.lang.String"
+    resultType="java.lang.Long" resultMap="productIdResultMap">
+    SELECT product_id
+    FROM products_table
+    WHERE product_name = #{productName}
+  </select>
+
+  <select id="findProductImageEntityByProductId" parameterType="java.lang.Long"
+    resultType="com.joo.abysshop.entity.product.ProductImageEntity"
+    resultMap="productImageEntityResultMap">
+    SELECT *
+    FROM product_image_table
+    WHERE product_id = #{productId}
+  </select>
+
+  <select id="countAllProducts" resultType="int">
+    SELECT COUNT(*)
+    FROM products_table
+  </select>
+
+  <select id="findPagedProducts" resultType="java.util.List" resultMap="productEntityResultMap">
+    SELECT *
+    FROM products_table
+    LIMIT #{pageSize} OFFSET #{offset}
+  </select>
+
+  <select id="findOriginalFilename" parameterType="java.lang.Long" resultType="java.lang.String">
+    SELECT original_file_name
+    FROM product_image_table
+    WHERE product_id = #{productId}
+  </select>
+</mapper>
