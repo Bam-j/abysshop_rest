@@ -37,7 +37,7 @@
     <form id="sign-in-form" action="/account/sign-in" method="post">
       <input class="username-input" name="username" type="text" placeholder="계정">
       <input class="password-input" name="password" type="password" placeholder="비밀번호">
-      <button type="submit" class="btn btn-primary">로그인</button>
+      <button type="submit" id="sign-in-button" class="btn btn-primary">로그인</button>
     </form>
     <form action="/account/sign-up" method="get">
       <button type="submit" class="btn btn-secondary">회원가입</button>

@@ -40,7 +40,7 @@
              data-bs-placement="right" data-bs-html="true"
              title="인게임 닉네임과 동일하게 가입해주세요.<br>거래 과정에서 문제가 발생할 수 있습니다." placeholder="마인크래프트 닉네임">
       <input class="password-input" name="password" type="password" placeholder="비밀번호">
-      <button type="submit" class="btn btn-primary">회원가입</button>
+      <button type="submit" id="sign-up-button" class="btn btn-primary">회원가입</button>
     </form>
   </section>
 </main>

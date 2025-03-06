@@ -37,13 +37,15 @@
         <li>결제 과정의 문의나 환불 및 QnA는 디스코드에서 받고있습니다.</li>
       </ol>
     </div>
-    <button type="button" class="btn btn-primary" href="/">
-      <i class="bi bi-house-door"></i> 메인으로
-    </button>
-    <button type="button" class="btn btn-success"
-       href="/user/my-page/${user.userId}?menu=order-management">
-      <i class="bi bi-card-list"></i> 주문 내역으로
-    </button>
+    <div class="button-container">
+      <a type="button" id="move-home-button" class="btn btn-primary" href="/">
+        <i class="bi bi-house-door"></i> 메인으로
+      </a>
+      <a type="button" id="move-my-page-button" class="btn btn-success"
+         href="/user/my-page/${user.userId}?menu=order-management">
+        <i class="bi bi-card-list"></i> 주문 내역으로
+      </a>
+    </div>
   </section>
 </main>
 </body>

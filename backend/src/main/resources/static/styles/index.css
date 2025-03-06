@@ -1,8 +1,7 @@
 #carouselIndicators {
   width: 95%;
   height: 12.5rem;
-  margin-top: 0.625rem;
-  margin-left: 0.625rem;
+  margin: 1rem 1rem;
   display: flex;
   align-items: center;
 }

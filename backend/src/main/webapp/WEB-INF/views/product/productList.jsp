@@ -26,7 +26,7 @@
 </head>
 <body>
 <section>
-  <h2>상품 목록</h2>
+  <%--<h2>상품 목록</h2>--%>
   <div class="item-list">
     <c:forEach items="${productList}" var="product">
       <div class="item" data-item-id="${product.productId}">

@@ -1,7 +1,6 @@
 section {
-  margin: 0.625rem;
+  margin: 1rem 1.2rem;
   position: relative;
-  padding-bottom: 2rem;
 }
 
 section > h2 {
@@ -9,15 +8,17 @@ section > h2 {
 }
 
 .item-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.1rem;
-  margin-bottom: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 1.2rem;
   justify-content: center;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto 2rem;
 }
 
 .item {
-  /* 상품 카드 크기 유동적 flex: 0 0 calc(25% - 20px); */
   width: 150px;
   margin: 0.25rem 0.25rem;
   box-sizing: border-box;
@@ -37,4 +38,12 @@ section > h2 {
 .item img {
   width: 128px;
   height: 128px;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem; /* 상품 리스트와 간격 확보 */
 }

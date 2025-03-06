@@ -1,14 +1,19 @@
 body {
   background-color: var(--third-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 main {
   background-color: #fff;
-  margin: 0.5rem auto;
-  padding: 0;
+  padding: 1.5rem;
   border-radius: 10px;
-  width: 31.25rem;
-  height: 27.125rem;
+  width: 600px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 section {
@@ -17,21 +22,38 @@ section {
   align-items: center;
 }
 
+section h3 {
+  margin: 0.4rem 0;
+}
+
 #order-complete-info {
-  margin: 0 2rem; !important;
+  width: 90%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
   border-radius: 10px;
 }
 
 .mark-logo > img {
-  margin-top: 0.825rem;
-  width: 300px;
+  width: 350px;
+  margin: 0.825rem 0;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
-button {
-  width: 200px; !important;
-  margin: 0.25rem 0; !important;
+.button-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#move-home-button,
+#move-my-page-button {
+  width: 200px !important;
+  margin: 0.25rem 0 !important;
+  display: inline-block;
+  text-align: center;
 }
