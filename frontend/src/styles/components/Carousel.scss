@@ -1,0 +1,33 @@
+#carouselIndicators {
+  width: 95%;
+  height: 12.5rem;
+  margin: 1rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.carousel {
+  .carousel-indicators {
+    button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: gray;
+      margin: 5px;
+
+      &.active {
+        background-color: white;
+      }
+    }
+  }
+
+  .carousel-inner img {
+    object-fit: contain;
+    width: 100%;
+    height: 12.5rem;
+  }
+
+  .carousel-control-prev, .carousel-control-next {
+    filter: invert(1);
+  }
+}

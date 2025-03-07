@@ -1,0 +1,36 @@
+$spacing-small: 0.625rem;
+$spacing-medium: 0.825rem;
+$spacing-large: 1rem;
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: $spacing-medium $spacing-large;
+
+  .square-logo {
+    img {
+      margin: $spacing-small;
+      object-fit: scale-down;
+      user-select: none;
+    }
+  }
+
+  .address-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: $spacing-small;
+
+    li {
+      padding: 0 $spacing-small;
+
+      &:hover,
+      &:active {
+        cursor: pointer;
+        font-weight: bold;
+      }
+    }
+  }
+}

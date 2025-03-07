@@ -1,14 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './styles/index.css';
+import './styles/common.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import 'bootswatch/dist/cosmo/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <DevSupport ComponentPreviews={ComponentPreviews}
+                useInitialHook={useInitial}
+    >
+      <App />
+    </DevSupport>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

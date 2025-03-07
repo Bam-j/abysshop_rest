@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.scss';
 
-function App() {
+import Header from './components/Header';
+import Carousel from './components/Carousel';
+import Footer from './components/Footer';
+import PointRecharge from './components/PointRecharge';
+import TransferAndRefundInfo from './components/TransferAndRefundInfo';
+import ProductList from './components/ProductList';
+
+const App = () => {
+  //TODO: 에러표시 제거용 임시 유저. 백엔드 API로 유저 정보 받아올 것
+  const user = null;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Carousel />
+      {user && (
+        <nav id="point-action-menu">
+          <PointRecharge user={user} />
+          <TransferAndRefundInfo />
+        </nav>
+      )}
+      <main>
+        <ProductList />
+      </main>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;

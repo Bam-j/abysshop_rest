@@ -4,10 +4,6 @@
   Date: 2024-12-01
   Time: 오후 3:17
   To change this template use File | Settings | File Templates.
-
-  메모: 두 가지 include 방식 (추후 삭제)
-  <%@ include file=""%>: 컴파일 시점에 include, 헤더 푸터와 같은 변경이 적은 부분 적용시
-  <jsp:include page=""/> 실행 시점에 include, 동적 변경 내용이 포함될 때 사용
 --%>
 <%@ page
     info="Abysshop의 메인 페이지입니다. 상품 목록을 보여줍니다."
@@ -85,7 +81,6 @@
   </div>
 </aside>
 
-<%--<%@ include file="product/productNav.jsp" %>--%>
 <nav id="point-menu">
   <%@ include file="point/pointRechargeRequestForm.jsp" %>
   <%@ include file="order/transferAndRefundInfo.jsp" %>
