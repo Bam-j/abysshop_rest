@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import '../styles/components/Header.scss';
-import logo from '../../assets/images/abyssblock_square_64x64.png';
+import logo from '../assets/images/abyssblock_square_64x64.png';
 
 const Header = () => {
   const [user, setUser] = useState(null);
