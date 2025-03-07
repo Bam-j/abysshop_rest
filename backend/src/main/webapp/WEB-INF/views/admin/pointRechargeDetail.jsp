@@ -26,38 +26,36 @@
       <th>주문자</th>
       <th>입금 확인 일</th>
       <%-- TODO: 입금액 컬럼 추가를 고려해보자 --%>
-      <th>은행</th>
-      <th>계좌 번호</th>
-      <th>입력 제출</th>
+      <th></th>
+      <th></th>
+      <th>은행, 계좌번호</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${pointRechargeDetailList}" var="pointRechargeDetail"
-               varStatus="status">
+    <c:forEach items="${pointRechargeDetailList}" var="pointRechargeDetail" varStatus="status">
       <tr data-index="${status.index}">
         <td>${pointRechargeDetail.rechargeDetailId}</td>
         <td>${pointRechargeDetail.rechargeId}</td>
         <td>${pointRechargeDetail.nickname}</td>
-        <td><fmt:formatDate value="${pointRechargeDetail.depositConfirmedTime}"
-                            pattern="yyyy-MM-dd" /></td>
-        <form action="/point/recharge/detail" method="post">
-          <td>
-            <input type="text" class="form-control" name="bank"
-                   value="${pointRechargeDetail.bank != null ? pointRechargeDetail.bank : ''}"
-                   placeholder="은행" />
-          </td>
-          <td>
-            <input type="text" class="form-control" name="accountNumber"
-                   value="${pointRechargeDetail.accountNumber != null ? pointRechargeDetail.accountNumber : ''}"
-                   placeholder="계좌번호" />
-          </td>
-          <td>
-            <input type="hidden" name="rechargeDetailId"
-                   value="${pointRechargeDetail.rechargeDetailId}" data-index="${status.index}" />
-            <%-- TODO: 정보 상세 입력 버튼이 동작하지 않음 --%>
-            <button type="submit" class="btn btn-success" data-index="${status.index}">입력</button>
-          </td>
-        </form>
+        <td>
+          <fmt:formatDate value="${pointRechargeDetail.depositConfirmedTime}"
+                          pattern="yyyy-MM-dd" />
+        </td>
+        <td colspan="3">
+          <form action="/point/recharge/detail" method="post">
+            <div id="detail-input">
+              <input type="text" class="form-control" name="bank"
+                     value="${pointRechargeDetail.bank != null ? pointRechargeDetail.bank : ''}"
+                     placeholder="은행" />
+              <input type="text" class="form-control" name="accountNumber"
+                     value="${pointRechargeDetail.accountNumber != null ? pointRechargeDetail.accountNumber : ''}"
+                     placeholder="계좌번호" />
+              <input type="hidden" name="rechargeDetailId"
+                     value="${pointRechargeDetail.rechargeDetailId}" data-index="${status.index}" />
+              <button type="submit" class="btn btn-success" data-index="${status.index}">입력</button>
+            </div>
+          </form>
+        </td>
       </tr>
     </c:forEach>
     </tbody>
@@ -81,7 +79,6 @@
       <a href="?menu=point-recharge-detail&page=${currentPage + 1}" class="page-link">&raquo;</a>
     </c:if>
   </div>
-
 </section>
 </body>
 </html>

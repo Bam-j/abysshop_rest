@@ -1,0 +1,17 @@
+#detail-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+
+#detail-input input {
+  width: 200px;
+}
+
+#detail-input button {
+  width: 80px;
+  height: 38px;
+  white-space: nowrap;
+}

@@ -32,7 +32,7 @@
     parameterType="com.joo.abysshop.entity.point.CreatePointRechargeEntity">
     INSERT INTO point_recharge_table (user_id, nickname, points, request_time,
                                       recharge_request_state)
-    VALUES (#{userId}, #{nickname}, #{points}, NOW(), 'pending_payment')
+    VALUES (#{userId}, #{nickname}, #{points}, now(), 'pending_payment')
   </insert>
 
   <update id="changePointRechargeState" parameterType="java.util.Map">
@@ -51,9 +51,9 @@
   <update id="updatePointRechargeDetail"
     parameterType="com.joo.abysshop.entity.point.UpdatePointRechargeDetailEntity">
     UPDATE point_recharge_detail_table
-    SET bank           = #{bank},
-        account_number = #{accountNumber}
-    WHERE recharge_detail_id = #{rechargeDetailId}
+    SET deposit_confirmed_time = NOW(),
+        bank                   = #{bank},
+        account_number         = #{accountNumber}
   </update>
 
   <select id="countAllPointRecharges" resultType="int">
@@ -64,8 +64,8 @@
   <select id="findPagedPointRecharges" resultType="java.util.List"
     resultMap="pointRechargeEntityResultMap">
     SELECT *
-    FROM point_recharge_table
-    LIMIT #{pageSize} OFFSET #{offset}
+    FROM point_recharge_table limit #{pageSize}
+    OFFSET #{offset}
   </select>
 
   <select id="countAllPointRechargeDetails" resultType="int">
@@ -77,8 +77,8 @@
     resultType="com.joo.abysshop.entity.point.PointRechargeDetailEntity"
     resultMap="pointRechargeDetailEntityResultMap">
     SELECT *
-    FROM point_recharge_detail_table
-    LIMIT #{pageSize} OFFSET #{offset}
+    FROM point_recharge_detail_table limit #{pageSize}
+    OFFSET #{offset}
   </select>
 
   <select id="countUserPointRecharges" resultType="int">
@@ -91,7 +91,7 @@
     resultMap="pointRechargeEntityResultMap">
     SELECT *
     FROM point_recharge_table
-    WHERE user_id = #{userId}
-    LIMIT #{pageSize} OFFSET #{offset}
+    WHERE user_id = #{userId} LIMIT #{pageSize}
+    OFFSET #{offset}
   </select>
 </mapper>

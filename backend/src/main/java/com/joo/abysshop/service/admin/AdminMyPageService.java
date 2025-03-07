@@ -33,7 +33,7 @@ public class AdminMyPageService {
     public void addProduct(AddProductRequest addProductRequest) throws IOException {
         MultipartFile imageFile = addProductRequest.getImage();
         String originalFileName = imageFile.getOriginalFilename();
-        String savePath = "C:/Users/juhyu/abysshop_img/" + originalFileName;
+        String savePath = "C:\\Users\\juhyu\\abysshop_img" + originalFileName;
         imageFile.transferTo(new File(savePath));
 
         AddProductEntity addProductEntity = toProductEntityMapper.toAddProductEntity(

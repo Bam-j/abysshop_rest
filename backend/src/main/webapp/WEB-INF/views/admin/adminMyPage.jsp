@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="../../../resources/static/styles/common/table.css">
   <link rel="stylesheet" href="../../../resources/static/styles/common/pagination.css">
   <link rel="stylesheet" href="../../../resources/static/styles/admin/addProduct.css">
-  <link rel="stylesheet" href="../../../resources/static/styles/admin/removeProduct.css">
+  <link rel="stylesheet" href="../../../resources/static/styles/admin/pointRechargeDetail.css">
   <link rel="shortcut icon" href="../../../resources/static/favicon.ico" type="image/x-icon">
 </head>
 <body>
