@@ -1,14 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
 
-import '../styles/pages/UserMyPage.scss';
 import '../styles/components/Nav.scss';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import UserMyPageNav from '../components/user/UserMyPageNav';
-import UserInfo from '../components/user/UserInfo';
 import UserPointRechargeList from '../components/user/UserPointRechargeList';
 import UserOrderList from '../components/user/UserOrderList';
+import UserAccountSettings from '../components/user/UserAccountSettings';
 
 const UserMyPage = () => {
   const [searchParams] = useSearchParams();
@@ -16,8 +13,8 @@ const UserMyPage = () => {
 
   const renderContent = () => {
     switch (menu) {
-      case 'user-info':
-        return <UserInfo />;
+      case 'user-account-settings':
+        return <UserAccountSettings />;
       case 'point-request':
         return <UserPointRechargeList />;
       default:
@@ -27,14 +24,10 @@ const UserMyPage = () => {
 
   return (
     <div className="user-my-page">
-      <Header />
       <UserMyPageNav />
-      <main>
-        <div id="content" className="user-my-page-content">
-          {renderContent()}
-        </div>
-      </main>
-      <Footer />
+      <div id="content" className="user-my-page-content">
+        {renderContent()}
+      </div>
     </div>
   );
 };

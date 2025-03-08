@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import '../styles/pages/CartPage.scss';
 
 const ShoppingCartPage = () => {
@@ -20,7 +21,7 @@ const ShoppingCartPage = () => {
   };
 
   return (
-    <main className="cart-content">
+    <div className="cart-content">
       <nav>
         <Link to="/" className="btn btn-outline-primary">
           <i className="bi bi-arrow-left"></i> 메인으로
@@ -74,7 +75,7 @@ const ShoppingCartPage = () => {
           </tfoot>
         </table>
       </section>
-    </main>
+    </div>
   );
 };
 

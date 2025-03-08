@@ -21,9 +21,7 @@ export const HomePage = () => {
           <TransferAndRefundInfo />
         </nav>
       )}
-      <main>
-        <ProductList />
-      </main>
+      <ProductList />
     </>
   );
 };

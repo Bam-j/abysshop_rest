@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import '../../styles/components/admin/PointRechargeDetail.scss';
-
 const AdminPointRechargeDetailManagement = () => {
   const [rechargeDetails, setRechargeDetails] = useState([]);
   const [totalPages, setTotalPages] = useState(1);

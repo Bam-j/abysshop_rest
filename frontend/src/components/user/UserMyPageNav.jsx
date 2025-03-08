@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import '../styles/components/Nav.scss';
+import '../../styles/components/Nav.scss';
 
 const UserMyPageNav = () => {
   return (
@@ -13,7 +13,7 @@ const UserMyPageNav = () => {
                className="nav-link">
         포인트 지급 요청
       </NavLink>
-      <NavLink to="/user/my-page?menu=user-info&page=1" className="nav-link">
+      <NavLink to="/user/my-page?menu=user-account-settings" className="nav-link">
         계정 관리
       </NavLink>
     </nav>

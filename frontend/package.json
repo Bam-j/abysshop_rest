@@ -20,7 +20,8 @@
     "react-router-dom": "^7.2.0",
     "react-scripts": "^5.0.1",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.85.1"
+    "sass": "^1.85.1",
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",

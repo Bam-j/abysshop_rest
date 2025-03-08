@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import '../styles/pages/OrderCompletePage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
 
@@ -7,7 +8,7 @@ const OrderCompletePage = () => {
   const userId = 0;
 
   return (
-    <main className="order-complete">
+    <div className="order-complete">
       <section>
         <div className="mark-logo">
           <img src={logo} alt="abyssblock 로고" />
@@ -32,7 +33,7 @@ const OrderCompletePage = () => {
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 };
 

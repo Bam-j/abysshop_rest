@@ -1,17 +1,16 @@
 import { useSearchParams } from 'react-router-dom';
 
-import '../styles/pages/AdminPage.scss';
 import '../styles/components/Nav.scss';
 
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import AdminPageNav from '../components/admin/AdminPageNav';
-import PointRechargeManagement
-  from '../components/admin/PointRechargeManagement';
-import PointRechargeDetail from '../components/admin/PointRechargeDetail';
-import AddProduct from '../components/admin/AddProduct';
-import RemoveProduct from '../components/admin/RemoveProduct';
-import OrderManagement from '../components/admin/OrderManagement';
+import AdminPointRechargeManagement
+  from '../components/admin/AdminPointRechargeManagement';
+import AdminPointRechargeDetailManagement
+  from '../components/admin/AdminPointRechargeDetailManagement';
+import AdminAddProduct from '../components/admin/AdminAddProduct';
+import AdminRemoveProduct from '../components/admin/AdminRemoveProduct';
+import AdminOrderManagement from '../components/admin/AdminOrderManagement';
+
 
 const AdminPage = () => {
   const [searchParams] = useSearchParams();
@@ -20,28 +19,24 @@ const AdminPage = () => {
   const renderContent = () => {
     switch (menu) {
       case 'point-recharge-management':
-        return <PointRechargeManagement />;
+        return <AdminPointRechargeManagement />;
       case 'point-recharge-detail':
-        return <PointRechargeDetail />;
+        return <AdminPointRechargeDetailManagement />;
       case 'add-product':
-        return <AddProduct />;
+        return <AdminAddProduct />;
       case 'remove-product':
-        return <RemoveProduct />;
+        return <AdminRemoveProduct />;
       default:
-        return <OrderManagement />;
+        return <AdminOrderManagement />;
     }
   };
 
   return (
     <div className="admin-page">
-      <Header />
       <AdminPageNav />
-      <main>
-        <div id="content" className="admin-page-content">
-          {renderContent()}
-        </div>
-      </main>
-      <Footer />
+      <div id="content" className="admin-page-content">
+        {renderContent()}
+      </div>
     </div>
   );
 };
