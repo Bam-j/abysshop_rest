@@ -3,12 +3,12 @@ import { useState } from 'react';
 const PointRecharge = ({ user }) => {
   const [points, setPoints] = useState('');
 
-  const handleInputChange = event => {
-    setPoints(event.target.value);
+  const handleInputChange = e => {
+    setPoints(e.target.value);
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
 
     if (!points.trim()) {
       alert('포인트를 입력해주세요.');

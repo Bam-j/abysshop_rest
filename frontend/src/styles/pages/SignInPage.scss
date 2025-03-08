@@ -1,0 +1,87 @@
+@import './../variables';
+
+body {
+  background-color: $third-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+main {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 600px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+aside {
+  a {
+    margin-left: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    transform: scale(1.2);
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mark-logo {
+  img {
+    width: 400px;
+    margin: 0.25rem 0;
+    user-select: none;
+  }
+}
+
+input {
+  width: 250px;
+  height: 40px;
+  margin-top: 1rem;
+  padding: 10px;
+  border: none;
+  border-bottom: 3px solid #6ab4ff;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-bottom: 3px solid #165fe9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
+button {
+  width: 250px;
+  margin-top: 1.25rem;
+}
+
+#sign-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#sign-in-button {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+
+form {
+  input {
+    margin-top: 1rem;
+  }
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}

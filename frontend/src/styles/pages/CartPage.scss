@@ -1,0 +1,41 @@
+.cart-content {
+  margin: 0 0.825rem;
+}
+
+#cart-table {
+  margin-top: 0.5rem;
+}
+
+.quantity-controller {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#quantity {
+  margin: 0;
+  font-weight: bold;
+}
+
+.empty-cart {
+  text-align: center;
+  margin-top: 50px;
+
+  h2 {
+    color: #2566a7;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+  }
+}
+
+button {
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

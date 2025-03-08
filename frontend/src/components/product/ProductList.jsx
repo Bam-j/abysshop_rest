@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/components/ProductList.scss';
+import '../../styles/components/product/ProductList.scss';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +9,7 @@ const ProductList = () => {
 
   useEffect(() => {
     //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
-    fetch(`/api/products?page=${currentPage}`)
+    fetch(``)
     .then(res => res.json())
     .then(data => {
       setProducts(data.products);
@@ -39,6 +39,7 @@ const ProductList = () => {
         ))}
       </div>
 
+      //TODO: 반복 요소인 pagination 버튼 메뉴를 컴포넌트화 시키기
       <div className="pagination">
         {currentPage > 1 && (
           <button className="page-link"

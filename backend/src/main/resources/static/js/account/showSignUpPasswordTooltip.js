@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("focus", function () {
       let tooltip = bootstrap.Tooltip.getInstance(this);
       tooltip.show();
-
-      //setTimeout(() => tooltip.hide(), 3000);
     });
   });
 });

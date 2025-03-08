@@ -1,0 +1,14 @@
+.nav {
+  ul {
+    li {
+      position: relative;
+      margin: 0.625rem;
+    }
+  }
+
+  .nav-link {
+    &.active {
+      font-weight: bold;
+    }
+  }
+}

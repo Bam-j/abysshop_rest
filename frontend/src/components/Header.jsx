@@ -13,6 +13,10 @@ const Header = () => {
     //TODO: API로 부터 사용자 데이터(로그인 상태, 장바구니 quantity, points, userId, cartId) 가져오기
   }, []);
 
+  const handleLoginClick = () => {
+    navigate('/account/sign-in');
+  };
+
   const handleLogout = () => {
     //TODO: 로그아웃 핸들러, 유저 로그인 인증 해제
     navigate('/');
@@ -22,7 +26,7 @@ const Header = () => {
     <header>
       <div className="square-logo">
         <Link to="/">
-          <img id="header-logo" src={logo} alt="어비스 블록 미니멀 로고"/>
+          <img id="header-logo" src={logo} alt="어비스 블록 미니멀 로고" />
         </Link>
       </div>
 
@@ -67,9 +71,8 @@ const Header = () => {
           </>
         ) : (
           <li>
-            <Link to="/account/sign-in" className="btn btn-primary">
-              로그인
-            </Link>
+            <button onClick={handleLoginClick} className="btn btn-primary">로그인
+            </button>
           </li>
         )}
       </ul>
