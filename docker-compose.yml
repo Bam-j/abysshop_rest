@@ -5,13 +5,13 @@ services:
     image: mysql:8.0
     container_name: abysshop-mysql
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db_abysshop
-      MYSQL_USER: jh
-      MYSQL_PASSWORD: 1234
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
