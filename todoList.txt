@@ -1,3 +1,10 @@
+[작업 순서]
+1. JSP 문서 구조 리액트 컴포넌트/페이지 화, CSS > SCSS 교체
+2. @Controller > @RestController, Session 인증 > JWT 인증
+3. MyBatis > JPA
+4. React에 백엔드 API 연동
+5. 배포 환경 최종 테스트
+
 [공통]
 0. 반드시 배포 전에 txt 메모들 지우기
 
@@ -9,6 +16,8 @@
 2. 이에따라 session 권한 검사를 Spring Security(+JWT) 업무로 변경
 
 3. 기존 MyBatis를 활용해 DB에 접근하던 방식을 Spring Data JPA로 변경
+
+4. 개발 완료 단계에서 기존 JSP, MyBatis 매퍼 삭제
 
 [프론트엔드]
 1. 회원가입, 로그인, 주문 완료 제외한 페이지의 요소 크기 전체적으로 조금씩 키우기

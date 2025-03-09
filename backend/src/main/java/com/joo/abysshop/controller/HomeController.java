@@ -1,46 +1,42 @@
 package com.joo.abysshop.controller;
 
-import com.joo.abysshop.util.constants.ModelAttributeNames;
-import com.joo.abysshop.util.constants.ViewNames;
+import com.joo.abysshop.dto.home.HomeResponse;
+import com.joo.abysshop.service.HomeService;
 import com.joo.abysshop.dto.cart.CartResponse;
 import com.joo.abysshop.dto.product.ProductListResponse;
 import com.joo.abysshop.dto.user.UserInfoResponse;
-import com.joo.abysshop.service.cart.CartService;
-import com.joo.abysshop.service.product.ProductService;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final ProductService productService;
-    private final CartService cartService;
+    private final HomeService homeService;
 
-    @GetMapping("/")
-    public String home(@RequestParam(defaultValue = "1") int page, HttpSession session,
-        Model model) {
+    @GetMapping("/home")
+    public ResponseEntity<HomeResponse> home(@RequestParam(defaultValue = "1") int page,
+        @AuthenticationPrincipal UserInfoResponse user) {
         int pageSize = 12;
-        int totalProducts = productService.getTotalProductCount();
+        int totalProducts = homeService.countProducts();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
-        List<ProductListResponse> pagedProductList = productService.findPagedProducts(page,
-            pageSize);
-        model.addAttribute(ModelAttributeNames.PRODUCT_LIST, pagedProductList);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
+        List<ProductListResponse> pagedProductList = homeService.findPagedProducts(page, pageSize);
 
-        UserInfoResponse user = (UserInfoResponse) session.getAttribute("user");
+        CartResponse cart = null;
         if (user != null) {
-            CartResponse cart = cartService.getCart(user.getUserId());
-            model.addAttribute(ModelAttributeNames.CART, cart);
+            cart = homeService.findUserCart(user.getUserId());
         }
 
-        return ViewNames.INDEX_PAGE;
+        //유저, cart, 상품 목록, 페이지네이션 정보를 담아서 return
+        HomeResponse response = new HomeResponse(user, pagedProductList, page, totalPages, cart);
+        return ResponseEntity.ok(response);
     }
 }
