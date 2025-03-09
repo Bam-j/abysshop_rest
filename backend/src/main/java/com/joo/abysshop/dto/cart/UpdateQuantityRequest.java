@@ -1,16 +1,8 @@
 package com.joo.abysshop.dto.cart;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record UpdateQuantityRequest(Long cartId, Long userId, Long productId, String operator) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class UpdateQuantityRequest {
-
-    private Long cartId;
-    private Long userId;
-    private Long productId;
-    private String operator;
+    public static UpdateQuantityRequest of(Long cartId, Long userId, Long productId, String operator) {
+        return new UpdateQuantityRequest(cartId, userId, productId, operator);
+    }
 }

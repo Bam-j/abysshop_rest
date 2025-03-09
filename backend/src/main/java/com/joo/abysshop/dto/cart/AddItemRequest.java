@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.cart;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record AddItemRequest(Long cartId, Long productId) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class AddItemRequest {
-
-    private Long cartId;
-    private Long productId;
+    public static AddItemRequest of(Long cartId, Long productId) {
+        return new AddItemRequest(cartId, productId);
+    }
 }

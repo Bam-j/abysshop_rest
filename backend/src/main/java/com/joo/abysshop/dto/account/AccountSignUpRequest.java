@@ -1,15 +1,8 @@
 package com.joo.abysshop.dto.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record AccountSignUpRequest(String username, String nickname, String password) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class AccountSignUpRequest {
-
-    private String username;
-    private String nickname;
-    private String password;
+    public static AccountSignUpRequest of(String username, String nickname, String password) {
+        return new AccountSignUpRequest(username, nickname, password);
+    }
 }

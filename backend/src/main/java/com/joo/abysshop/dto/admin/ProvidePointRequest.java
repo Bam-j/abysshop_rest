@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record ProvidePointRequest(Long userId, Long points) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class ProvidePointRequest {
-
-    private Long userId;
-    private Long point;
+    public static ProvidePointRequest of(Long userId, Long points) {
+        return new ProvidePointRequest(userId, points);
+    }
 }

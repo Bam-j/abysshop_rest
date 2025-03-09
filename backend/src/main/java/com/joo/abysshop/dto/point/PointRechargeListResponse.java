@@ -1,19 +1,24 @@
 package com.joo.abysshop.dto.point;
 
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class PointRechargeListResponse {
+public record PointRechargeListResponse(
+    Long rechargeId,
+    Long userId,
+    String nickname,
+    Long points,
+    Date requestTime,
+    String rechargeRequestState
+) {
 
-    private Long rechargeId;
-    private Long userId;
-    private String nickname;
-    private Long points;
-    private Date requestTime;
-    private String rechargeRequestState;
+    public static PointRechargeListResponse of(
+        Long rechargeId,
+        Long userId,
+        String nickname,
+        Long points,
+        Date requestTime,
+        String rechargeRequestState) {
+        return new PointRechargeListResponse(rechargeId, userId, nickname,
+            points, requestTime, rechargeRequestState);
+    }
 }

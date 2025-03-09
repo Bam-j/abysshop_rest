@@ -1,15 +1,8 @@
 package com.joo.abysshop.dto.cart;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record RemoveItemRequest(Long cartId, Long productId, Long userId) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class RemoveItemRequest {
-
-    private Long cartId;
-    private Long productId;
-    private Long userId;
+    public static RemoveItemRequest of(Long cartId, Long productId, Long userId) {
+        return new RemoveItemRequest(cartId, productId, userId);
+    }
 }

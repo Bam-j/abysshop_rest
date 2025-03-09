@@ -1,19 +1,18 @@
 package com.joo.abysshop.dto.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class AddProductRequest {
+public record AddProductRequest(
+    MultipartFile image,
+    String productName,
+    Long price,
+    String description) {
 
-    private MultipartFile image;
-    //private String originalFileName;
-
-    private String productName;
-    private Long price;
-    private String description;
+    public static AddProductRequest of(
+        MultipartFile image,
+        String productName,
+        Long price,
+        String description) {
+        return new AddProductRequest(image, productName, price, description);
+    }
 }

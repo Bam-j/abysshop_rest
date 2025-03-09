@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.order;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record CreateOrderRequest(Long cartId, Long userId) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class CreateOrderRequest {
-
-    private Long cartId;
-    private Long userId;
+    public static CreateOrderRequest of(Long cartId, Long userId) {
+        return new CreateOrderRequest(cartId, userId);
+    }
 }

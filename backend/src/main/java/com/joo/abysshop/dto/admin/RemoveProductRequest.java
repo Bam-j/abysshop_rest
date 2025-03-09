@@ -1,13 +1,8 @@
 package com.joo.abysshop.dto.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record RemoveProductRequest(Long productId) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class RemoveProductRequest {
-
-    private Long productId;
+    public static RemoveProductRequest of(Long productId) {
+        return new RemoveProductRequest(productId);
+    }
 }

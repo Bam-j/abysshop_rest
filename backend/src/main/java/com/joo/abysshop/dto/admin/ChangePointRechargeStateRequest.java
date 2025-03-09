@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record ChangePointRechargeStateRequest(Long rechargeId, String newState) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class ChangePointRechargeStateRequest {
-
-    private Long rechargeId;
-    private String newState;
+    public static ChangeOrderStateRequest of(Long rechargeId, String newState) {
+        return new ChangeOrderStateRequest(rechargeId, newState);
+    }
 }

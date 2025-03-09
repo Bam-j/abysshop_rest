@@ -1,15 +1,18 @@
 package com.joo.abysshop.dto.point;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record UpdatePointRechargeDetailRequest(
+    Long rechargeDetailId,
+    String bank,
+    String accountNumber,
+    Long depositAmount) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class UpdatePointRechargeDetailRequest {
 
-    private Long rechargeDetailId;
-    private String bank;
-    private String accountNumber;
+    public static UpdatePointRechargeDetailRequest of(
+        Long rechargeDetailId,
+        String bank,
+        String accountNumber,
+        Long depositAmount) {
+        return new UpdatePointRechargeDetailRequest(rechargeDetailId,
+            bank, accountNumber, depositAmount);
+    }
 }

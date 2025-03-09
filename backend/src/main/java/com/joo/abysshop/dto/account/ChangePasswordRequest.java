@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record ChangePasswordRequest(Long userId, String newPassword) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class ChangePasswordRequest {
-
-    private Long userId;
-    private String newPassword;
+    public static ChangePasswordRequest of(Long userId, String newPassword) {
+        return new ChangePasswordRequest(userId, newPassword);
+    }
 }

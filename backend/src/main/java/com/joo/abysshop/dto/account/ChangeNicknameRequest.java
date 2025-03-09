@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record ChangeNicknameRequest(Long userId, String newNickname) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class ChangeNicknameRequest {
-
-    private Long userId;
-    private String newNickname;
+    public static ChangeNicknameRequest of(Long userId, String newNickname) {
+        return new ChangeNicknameRequest(userId, newNickname);
+    }
 }

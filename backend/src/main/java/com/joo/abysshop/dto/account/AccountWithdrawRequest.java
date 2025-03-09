@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.account;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record AccountWithdrawRequest(Long userId, String password) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class AccountWithdrawRequest {
-
-    private Long userId;
-    private String password;
+    public static AccountWithdrawRequest of(Long userId, String password) {
+        return new AccountWithdrawRequest(userId, password);
+    }
 }

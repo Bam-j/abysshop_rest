@@ -1,19 +1,26 @@
 package com.joo.abysshop.dto.point;
 
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class PointRechargeDetailListResponse {
+public record PointRechargeDetailListResponse(
+    Long rechargeDetailId,
+    Long rechargeId,
+    String nickname,
+    String bank,
+    String accountNumber,
+    Long depositAmount,
+    Date depositConfirmedTime
+) {
 
-    private Long rechargeDetailId;
-    private Long rechargeId;
-    private String nickname;
-    private String bank;
-    private String accountNumber;
-    private Date depositConfirmedTime;
+    public static PointRechargeDetailListResponse of(
+        Long rechargeDetailId,
+        Long rechargeId,
+        String nickname,
+        String bank,
+        String accountNumber,
+        Long depositAmount,
+        Date depositConfirmedTime) {
+        return new PointRechargeDetailListResponse(rechargeDetailId, rechargeId, nickname,
+            bank, accountNumber, depositAmount, depositConfirmedTime);
+    }
 }

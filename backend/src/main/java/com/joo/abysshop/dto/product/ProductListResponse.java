@@ -1,16 +1,17 @@
 package com.joo.abysshop.dto.product;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record ProductListResponse(
+    Long productId,
+    String productName,
+    Long price,
+    String originalFileName
+) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class ProductListResponse {
-
-    private Long productId;
-    private String productName;
-    private Long price;
-    private String originalFileName;
+    public static ProductListResponse of(
+        Long productId,
+        String productName,
+        Long price,
+        String originalFileName) {
+        return new ProductListResponse(productId, productName, price, originalFileName);
+    }
 }

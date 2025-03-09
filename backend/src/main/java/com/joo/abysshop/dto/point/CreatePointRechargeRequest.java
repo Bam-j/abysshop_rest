@@ -1,15 +1,8 @@
 package com.joo.abysshop.dto.point;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record CreatePointRechargeRequest(Long userId, String nickname, Long points) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class CreatePointRechargeRequest {
-
-    private Long userId;
-    private String nickname;
-    private Long points;
+    public static CreatePointRechargeRequest of(Long userId, String nickname, Long points) {
+        return new CreatePointRechargeRequest(userId, nickname, points);
+    }
 }

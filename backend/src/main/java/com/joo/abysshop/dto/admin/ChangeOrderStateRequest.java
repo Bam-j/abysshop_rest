@@ -1,14 +1,8 @@
 package com.joo.abysshop.dto.admin;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+public record ChangeOrderStateRequest(Long orderId, String newState) {
 
-@Getter
-@Builder
-@AllArgsConstructor
-public class ChangeOrderStateRequest {
-
-    private Long orderId;
-    private String newState;
+    public static ChangeOrderStateRequest of(Long orderId, String newState) {
+        return new ChangeOrderStateRequest(orderId, newState);
+    }
 }
