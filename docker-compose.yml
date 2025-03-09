@@ -29,11 +29,11 @@ services:
       mysql:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_abysshop
-      SPRING_DATASOURCE_USERNAME: jh
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: "${SPRING_DATASOURCE_URL}"
+      SPRING_DATASOURCE_USERNAME: "${SPRING_DATASOURCE_USERNAME}"
+      SPRING_DATASOURCE_PASSWORD: "${SPRING_DATASOURCE_PASSWORD}"
     ports:
-      - "8080:8080"
+      - "${SPRING_APP_PORT}:8080"
 
   frontend:
     build: ./frontend
