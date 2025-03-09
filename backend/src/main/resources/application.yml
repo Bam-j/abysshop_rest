@@ -7,11 +7,8 @@ server:
 spring:
   application:
     name: abysshop
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_abysshop?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: jh
-    password: 1234
+  profiles:
+    active: dev
   mvc:
     static-path-pattern: /resources/static/**
     view:
@@ -20,6 +17,12 @@ spring:
   devtools:
     livereload:
       enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml, classpath:mapper/**/*.xml

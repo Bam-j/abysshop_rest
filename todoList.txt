@@ -3,7 +3,7 @@
 2. @Controller > @RestController, Session 인증 > JWT 인증
 3. MyBatis > JPA
 4. React에 백엔드 API 연동
-5. 배포 환경 최종 테스트
+5. 배포 환경 최종 테스트 (배포 버전 DB 생성 등)
 
 [공통]
 0. 반드시 배포 전에 txt 메모들 지우기
