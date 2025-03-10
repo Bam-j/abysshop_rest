@@ -22,17 +22,17 @@ public class HomeController {
     private final HomeService homeService;
 
     @GetMapping("/home")
-    public ResponseEntity<HomeResponse> home(@RequestParam(defaultValue = "1") int page,
+    public ResponseEntity<HomeResponse> getHomePageData(@RequestParam(defaultValue = "1") int page,
         @AuthenticationPrincipal UserInfoResponse user) {
         int pageSize = 12;
-        int totalProducts = homeService.countProducts();
+        int totalProducts = homeService.countAllProducts();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
-        List<ProductListResponse> pagedProductList = homeService.findPagedProducts(page, pageSize);
+        List<ProductListResponse> pagedProductList = homeService.getPagedProducts(page, pageSize);
 
         CartResponse cart = null;
         if (user != null) {
-            cart = homeService.findUserCart(user.getUserId());
+            cart = homeService.getUserCart(user.getUserId());
         }
 
         //유저, cart, 상품 목록, 페이지네이션 정보를 담아서 return

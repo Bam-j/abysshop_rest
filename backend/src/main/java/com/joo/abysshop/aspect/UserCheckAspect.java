@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserCheckAspect {
 
-    private final HttpSession session;
-
+    //TODO: 권한 검증 Aspect들 JWT 인증에 맞게 변경하기
     @Before("@annotation(com.joo.abysshop.annotation.CurrentUserOnly)")
     public void checkCurrentUserAccess(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
@@ -28,7 +27,7 @@ public class UserCheckAspect {
             }
         }
 
-        Long currentUserId = ((UserInfoResponse) session.getAttribute("user")).getUserId();
+        //JWT 토큰 인증에서 userId를 가져온다.
 
         if (!currentUserId.equals(requestUserId)) {
             throw new UnauthorizedAccessException("권한이 없습니다.");
