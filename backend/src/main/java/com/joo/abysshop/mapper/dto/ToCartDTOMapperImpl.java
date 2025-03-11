@@ -1,9 +1,9 @@
 package com.joo.abysshop.mapper.dto;
 
-import com.joo.abysshop.dto.cart.AddItemRequest;
+import com.joo.abysshop.dto.cart.AddItemToCartRequest;
 import com.joo.abysshop.dto.cart.CartItemResponse;
 import com.joo.abysshop.dto.cart.CartResponse;
-import com.joo.abysshop.dto.cart.RemoveItemRequest;
+import com.joo.abysshop.dto.cart.DeleteItemFromCartRequest;
 import com.joo.abysshop.dto.cart.UpdateQuantityRequest;
 import com.joo.abysshop.entity.cart.CartEntity;
 import com.joo.abysshop.entity.cart.CartItemEntity;
@@ -35,16 +35,16 @@ public class ToCartDTOMapperImpl implements ToCartDTOMapper {
     }
 
     @Override
-    public AddItemRequest toAddItemRequest(UpdateQuantityRequest updateQuantityRequest) {
-        return AddItemRequest.builder()
+    public AddItemToCartRequest toAddItemRequest(UpdateQuantityRequest updateQuantityRequest) {
+        return AddItemToCartRequest.builder()
             .cartId(updateQuantityRequest.getCartId())
             .productId(updateQuantityRequest.getProductId())
             .build();
     }
 
     @Override
-    public RemoveItemRequest toRemoveItemRequest(UpdateQuantityRequest updateQuantityRequest) {
-        return RemoveItemRequest.builder()
+    public DeleteItemFromCartRequest toRemoveItemRequest(UpdateQuantityRequest updateQuantityRequest) {
+        return DeleteItemFromCartRequest.builder()
             .cartId(updateQuantityRequest.getCartId())
             .productId(updateQuantityRequest.getProductId())
             .userId(updateQuantityRequest.getUserId())

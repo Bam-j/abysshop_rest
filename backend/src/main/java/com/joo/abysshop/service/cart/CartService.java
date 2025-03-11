@@ -1,9 +1,9 @@
 package com.joo.abysshop.service.cart;
 
-import com.joo.abysshop.dto.cart.AddItemRequest;
+import com.joo.abysshop.dto.cart.AddItemToCartRequest;
 import com.joo.abysshop.dto.cart.CartItemResponse;
 import com.joo.abysshop.dto.cart.CartResponse;
-import com.joo.abysshop.dto.cart.RemoveItemRequest;
+import com.joo.abysshop.dto.cart.DeleteItemFromCartRequest;
 import com.joo.abysshop.dto.product.ProductInfoRequest;
 import com.joo.abysshop.entity.cart.AddCartItemEntity;
 import com.joo.abysshop.entity.cart.CartEntity;
@@ -44,18 +44,19 @@ public class CartService {
         return cartItemResponseList;
     }
 
-    public void addItem(AddItemRequest addItemRequest) {
-        Long productId = addItemRequest.getProductId();
+    public void addItem(AddItemToCartRequest addItemToCartRequest) {
+        Long productId = addItemToCartRequest.getProductId();
         ProductInfoRequest productInfoRequest = productService.getProductInfo(productId);
-        AddCartItemEntity addCartItemEntity = toCartEntityMapper.toAddCartItemEntity(addItemRequest,
+        AddCartItemEntity addCartItemEntity = toCartEntityMapper.toAddCartItemEntity(
+            addItemToCartRequest,
             productInfoRequest);
 
         cartMapper.addItem(addCartItemEntity);
     }
 
-    public void removeItem(RemoveItemRequest removeItemRequest) {
-        Long cartId = removeItemRequest.getCartId();
-        Long productId = removeItemRequest.getProductId();
+    public void removeItem(DeleteItemFromCartRequest deleteItemFromCartRequest) {
+        Long cartId = deleteItemFromCartRequest.getCartId();
+        Long productId = deleteItemFromCartRequest.getProductId();
         Map<String, Object> removeItemMap = new HashMap<>();
 
         removeItemMap.put("cartId", cartId);
@@ -71,34 +72,34 @@ public class CartService {
         return cartMapper.getTotalPoints(cartId);
     }
 
-    public boolean isCartItemExists(AddItemRequest addItemRequest) {
-        Long cartId = addItemRequest.getCartId();
-        Long productId = addItemRequest.getProductId();
+    public boolean isCartItemExists(AddItemToCartRequest addItemToCartRequest) {
+        Long cartId = addItemToCartRequest.getCartId();
+        Long productId = addItemToCartRequest.getProductId();
         return cartMapper.isCartItemExists(cartId, productId);
     }
 
-    public void increaseQuantity(AddItemRequest addItemRequest) {
-        Long cartId = addItemRequest.getCartId();
-        Long productId = addItemRequest.getProductId();
+    public void increaseQuantity(AddItemToCartRequest addItemToCartRequest) {
+        Long cartId = addItemToCartRequest.getCartId();
+        Long productId = addItemToCartRequest.getProductId();
         cartMapper.increaseQuantity(cartId, productId);
     }
 
-    public void increaseTotalPrice(AddItemRequest addItemRequest) {
-        Long cartId = addItemRequest.getCartId();
-        Long productId = addItemRequest.getProductId();
+    public void increaseTotalPrice(AddItemToCartRequest addItemToCartRequest) {
+        Long cartId = addItemToCartRequest.getCartId();
+        Long productId = addItemToCartRequest.getProductId();
         Long price = productService.getProductInfo(productId).getPrice();
         cartMapper.increaseTotalPrice(cartId, productId, price);
     }
 
-    public void decreaseQuantity(RemoveItemRequest removeItemRequest) {
-        Long cartId = removeItemRequest.getCartId();
-        Long productId = removeItemRequest.getProductId();
+    public void decreaseQuantity(DeleteItemFromCartRequest deleteItemFromCartRequest) {
+        Long cartId = deleteItemFromCartRequest.getCartId();
+        Long productId = deleteItemFromCartRequest.getProductId();
         cartMapper.decreaseQuantity(cartId, productId);
     }
 
-    public void decreaseTotalPrice(RemoveItemRequest removeItemRequest) {
-        Long cartId = removeItemRequest.getCartId();
-        Long productId = removeItemRequest.getProductId();
+    public void decreaseTotalPrice(DeleteItemFromCartRequest deleteItemFromCartRequest) {
+        Long cartId = deleteItemFromCartRequest.getCartId();
+        Long productId = deleteItemFromCartRequest.getProductId();
         Long price = productService.getProductInfo(productId).getPrice();
         cartMapper.decreaseTotalPrice(cartId, productId, price);
     }
