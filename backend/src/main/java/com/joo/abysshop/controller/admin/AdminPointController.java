@@ -15,7 +15,7 @@ public class AdminPointController {
     private final AdminPointService adminPointService;
 
     @PatchMapping("/provide")
-    public ResponseEntity<String> providePoints(ProvidePointRequest providePointRequest) {
+    public ResponseEntity<Void> providePoints(ProvidePointRequest providePointRequest) {
         adminPointService.providePoints(providePointRequest);
         return ResponseEntity.noContent().build();
     }

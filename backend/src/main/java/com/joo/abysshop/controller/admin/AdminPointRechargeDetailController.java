@@ -15,7 +15,7 @@ public class AdminPointRechargeDetailController {
     private final AdminPointRechargeDetailService adminPointRechargeDetailService;
 
     @PatchMapping("/update")
-    public ResponseEntity<Object> updatePointRechargeDetail(
+    public ResponseEntity<Void> updatePointRechargeDetail(
         UpdatePointRechargeDetailRequest updatePointRechargeDetailRequest) {
         adminPointRechargeDetailService.updatePointRechargeDetail(updatePointRechargeDetailRequest);
         return ResponseEntity.noContent().build();

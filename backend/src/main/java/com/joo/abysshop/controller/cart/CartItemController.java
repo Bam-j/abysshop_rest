@@ -20,7 +20,7 @@ public class CartItemController {
     private final CartItemService cartItemService;
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addItemToCart(AddItemToCartRequest addItemToCartRequest) {
+    public ResponseEntity<Void> addItemToCart(AddItemToCartRequest addItemToCartRequest) {
         //TODO: 사용자 검사 -> 관리자/비로그인 상태는 요청 수행 취소
 
         //서비스에서 카트에 상품이 존재하면 quantity 1증가, 아니라면 cartItem에 레코드 추가
@@ -29,7 +29,7 @@ public class CartItemController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteItemFromCart(
+    public ResponseEntity<Void> deleteItemFromCart(
         DeleteItemFromCartRequest deleteItemFromCartRequest) {
         cartItemService.deleteCartItem(deleteItemFromCartRequest);
         return ResponseEntity.noContent().build();
@@ -42,7 +42,7 @@ public class CartItemController {
      *       서버로 요청을 보내는 방식으로 변경해서 구현
      */
     @PatchMapping("/quantity")
-    public ResponseEntity<Object> updateCartItemsQuantity(
+    public ResponseEntity<Void> updateCartItemsQuantity(
         List<UpdateCartItemsQuantityRequest> requestList) {
         cartItemService.updateCartItemsQuantity(requestList);
         return ResponseEntity.noContent().build();

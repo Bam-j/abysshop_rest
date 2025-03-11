@@ -15,7 +15,7 @@ public class AdminOrderController {
     private final AdminOrderService adminOrderService;
 
     @PatchMapping("/state")
-    public ResponseEntity<String> updateOrderState(UpdateOrderStateRequest updateOrderStateRequest) {
+    public ResponseEntity<Void> updateOrderState(UpdateOrderStateRequest updateOrderStateRequest) {
         adminOrderService.updateOrderState(updateOrderStateRequest);
         return ResponseEntity.noContent().build();
     }
