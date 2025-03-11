@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 
-import '../../styles/components/admin/AdminAddProduct.scss';
+import '../../styles/components/admin/AdminCreateProduct.scss';
 
-const AdminAddProduct = () => {
+const AdminCreateProduct = () => {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
@@ -70,4 +70,4 @@ const AdminAddProduct = () => {
   );
 };
 
-export default AdminAddProduct;
+export default AdminCreateProduct;

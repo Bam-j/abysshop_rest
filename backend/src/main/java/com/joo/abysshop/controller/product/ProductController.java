@@ -1,4 +1,4 @@
-package com.joo.abysshop.controller;
+package com.joo.abysshop.controller.product;
 
 import com.joo.abysshop.dto.cart.CartResponse;
 import com.joo.abysshop.dto.user.UserInfoResponse;

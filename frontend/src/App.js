@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import UserMyPage from './pages/UserMyPage';
-import AdminPage from './pages/AdminPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 import CartPage from './pages/CartPage';
 import Layout from './components/Layout';
 import OrderCompletePage from './pages/OrderCompletePage';
@@ -22,7 +22,7 @@ const App = () => {
             {/* Header, Footer 컴포넌트가 포함된 페이지들은 여기에 */}
             <Route path="/" element={<HomePage />} />
             <Route path="/users/my-page" element={<UserMyPage />} />
-            <Route path="/admin/dashboard" element={<AdminPage />} />
+            <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
             <Route path="/users/cart" element={<CartPage />} />
             <Route path="/products/detail" element={<ProductDetailPage />} />
           </Route>

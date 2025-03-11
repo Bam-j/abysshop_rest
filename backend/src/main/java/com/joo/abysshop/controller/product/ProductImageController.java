@@ -1,4 +1,4 @@
-package com.joo.abysshop.controller;
+package com.joo.abysshop.controller.product;
 
 import java.net.MalformedURLException;
 import java.nio.file.Path;

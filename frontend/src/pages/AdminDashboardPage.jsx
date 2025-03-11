@@ -2,17 +2,17 @@ import { useSearchParams } from 'react-router-dom';
 
 import '../styles/components/Nav.scss';
 
-import AdminPageNav from '../components/admin/AdminPageNav';
+import AdminDashboardPageNav from '../components/admin/AdminDashboardPageNav';
 import AdminPointRechargeManagement
   from '../components/admin/AdminPointRechargeManagement';
 import AdminPointRechargeDetailManagement
   from '../components/admin/AdminPointRechargeDetailManagement';
-import AdminAddProduct from '../components/admin/AdminAddProduct';
+import AdminCreateProduct from '../components/admin/AdminCreateProduct';
 import AdminRemoveProduct from '../components/admin/AdminRemoveProduct';
 import AdminOrderManagement from '../components/admin/AdminOrderManagement';
 
 
-const AdminPage = () => {
+const AdminDashboardPage = () => {
   const [searchParams] = useSearchParams();
   const menu = searchParams.get('menu') || 'order-management';
 
@@ -23,7 +23,7 @@ const AdminPage = () => {
       case 'point-recharge-detail':
         return <AdminPointRechargeDetailManagement />;
       case 'add-product':
-        return <AdminAddProduct />;
+        return <AdminCreateProduct />;
       case 'remove-product':
         return <AdminRemoveProduct />;
       default:
@@ -33,7 +33,7 @@ const AdminPage = () => {
 
   return (
     <div className="admin-page">
-      <AdminPageNav />
+      <AdminDashboardPageNav />
       <div id="content" className="admin-page-content">
         {renderContent()}
       </div>
@@ -41,4 +41,4 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+export default AdminDashboardPage;

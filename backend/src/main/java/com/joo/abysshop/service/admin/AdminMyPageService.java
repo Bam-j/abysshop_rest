@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.admin.AddProductRequest;
+import com.joo.abysshop.dto.admin.CreateProductRequest;
 import com.joo.abysshop.dto.product.ProductListResponse;
 import com.joo.abysshop.entity.admin.AddProductEntity;
 import com.joo.abysshop.entity.admin.AddProductImageEntity;
@@ -30,14 +30,14 @@ public class AdminMyPageService {
     private final UserService userService;
     private final SqlSession sqlSession;
 
-    public void addProduct(AddProductRequest addProductRequest) throws IOException {
-        MultipartFile imageFile = addProductRequest.getImage();
+    public void addProduct(CreateProductRequest createProductRequest) throws IOException {
+        MultipartFile imageFile = createProductRequest.getImage();
         String originalFileName = imageFile.getOriginalFilename();
         String savePath = "C:\\Users\\juhyu\\abysshop_img" + originalFileName;
         imageFile.transferTo(new File(savePath));
 
         AddProductEntity addProductEntity = toProductEntityMapper.toAddProductEntity(
-            addProductRequest);
+            createProductRequest);
         adminMapper.insertProduct(addProductEntity);
         Long productId = addProductEntity.getProductId();
 

@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import '../../styles/components/Nav.scss';
 
-const AdminPageNav = () => {
+const AdminDashboardPageNav = () => {
   return (
     <nav className="admin-page-nav">
       <NavLink to="/admin/my-page?menu=order-management&page=1"
@@ -17,7 +17,7 @@ const AdminPageNav = () => {
                className="nav-link">
         포인트 지급 요청 정보 관리
       </NavLink>
-      <NavLink to="/admin/my-page?menu=add-product" className="nav-link">
+      <NavLink to="/admin/my-page?menu=create-product" className="nav-link">
         상품 추가
       </NavLink>
       <NavLink to="/admin/my-page?menu=remove-product&page=1"
@@ -28,4 +28,4 @@ const AdminPageNav = () => {
   );
 };
 
-export default AdminPageNav;
+export default AdminDashboardPageNav;

@@ -1,7 +1,7 @@
 package com.joo.abysshop.mapper.entity;
 
 
-import com.joo.abysshop.dto.admin.AddProductRequest;
+import com.joo.abysshop.dto.admin.CreateProductRequest;
 import com.joo.abysshop.entity.admin.AddProductEntity;
 import com.joo.abysshop.entity.admin.AddProductImageEntity;
 import com.joo.abysshop.entity.product.ProductEntity;
@@ -11,20 +11,20 @@ import org.springframework.stereotype.Component;
 public class ToProductEntityMapperImpl implements ToProductEntityMapper {
 
     @Override
-    public ProductEntity toProductEntity(AddProductRequest addProductRequest) {
+    public ProductEntity toProductEntity(CreateProductRequest createProductRequest) {
         return ProductEntity.builder()
-            .productName(addProductRequest.getProductName())
-            .price(addProductRequest.getPrice())
-            .description(addProductRequest.getDescription())
+            .productName(createProductRequest.getProductName())
+            .price(createProductRequest.getPrice())
+            .description(createProductRequest.getDescription())
             .build();
     }
 
     @Override
-    public AddProductEntity toAddProductEntity(AddProductRequest addProductRequest) {
+    public AddProductEntity toAddProductEntity(CreateProductRequest createProductRequest) {
         return AddProductEntity.builder()
-            .productName(addProductRequest.getProductName())
-            .price(addProductRequest.getPrice())
-            .description(addProductRequest.getDescription())
+            .productName(createProductRequest.getProductName())
+            .price(createProductRequest.getPrice())
+            .description(createProductRequest.getDescription())
             .build();
     }
 

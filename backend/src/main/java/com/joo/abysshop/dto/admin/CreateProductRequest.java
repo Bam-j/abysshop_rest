@@ -2,17 +2,17 @@ package com.joo.abysshop.dto.admin;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public record AddProductRequest(
+public record CreateProductRequest(
     MultipartFile image,
     String productName,
     Long price,
     String description) {
 
-    public static AddProductRequest of(
+    public static CreateProductRequest of(
         MultipartFile image,
         String productName,
         Long price,
         String description) {
-        return new AddProductRequest(image, productName, price, description);
+        return new CreateProductRequest(image, productName, price, description);
     }
 }

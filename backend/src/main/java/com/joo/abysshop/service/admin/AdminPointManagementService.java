@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.admin.ChangePointRechargeStateRequest;
+import com.joo.abysshop.dto.admin.UpdatePointRechargeStateRequest;
 import com.joo.abysshop.dto.admin.ProvidePointRequest;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
 import com.joo.abysshop.entity.point.PointRechargeEntity;
@@ -55,10 +55,10 @@ public class AdminPointManagementService {
     }
 
     public void changePointRechargeState(
-        ChangePointRechargeStateRequest changePointRechargeStateRequest) {
+        UpdatePointRechargeStateRequest updatePointRechargeStateRequest) {
         Map<String, Object> changeStateMap = new HashMap<>();
-        changeStateMap.put("rechargeId", changePointRechargeStateRequest.getRechargeId());
-        changeStateMap.put("newState", changePointRechargeStateRequest.getNewState());
+        changeStateMap.put("rechargeId", updatePointRechargeStateRequest.getRechargeId());
+        changeStateMap.put("newState", updatePointRechargeStateRequest.getNewState());
 
         adminMapper.changePointRechargeState(changeStateMap);
     }

@@ -1,4 +1,4 @@
-package com.joo.abysshop.controller;
+package com.joo.abysshop.controller.point;
 
 import com.joo.abysshop.util.constants.RedirectMappings;
 import com.joo.abysshop.dto.point.CreatePointRechargeRequest;

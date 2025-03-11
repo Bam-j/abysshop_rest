@@ -1,4 +1,4 @@
-package com.joo.abysshop.controller;
+package com.joo.abysshop.controller.order;
 
 import com.joo.abysshop.util.constants.Messages;
 import com.joo.abysshop.util.constants.ViewNames;

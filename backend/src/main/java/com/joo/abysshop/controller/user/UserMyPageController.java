@@ -1,4 +1,4 @@
-package com.joo.abysshop.controller;
+package com.joo.abysshop.controller.user;
 
 import com.joo.abysshop.dto.order.OrderListResponse;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;

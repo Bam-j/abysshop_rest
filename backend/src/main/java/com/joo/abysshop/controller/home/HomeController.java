@@ -1,4 +1,4 @@
-package com.joo.abysshop.controller;
+package com.joo.abysshop.controller.home;
 
 import com.joo.abysshop.dto.home.HomeResponse;
 import com.joo.abysshop.service.HomeService;

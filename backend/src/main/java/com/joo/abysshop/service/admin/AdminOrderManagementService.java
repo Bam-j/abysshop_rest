@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.admin.ChangeOrderStateRequest;
+import com.joo.abysshop.dto.admin.UpdateOrderStateRequest;
 import com.joo.abysshop.dto.order.OrderListResponse;
 import com.joo.abysshop.entity.order.OrderEntity;
 import com.joo.abysshop.mapper.dto.ToOrderDTOMapper;
@@ -21,10 +21,10 @@ public class AdminOrderManagementService {
     private final UserMapper userMapper;
     private final ToOrderDTOMapper toOrderDTOMapper;
 
-    public void changeOrderState(ChangeOrderStateRequest changeOrderStateRequest) {
+    public void changeOrderState(UpdateOrderStateRequest updateOrderStateRequest) {
         Map<String, Object> changeStateMap = new HashMap<>();
-        changeStateMap.put("orderId", changeOrderStateRequest.getOrderId());
-        changeStateMap.put("newState", changeOrderStateRequest.getNewState());
+        changeStateMap.put("orderId", updateOrderStateRequest.getOrderId());
+        changeStateMap.put("newState", updateOrderStateRequest.getNewState());
 
         adminMapper.changeOrderState(changeStateMap);
     }

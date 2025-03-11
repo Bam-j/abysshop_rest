@@ -18,5 +18,8 @@ public enum ResultStatus {
     SAME_PASSWORD,
 
     //주문 관련 실패 상태
-    INSUFFICIENT_POINTS
+    INSUFFICIENT_POINTS,
+
+    //관리자 상품 추가 관련 실패 상태
+    PRODUCT_ALREADY_EXISTS
 }

@@ -3,8 +3,8 @@ package com.joo.abysshop.service.account;
 import com.joo.abysshop.dto.account.AccountSignInRequest;
 import com.joo.abysshop.dto.account.AccountSignUpRequest;
 import com.joo.abysshop.dto.account.AccountWithdrawRequest;
-import com.joo.abysshop.dto.account.ChangeNicknameRequest;
-import com.joo.abysshop.dto.account.ChangePasswordRequest;
+import com.joo.abysshop.dto.account.UpdateNicknameRequest;
+import com.joo.abysshop.dto.account.UpdatePasswordRequest;
 import com.joo.abysshop.entity.account.AccountEntity;
 import com.joo.abysshop.entity.account.SignInEntity;
 import com.joo.abysshop.entity.account.SignUpEntity;
@@ -82,8 +82,8 @@ public class AccountService {
         return ResultStatus.SUCCESS;
     }
 
-    public ResultStatus changeNickname(ChangeNicknameRequest changeNicknameRequest) {
-        Long userId = changeNicknameRequest.getUserId();
+    public ResultStatus changeNickname(UpdateNicknameRequest updateNicknameRequest) {
+        Long userId = updateNicknameRequest.getUserId();
         Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
 
         if (optionalUserEntity.isEmpty()) {
@@ -93,7 +93,7 @@ public class AccountService {
 
         UserEntity userEntity = optionalUserEntity.get();
         String oldNickname = userEntity.getNickname();
-        String newNickname = changeNicknameRequest.getNewNickname();
+        String newNickname = updateNicknameRequest.getNewNickname();
 
         if (oldNickname.equals(newNickname)) {
             //바꾸려는 nickname과 현재 사용 중인 nickname이 동일함
@@ -114,8 +114,8 @@ public class AccountService {
         return ResultStatus.SUCCESS;
     }
 
-    public ResultStatus changePassword(ChangePasswordRequest changePasswordRequest) {
-        Long userId = changePasswordRequest.getUserId();
+    public ResultStatus changePassword(UpdatePasswordRequest updatePasswordRequest) {
+        Long userId = updatePasswordRequest.getUserId();
         Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
 
         if (optionalUserEntity.isEmpty()) {
@@ -125,7 +125,7 @@ public class AccountService {
 
         UserEntity userEntity = optionalUserEntity.get();
         String oldPassword = userEntity.getPassword();
-        String newPassword = changePasswordRequest.getNewPassword();
+        String newPassword = updatePasswordRequest.getNewPassword();
 
         if (oldPassword.equals(newPassword)) {
             //바꾸려는 password과 현재 사용 중인 password이 동일함
