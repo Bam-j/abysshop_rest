@@ -2,6 +2,7 @@ package com.joo.abysshop.controller.user;
 
 import com.joo.abysshop.dto.order.OrderListResponse;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
+import com.joo.abysshop.service.user.UserMyPageService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

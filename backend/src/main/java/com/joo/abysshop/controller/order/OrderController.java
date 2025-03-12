@@ -24,7 +24,6 @@ public class OrderController {
         ResultStatus createOrderResult = orderService.createOrder(createOrderRequest);
 
         if (createOrderResult.equals(ResultStatus.SUCCESS)) {
-            //point가 차감된 유저 정보 토큰 재발급
             return ResponseEntity.ok().build();
         } else if (createOrderResult.equals(ResultStatus.INSUFFICIENT_POINTS)) {
             return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED)

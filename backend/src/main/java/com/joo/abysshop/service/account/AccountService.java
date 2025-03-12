@@ -5,14 +5,8 @@ import com.joo.abysshop.dto.account.AccountSignUpRequest;
 import com.joo.abysshop.dto.account.AccountWithdrawRequest;
 import com.joo.abysshop.dto.account.UpdateNicknameRequest;
 import com.joo.abysshop.dto.account.UpdatePasswordRequest;
-import com.joo.abysshop.entity.account.AccountEntity;
-import com.joo.abysshop.entity.account.SignInEntity;
-import com.joo.abysshop.entity.account.SignUpEntity;
+import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.util.enums.ResultStatus;
-import com.joo.abysshop.mapper.dto.ToAccountDTOMapper;
-import com.joo.abysshop.mapper.entity.ToAccountEntityMapper;
-import com.joo.abysshop.mapper.mybatis.AccountMapper;
-import com.joo.abysshop.mapper.mybatis.UserMapper;
 import com.joo.abysshop.util.security.PasswordSecurity;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -22,66 +16,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccountService {
 
-    private final AccountMapper accountMapper;
-    private final UserMapper userMapper;
-    private final ToAccountDTOMapper toAccountDTOMapper;
-    private final ToAccountEntityMapper toAccountEntityMapper;
-
-    public ResultStatus signIn(AccountSignInRequest accountSignInRequest) {
-        String username = accountSignInRequest.getUsername();
-        Optional<AccountEntity> optionalAccountEntity = accountMapper.findByUsername(username);
-        SignInEntity signInEntity;
-
-        //잘못된 username
-        if (optionalAccountEntity.isEmpty()) {
-            return ResultStatus.INVALID_USERNAME;
-        }
-
-        AccountEntity accountEntity = optionalAccountEntity.get();
-        signInEntity = SignInEntity.builder()
-            .username(accountEntity.getUsername())
-            .nickname(accountEntity.getNickname())
-            .password(accountEntity.getPassword())
-            .build();
-
-        String inputPassword = accountSignInRequest.getPassword();
-        String encodedPassword = signInEntity.getPassword();
-
-        if (PasswordSecurity.matches(inputPassword, encodedPassword)) {
-            return ResultStatus.SUCCESS;
-        } else {
-            return ResultStatus.INVALID_PASSWORD;
-        }
-    }
-
-    public ResultStatus signUp(AccountSignUpRequest accountSignUpRequest) {
-        String username = accountSignUpRequest.getUsername();
-        Optional<AccountEntity> optionalAccountEntity = accountMapper.findByUsername(username);
-
-        //username 조회 결과가 존재하면 회원가입 요청 실패
-        if (optionalAccountEntity.isPresent()) {
-            return ResultStatus.DUPLICATE_USERNAME;
-        }
-
-        String nickname = accountSignUpRequest.getNickname();
-        optionalAccountEntity = accountMapper.findByNickname(nickname);
-
-        //nickname 조회 결과가 존재하면 회원가입 요청 실패
-        if (optionalAccountEntity.isPresent()) {
-            return ResultStatus.DUPLICATE_NICKNAME;
-        }
-
-        String encryptedPassword = PasswordSecurity
-            .encryptPassword(accountSignUpRequest.getPassword());
-
-        SignUpEntity signUpEntity = toAccountEntityMapper
-            .toSignUpEntity(accountSignUpRequest, encryptedPassword);
-        accountMapper.insertUser(signUpEntity);
-
-        return ResultStatus.SUCCESS;
-    }
+    private final UserRepository userRepository;
 
     public ResultStatus changeNickname(UpdateNicknameRequest updateNicknameRequest) {
+        /*
+         *  1. users_table에서 현재 저장된 nickname과 전달된 newNickname이 일치하는지 확인 > 실패: SAME_NICKNAME
+         *  2. 이상 없는 경우 userId user update nickname
+         */
         Long userId = updateNicknameRequest.getUserId();
         Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
 
@@ -114,6 +55,11 @@ public class AccountService {
     }
 
     public ResultStatus changePassword(UpdatePasswordRequest updatePasswordRequest) {
+        /*
+         *  1. userId 통해 현재 비밀번호와 newPassword가 일치하는지 확인  > 실패: SAME_PASSWORD
+         *  2. 이상 없는 경우 update password
+         *  !update 비밀번호도 암호화하여 저장
+         */
         Long userId = updatePasswordRequest.getUserId();
         Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
 
@@ -139,6 +85,11 @@ public class AccountService {
     }
 
     public ResultStatus withdraw(AccountWithdrawRequest accountWithdrawRequest) {
+        /*
+         *  1. userId로 저장된 password 가져와서 입력받은 password와 비교 > 불일치: INVALID_PASSWORD
+         *  2. 일치할 시 users_table에서 delete
+         *  3. JWT 인증 해제
+         */
         Long userId = accountWithdrawRequest.getUserId();
         String inputPassword = accountWithdrawRequest.getPassword();
         Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);

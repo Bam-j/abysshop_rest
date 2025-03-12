@@ -1,18 +1,8 @@
 package com.joo.abysshop.service.cart;
 
-import com.joo.abysshop.dto.cart.AddItemToCartRequest;
-import com.joo.abysshop.dto.cart.CartItemResponse;
 import com.joo.abysshop.dto.cart.CartResponse;
-import com.joo.abysshop.dto.cart.DeleteItemFromCartRequest;
-import com.joo.abysshop.dto.product.ProductInfoRequest;
-import com.joo.abysshop.mapper.dto.ToCartDTOMapper;
-import com.joo.abysshop.mapper.entity.ToCartEntityMapper;
-import com.joo.abysshop.mapper.mybatis.CartMapper;
-import com.joo.abysshop.service.product.ProductService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.joo.abysshop.repository.cart.CartItemRepository;
+import com.joo.abysshop.repository.cart.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,103 +10,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CartService {
 
-    private final ProductService productService;
-    private final CartMapper cartMapper;
-    private final ToCartDTOMapper toCartDTOMapper;
-    private final ToCartEntityMapper toCartEntityMapper;
+    private final CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
 
-    public CartResponse getCart(Long userId) {
-        CartEntity cartEntity = cartMapper.getCart(userId);
-        return toCartDTOMapper.toCartResponse(cartEntity);
-    }
-
-    public List<CartItemResponse> getUserCartItems(Long cartId) {
-        List<CartItemEntity> cartItemEntityList = cartMapper.getCartItems(cartId);
-        List<CartItemResponse> cartItemResponseList = new ArrayList<>();
-
-        for (CartItemEntity cartItemEntity : cartItemEntityList) {
-            cartItemResponseList.add(toCartDTOMapper.toCartItemResponse(cartItemEntity));
-        }
-
-        return cartItemResponseList;
-    }
-
-    public void addItem(AddItemToCartRequest addItemToCartRequest) {
-        Long productId = addItemToCartRequest.getProductId();
-        ProductInfoRequest productInfoRequest = productService.getProductInfo(productId);
-        AddCartItemEntity addCartItemEntity = toCartEntityMapper.toAddCartItemEntity(
-            addItemToCartRequest,
-            productInfoRequest);
-
-        cartMapper.addItem(addCartItemEntity);
-    }
-
-    public void removeItem(DeleteItemFromCartRequest deleteItemFromCartRequest) {
-        Long cartId = deleteItemFromCartRequest.getCartId();
-        Long productId = deleteItemFromCartRequest.getProductId();
-        Map<String, Object> removeItemMap = new HashMap<>();
-
-        removeItemMap.put("cartId", cartId);
-        removeItemMap.put("productId", productId);
-        cartMapper.removeItem(removeItemMap);
-    }
-
-    public Long getQuantity(Long cartId) {
-        return cartMapper.getQuantity(cartId);
-    }
-
-    public Long getTotalPoints(Long cartId) {
-        return cartMapper.getTotalPoints(cartId);
-    }
-
-    public boolean isCartItemExists(AddItemToCartRequest addItemToCartRequest) {
-        Long cartId = addItemToCartRequest.getCartId();
-        Long productId = addItemToCartRequest.getProductId();
-        return cartMapper.isCartItemExists(cartId, productId);
-    }
-
-    public void increaseQuantity(AddItemToCartRequest addItemToCartRequest) {
-        Long cartId = addItemToCartRequest.getCartId();
-        Long productId = addItemToCartRequest.getProductId();
-        cartMapper.increaseQuantity(cartId, productId);
-    }
-
-    public void increaseTotalPrice(AddItemToCartRequest addItemToCartRequest) {
-        Long cartId = addItemToCartRequest.getCartId();
-        Long productId = addItemToCartRequest.getProductId();
-        Long price = productService.getProductInfo(productId).getPrice();
-        cartMapper.increaseTotalPrice(cartId, productId, price);
-    }
-
-    public void decreaseQuantity(DeleteItemFromCartRequest deleteItemFromCartRequest) {
-        Long cartId = deleteItemFromCartRequest.getCartId();
-        Long productId = deleteItemFromCartRequest.getProductId();
-        cartMapper.decreaseQuantity(cartId, productId);
-    }
-
-    public void decreaseTotalPrice(DeleteItemFromCartRequest deleteItemFromCartRequest) {
-        Long cartId = deleteItemFromCartRequest.getCartId();
-        Long productId = deleteItemFromCartRequest.getProductId();
-        Long price = productService.getProductInfo(productId).getPrice();
-        cartMapper.decreaseTotalPrice(cartId, productId, price);
-    }
-
-
-    public void updateCart(Long cartId) {
-        Long totalQuantity = getQuantity(cartId);
-        if (totalQuantity == null) {
-            totalQuantity = 0L;
-        }
-
-        Long totalPoints = getTotalPoints(cartId);
-        if (totalPoints == null) {
-            totalPoints = 0L;
-        }
-
-        cartMapper.updateCart(cartId, totalPoints, totalQuantity);
+    public CartResponse getCartByUserId(Long userId) {
+        /*
+         *  1. userId(fk)로 특정 회원의 카트 불러오기
+         *  2. 이때 카트 총합 정보인 Cart와 거기에 담긴 아이템 정보인 CartItem을 모두 가져온다.
+         */
     }
 
     public void clearCart(Long cartId) {
+        /*
+         * 1. cartId를 가진 Cart와 CartItem(FK) 레코드를 모두 DELETE
+         * 2. 이때 Cart의 totalPrice와 totalQuantity는 0L로 만들어야 함
+         * 3. 구버전 코드(아래 코드들)은 삭제
+         */
         if (cartId == null) {
             return;
         }

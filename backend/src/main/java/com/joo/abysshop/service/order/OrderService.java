@@ -1,10 +1,8 @@
 package com.joo.abysshop.service.order;
 
 import com.joo.abysshop.dto.order.CreateOrderRequest;
+import com.joo.abysshop.repository.order.OrderRepository;
 import com.joo.abysshop.util.enums.ResultStatus;
-import com.joo.abysshop.mapper.mybatis.OrderMapper;
-import com.joo.abysshop.mapper.mybatis.UserMapper;
-import com.joo.abysshop.service.cart.CartService;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +12,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderService {
 
-    private final CartService cartService;
-    private final OrderMapper orderMapper;
-    private final UserMapper userMapper;
+    private final OrderRepository orderRepository;
 
     public ResultStatus createOrder(CreateOrderRequest createOrderRequest) {
+        /*
+         *  1. cart에서 결제 포인트 가져와서 유저 pointBalance에서 차감시키기 > 잔액 부족: INSUFFICIENT_POINTS
+         *  2. cart 정보 토대로 Order 엔티티 만들어서 orders_table에 insert
+         *  3. point가 차감되어 갱신된 유저 JWT 인증 토큰 재발급
+         *  4. 불필요한 구버전 코드 제거하기
+         */
         Long cartId = createOrderRequest.getCartId();
         Long userId = createOrderRequest.getUserId();
         Long totalPoints = cartService.getTotalPoints(cartId);

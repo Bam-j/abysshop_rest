@@ -3,6 +3,7 @@ package com.joo.abysshop.controller.cart;
 import com.joo.abysshop.dto.cart.AddItemToCartRequest;
 import com.joo.abysshop.dto.cart.DeleteItemFromCartRequest;
 import com.joo.abysshop.dto.cart.UpdateCartItemsQuantityRequest;
+import com.joo.abysshop.service.cart.CartItemService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,6 @@ public class CartItemController {
     @PostMapping("/add")
     public ResponseEntity<Void> addItemToCart(AddItemToCartRequest addItemToCartRequest) {
         //TODO: 사용자 검사 -> 관리자/비로그인 상태는 요청 수행 취소
-
-        //서비스에서 카트에 상품이 존재하면 quantity 1증가, 아니라면 cartItem에 레코드 추가
         cartItemService.addOrUpdateCartItem(addItemToCartRequest);
         return ResponseEntity.noContent().build();
     }

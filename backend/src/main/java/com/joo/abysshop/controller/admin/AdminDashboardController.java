@@ -3,6 +3,7 @@ package com.joo.abysshop.controller.admin;
 import com.joo.abysshop.dto.order.OrderListResponse;
 import com.joo.abysshop.dto.point.PointRechargeDetailListResponse;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
+import com.joo.abysshop.service.admin.AdminDashboardService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class AdminDashboardController {
 
     @GetMapping("/orders")
     public ResponseEntity<Object> getOrders(@RequestParam(defaultValue = "1") int page) {
+        //TODO: Pagination Pageable 사용한 방식으로 교체하기
         int totalOrders = adminDashboardService.countOrders();
         int totalPages = (int) Math.ceil((double) totalOrders / PAGE_SIZE);
         List<OrderListResponse> pagedOrderList = adminDashboardService.getPagedOrders(page,
@@ -56,6 +58,4 @@ public class AdminDashboardController {
             pagedPointRechargeDetailList, page, totalPages);
         return ResponseEntity.ok(response);
     }
-
-    //관리자 페이지에서 remove를 위한 전체 상품 조회는 product 컨트롤러로 이동
 }

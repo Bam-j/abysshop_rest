@@ -1,5 +1,8 @@
 package com.joo.abysshop.controller.account;
 
+import com.joo.abysshop.dto.account.AccountSignInRequest;
+import com.joo.abysshop.dto.account.AccountSignUpRequest;
+import com.joo.abysshop.service.account.AuthService;
 import com.joo.abysshop.util.constants.Messages;
 import com.joo.abysshop.util.enums.ResultStatus;
 import java.util.Map;
@@ -18,8 +21,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/sign-in")
-    public ResponseEntity<Object> authenticateUser() {
-        ResultStatus signInResult = authService.authenticateUser();
+    public ResponseEntity<Object> authenticateUser(AccountSignInRequest accountSignInRequest) {
+        ResultStatus signInResult = authService.authenticateUser(accountSignInRequest);
 
         if (signInResult.equals(ResultStatus.SUCCESS)) {
             //success시 서비스 레이어에서 jwt 토큰 발급 하고 여기서는 토큰과 유저 정보만 던져주기
@@ -37,8 +40,8 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Object> createUser() {
-        ResultStatus signUpResult = authService.createUser();
+    public ResponseEntity<Object> createUser(AccountSignUpRequest accountSignUpRequest) {
+        ResultStatus signUpResult = authService.createUser(accountSignUpRequest);
 
         if (signUpResult.equals(ResultStatus.SUCCESS)) {
             //프론트엔드에서 sign-in 페이지로 redirect되도록 처리

@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.home;
 
 import com.joo.abysshop.dto.home.HomeResponse;
-import com.joo.abysshop.service.HomeService;
+import com.joo.abysshop.service.home.HomeService;
 import com.joo.abysshop.dto.cart.CartResponse;
 import com.joo.abysshop.dto.product.ProductListResponse;
 import com.joo.abysshop.dto.user.UserInfoResponse;
@@ -24,6 +24,7 @@ public class HomeController {
     @GetMapping("/home")
     public ResponseEntity<HomeResponse> getHomePageData(@RequestParam(defaultValue = "1") int page,
         @AuthenticationPrincipal UserInfoResponse user) {
+        //TODO: Pageable 적용시킨 페이지네이션 구현방식 변경하기
         int pageSize = 12;
         int totalProducts = homeService.countAllProducts();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
