@@ -1,6 +1,6 @@
 package com.joo.abysshop.util.enums;
 
-public enum RechargeRequestState {
+public enum RechargeState {
     PENDING_PAYMENT,
     PENDING_POINT_DEPOSIT,
     COMPLETED,

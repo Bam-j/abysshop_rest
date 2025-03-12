@@ -1,7 +1,6 @@
 package com.joo.abysshop.service.point;
 
 import com.joo.abysshop.dto.point.CreatePointRechargeRequest;
-import com.joo.abysshop.entity.point.CreatePointRechargeEntity;
 import com.joo.abysshop.mapper.entity.ToPointEntityMapper;
 import com.joo.abysshop.mapper.mybatis.PointMapper;
 import java.util.HashMap;

@@ -3,8 +3,6 @@ package com.joo.abysshop.service.product;
 import com.joo.abysshop.dto.product.ProductDetailResponse;
 import com.joo.abysshop.dto.product.ProductInfoRequest;
 import com.joo.abysshop.dto.product.ProductListResponse;
-import com.joo.abysshop.entity.product.ProductEntity;
-import com.joo.abysshop.entity.product.ProductImageEntity;
 import com.joo.abysshop.mapper.dto.ToProductDTOMapper;
 import com.joo.abysshop.mapper.mybatis.ProductMapper;
 import java.util.ArrayList;

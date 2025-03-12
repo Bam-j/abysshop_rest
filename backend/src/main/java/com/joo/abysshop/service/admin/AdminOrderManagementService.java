@@ -2,7 +2,6 @@ package com.joo.abysshop.service.admin;
 
 import com.joo.abysshop.dto.admin.UpdateOrderStateRequest;
 import com.joo.abysshop.dto.order.OrderListResponse;
-import com.joo.abysshop.entity.order.OrderEntity;
 import com.joo.abysshop.mapper.dto.ToOrderDTOMapper;
 import com.joo.abysshop.mapper.mybatis.AdminMapper;
 import com.joo.abysshop.mapper.mybatis.UserMapper;

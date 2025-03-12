@@ -1,9 +1,5 @@
 package com.joo.abysshop.mapper.mybatis;
 
-import com.joo.abysshop.entity.point.CreatePointRechargeEntity;
-import com.joo.abysshop.entity.point.PointRechargeDetailEntity;
-import com.joo.abysshop.entity.point.PointRechargeEntity;
-import com.joo.abysshop.entity.point.UpdatePointRechargeDetailEntity;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;

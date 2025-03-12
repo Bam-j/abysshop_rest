@@ -1,7 +1,5 @@
 package com.joo.abysshop.mapper.mybatis;
 
-import com.joo.abysshop.entity.order.CreateOrderEntity;
-import com.joo.abysshop.entity.order.OrderEntity;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

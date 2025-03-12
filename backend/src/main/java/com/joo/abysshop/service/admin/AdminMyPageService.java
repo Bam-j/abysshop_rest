@@ -4,7 +4,6 @@ import com.joo.abysshop.dto.admin.CreateProductRequest;
 import com.joo.abysshop.dto.product.ProductListResponse;
 import com.joo.abysshop.entity.admin.AddProductEntity;
 import com.joo.abysshop.entity.admin.AddProductImageEntity;
-import com.joo.abysshop.entity.product.ProductEntity;
 import com.joo.abysshop.mapper.dto.ToProductDTOMapper;
 import com.joo.abysshop.mapper.entity.ToProductEntityMapper;
 import com.joo.abysshop.mapper.mybatis.AdminMapper;

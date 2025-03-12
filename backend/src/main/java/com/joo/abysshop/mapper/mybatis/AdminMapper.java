@@ -2,7 +2,6 @@ package com.joo.abysshop.mapper.mybatis;
 
 import com.joo.abysshop.entity.admin.AddProductEntity;
 import com.joo.abysshop.entity.admin.AddProductImageEntity;
-import com.joo.abysshop.entity.order.OrderEntity;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;

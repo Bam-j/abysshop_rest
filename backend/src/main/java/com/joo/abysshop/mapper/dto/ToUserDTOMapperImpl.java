@@ -1,7 +1,6 @@
 package com.joo.abysshop.mapper.dto;
 
 import com.joo.abysshop.dto.user.UserInfoResponse;
-import com.joo.abysshop.entity.user.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component

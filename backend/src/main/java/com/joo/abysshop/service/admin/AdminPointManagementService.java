@@ -3,8 +3,6 @@ package com.joo.abysshop.service.admin;
 import com.joo.abysshop.dto.admin.UpdatePointRechargeStateRequest;
 import com.joo.abysshop.dto.admin.ProvidePointRequest;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
-import com.joo.abysshop.entity.point.PointRechargeEntity;
-import com.joo.abysshop.entity.user.UserEntity;
 import com.joo.abysshop.mapper.dto.ToPointDTOMapper;
 import com.joo.abysshop.mapper.mybatis.AdminMapper;
 import com.joo.abysshop.mapper.mybatis.PointMapper;

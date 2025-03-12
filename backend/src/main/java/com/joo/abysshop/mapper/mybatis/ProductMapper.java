@@ -1,7 +1,5 @@
 package com.joo.abysshop.mapper.mybatis;
 
-import com.joo.abysshop.entity.product.ProductEntity;
-import com.joo.abysshop.entity.product.ProductImageEntity;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;

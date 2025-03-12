@@ -1,7 +1,6 @@
 package com.joo.abysshop.service.order;
 
 import com.joo.abysshop.dto.order.CreateOrderRequest;
-import com.joo.abysshop.entity.order.CreateOrderEntity;
 import com.joo.abysshop.util.enums.ResultStatus;
 import com.joo.abysshop.mapper.mybatis.OrderMapper;
 import com.joo.abysshop.mapper.mybatis.UserMapper;

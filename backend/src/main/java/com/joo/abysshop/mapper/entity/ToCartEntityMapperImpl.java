@@ -2,7 +2,6 @@ package com.joo.abysshop.mapper.entity;
 
 import com.joo.abysshop.dto.cart.AddItemToCartRequest;
 import com.joo.abysshop.dto.product.ProductInfoRequest;
-import com.joo.abysshop.entity.cart.AddCartItemEntity;
 import org.springframework.stereotype.Component;
 
 @Component
