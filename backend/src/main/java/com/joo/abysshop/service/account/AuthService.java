@@ -1,7 +1,7 @@
 package com.joo.abysshop.service.account;
 
-import com.joo.abysshop.dto.account.AccountSignInRequest;
-import com.joo.abysshop.dto.account.AccountSignUpRequest;
+import com.joo.abysshop.dto.account.SignInRequest;
+import com.joo.abysshop.dto.account.SignUpRequest;
 import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.util.enums.ResultStatus;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    public ResultStatus authenticateUser(AccountSignInRequest accountSignInRequest) {
+    public ResultStatus authenticateUser(SignInRequest signInRequest) {
         /*
          *  1. users_table에 username이 존재하는지 확인 > 실패: INVALID_USERNAME
          *  2. 일치하는 username과 입력받은 password가 일치하는지 확인 > 실패: INVALIDPASSWORD
@@ -21,7 +21,7 @@ public class AuthService {
          */
     }
 
-    public ResultStatus createUser(AccountSignUpRequest accountSignUpRequest) {
+    public ResultStatus createUser(SignUpRequest signUpRequest) {
         /*
          *  1. users_table에 username, nickname이 존재하는지 확인 > 실패: DUPLICATE_USERNAME, DUPLICATE_NICKNAME
          *  2. 1번 통과시 users_table에 새 회원 create
