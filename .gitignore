@@ -55,3 +55,6 @@ backend/mvnw.cmd
 .vscode/
 *.sublime-workspace
 *.swp
+
+# 개인용 메모 txt, md 파일 모음
+memo/
