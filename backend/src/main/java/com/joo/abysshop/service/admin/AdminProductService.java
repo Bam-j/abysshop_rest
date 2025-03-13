@@ -4,7 +4,6 @@ import com.joo.abysshop.dto.admin.CreateProductRequest;
 import com.joo.abysshop.dto.admin.DeleteProductRequest;
 import com.joo.abysshop.repository.product.ProductImageRepository;
 import com.joo.abysshop.repository.product.ProductRepository;
-import com.joo.abysshop.util.enums.ResultStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

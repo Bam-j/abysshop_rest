@@ -1,5 +1,6 @@
 package com.joo.abysshop.util.security;
 
+import com.joo.abysshop.entity.user.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -21,9 +22,14 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(User user, Long cartId) {
         return Jwts.builder()
-            .setSubject(username)
+            .setSubject(user.getUsername())
+            .claim("userId", user.getUserId())
+            .claim("cartId", cartId)
+            .claim("nickname", user.getNickname())
+            .claim("userType", user.getUserType().name())
+            .claim("pointBalance", user.getPointBalance())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + expiration))
             .signWith(key, SignatureAlgorithm.HS256)

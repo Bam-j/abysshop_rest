@@ -1,10 +1,8 @@
 package com.joo.abysshop.controller.account;
 
-import com.joo.abysshop.util.constants.Messages;
 import com.joo.abysshop.dto.account.AccountWithdrawRequest;
 import com.joo.abysshop.dto.account.UpdateNicknameRequest;
 import com.joo.abysshop.dto.account.UpdatePasswordRequest;
-import com.joo.abysshop.util.enums.ResultStatus;
 import com.joo.abysshop.service.account.AccountService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

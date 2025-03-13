@@ -3,8 +3,6 @@ package com.joo.abysshop.controller.admin;
 import com.joo.abysshop.dto.admin.CreateProductRequest;
 import com.joo.abysshop.dto.admin.DeleteProductRequest;
 import com.joo.abysshop.service.admin.AdminProductService;
-import com.joo.abysshop.util.constants.Messages;
-import com.joo.abysshop.util.enums.ResultStatus;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

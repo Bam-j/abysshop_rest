@@ -4,7 +4,6 @@ import com.joo.abysshop.dto.account.AccountWithdrawRequest;
 import com.joo.abysshop.dto.account.UpdateNicknameRequest;
 import com.joo.abysshop.dto.account.UpdatePasswordRequest;
 import com.joo.abysshop.repository.user.UserRepository;
-import com.joo.abysshop.util.enums.ResultStatus;
 import com.joo.abysshop.util.security.PasswordSecurity;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
