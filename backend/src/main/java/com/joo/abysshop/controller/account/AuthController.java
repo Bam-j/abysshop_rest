@@ -25,6 +25,6 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<Object> createUser(SignUpRequest signUpRequest) {
-        String signUpResult = authService.createUser(signUpRequest);
+        authService.createUser(signUpRequest);
     }
 }
