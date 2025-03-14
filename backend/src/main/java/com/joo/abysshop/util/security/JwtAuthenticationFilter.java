@@ -1,5 +1,6 @@
 package com.joo.abysshop.util.security;
 
+import com.joo.abysshop.service.security.JwtBlacklistService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
@@ -23,6 +24,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final JwtBlacklistService jwtBlacklistService;
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -39,6 +41,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = authorizationHeader.substring(7);
+
+        if (jwtBlacklistService.isTokenBlacklisted(token)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "로그아웃된 토큰입니다.");
+            return;
+        }
+
         String username = null;
 
         try {

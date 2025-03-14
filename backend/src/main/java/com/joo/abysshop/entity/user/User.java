@@ -1,6 +1,5 @@
 package com.joo.abysshop.entity.user;
 
-import com.joo.abysshop.dto.account.SignUpRequest;
 import com.joo.abysshop.entity.cart.Cart;
 import com.joo.abysshop.entity.order.Order;
 import com.joo.abysshop.entity.point.PointRecharge;
@@ -81,12 +80,11 @@ public class User {
         this.pointBalance = pointBalance;
     }
 
-    public static User of(SignUpRequest signUpRequest, String encryptedPassword) {
-        return User.builder()
-            .username(signUpRequest.username())
-            .nickname(signUpRequest.nickname())
-            .password(encryptedPassword)
-            .pointBalance(0L)
-            .build();
+    public void updateNickname(String newNickname) {
+        this.nickname = newNickname;
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
     }
 }

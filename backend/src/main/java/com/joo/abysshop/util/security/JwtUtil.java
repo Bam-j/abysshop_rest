@@ -4,6 +4,7 @@ import com.joo.abysshop.entity.user.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import java.security.Key;
@@ -14,6 +15,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private final Key key;
+    @Getter
     private final long expiration;
 
     public JwtUtil(Dotenv dotenv) {
@@ -55,5 +57,15 @@ public class JwtUtil {
             log.error("JWT validation failed", e);
         }
         return false;
+    }
+
+    public long extractExpiration(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getExpiration()
+            .getTime();
     }
 }

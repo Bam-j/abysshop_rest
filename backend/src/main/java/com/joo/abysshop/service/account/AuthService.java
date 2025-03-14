@@ -3,6 +3,7 @@ package com.joo.abysshop.service.account;
 import com.joo.abysshop.dto.account.SignInRequest;
 import com.joo.abysshop.dto.account.SignUpRequest;
 import com.joo.abysshop.entity.user.User;
+import com.joo.abysshop.factory.UserFactory;
 import com.joo.abysshop.repository.cart.CartRepository;
 import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.util.exception.DuplicateNicknameException;
@@ -44,12 +45,12 @@ public class AuthService {
 
         userRepository.findByNickname(signUpRequest.nickname())
             .ifPresent(user -> {
-                throw new DuplicateNicknameException("이미 존재하는 닉네임입니다.");
+                throw new DuplicateNicknameException("이미 사용중인 닉네임입니다.");
             });
 
         String encryptedPassword = PasswordSecurity.encryptPassword(signUpRequest.password());
 
-        User newUser = User.of(signUpRequest, encryptedPassword);
+        User newUser = UserFactory.of(signUpRequest, encryptedPassword);
         userRepository.save(newUser);
     }
 }

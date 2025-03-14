@@ -1,109 +1,57 @@
 package com.joo.abysshop.service.account;
 
-import com.joo.abysshop.dto.account.AccountWithdrawRequest;
+import com.joo.abysshop.dto.account.WithdrawAccountRequest;
 import com.joo.abysshop.dto.account.UpdateNicknameRequest;
 import com.joo.abysshop.dto.account.UpdatePasswordRequest;
+import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.repository.user.UserRepository;
+import com.joo.abysshop.service.security.JwtBlacklistService;
+import com.joo.abysshop.util.exception.InvalidPasswordException;
+import com.joo.abysshop.util.security.JwtUtil;
 import com.joo.abysshop.util.security.PasswordSecurity;
-import java.util.Optional;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+    private final JwtBlacklistService jwtBlacklistService;
 
-    public ResultStatus changeNickname(UpdateNicknameRequest updateNicknameRequest) {
-        /*
-         *  1. users_table에서 현재 저장된 nickname과 전달된 newNickname이 일치하는지 확인 > 실패: SAME_NICKNAME
-         *  2. 이상 없는 경우 userId user update nickname
-         */
-        Long userId = updateNicknameRequest.getUserId();
-        Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
+    @Transactional
+    public void updateNickname(UpdateNicknameRequest updateNicknameRequest) {
+        User user = userRepository.findById(updateNicknameRequest.userId())
+            .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다."));
 
-        if (optionalUserEntity.isEmpty()) {
-            //id 조회 결과 users_table에 유저가 없음 = 잘못된 요청
-            return ResultStatus.BAD_REQUEST;
-        }
-
-        UserEntity userEntity = optionalUserEntity.get();
-        String oldNickname = userEntity.getNickname();
-        String newNickname = updateNicknameRequest.getNewNickname();
-
-        if (oldNickname.equals(newNickname)) {
-            //바꾸려는 nickname과 현재 사용 중인 nickname이 동일함
-            return ResultStatus.SAME_NICKNAME;
-        } else if (newNickname == null || newNickname.trim().isEmpty()) {
-            //form에 공백, 빈 입력이 들어옴
-            return ResultStatus.EMPTY_INPUT_FORM;
-        }
-
-        Optional<AccountEntity> optionalAccountEntity = accountMapper.findByNickname(newNickname);
-
-        if (optionalAccountEntity.isPresent()) {
-            //바꾸려는 nickname을 가진 유저가 users_table에 존재함
-            return ResultStatus.DUPLICATE_NICKNAME;
-        }
-
-        accountMapper.updateNickname(userId, newNickname);
-        return ResultStatus.SUCCESS;
+        user.updateNickname(updateNicknameRequest.newNickname());
     }
 
-    public ResultStatus changePassword(UpdatePasswordRequest updatePasswordRequest) {
-        /*
-         *  1. userId 통해 현재 비밀번호와 newPassword가 일치하는지 확인  > 실패: SAME_PASSWORD
-         *  2. 이상 없는 경우 update password
-         *  !update 비밀번호도 암호화하여 저장
-         */
-        Long userId = updatePasswordRequest.getUserId();
-        Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
+    @Transactional
+    public void updatePassword(UpdatePasswordRequest updatePasswordRequest) {
+        User user = userRepository.findById(updatePasswordRequest.userId())
+            .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다."));
 
-        if (optionalUserEntity.isEmpty()) {
-            //id 조회 결과 users_table에 유저가 없음 = 잘못된 요청
-            return ResultStatus.BAD_REQUEST;
-        }
-
-        UserEntity userEntity = optionalUserEntity.get();
-        String oldPassword = userEntity.getPassword();
-        String newPassword = updatePasswordRequest.getNewPassword();
-
-        if (oldPassword.equals(newPassword)) {
-            //바꾸려는 password과 현재 사용 중인 password이 동일함
-            return ResultStatus.SAME_PASSWORD;
-        } else if (newPassword == null || newPassword.trim().isEmpty()) {
-            //form에 공백, 빈 입력이 들어옴
-            return ResultStatus.EMPTY_INPUT_FORM;
-        }
-
-        accountMapper.updatePassword(userId, newPassword);
-        return ResultStatus.SUCCESS;
+        String encryptedNewPassword = PasswordSecurity.encryptPassword(
+            updatePasswordRequest.newPassword());
+        user.updatePassword(encryptedNewPassword);
     }
 
-    public ResultStatus withdraw(AccountWithdrawRequest accountWithdrawRequest) {
-        /*
-         *  1. userId로 저장된 password 가져와서 입력받은 password와 비교 > 불일치: INVALID_PASSWORD
-         *  2. 일치할 시 users_table에서 delete
-         *  3. JWT 인증 해제
-         */
-        Long userId = accountWithdrawRequest.getUserId();
-        String inputPassword = accountWithdrawRequest.getPassword();
-        Optional<UserEntity> optionalUserEntity = userMapper.findByUserId(userId);
+    @Transactional
+    public void withdraw(WithdrawAccountRequest withdrawAccountRequest, String token) {
+        User user = userRepository.findById(withdrawAccountRequest.userId())
+            .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다."));
 
-        if (optionalUserEntity.isEmpty()) {
-            //조회된 유저 없음 = 잘못된 요청
-            return ResultStatus.BAD_REQUEST;
+        if (!PasswordSecurity.matches(user.getPassword(), withdrawAccountRequest.password())) {
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
-        String encodedPassword = optionalUserEntity.get().getPassword();
+        userRepository.delete(user);
 
-        if (!PasswordSecurity.matches(inputPassword, encodedPassword)) {
-            //유저의 password와 입력된 password가 불일치함
-            return ResultStatus.INVALID_PASSWORD;
-        }
-
-        accountMapper.deleteUser(userId);
-        return ResultStatus.SUCCESS;
+        long remainingExpiration = jwtUtil.extractExpiration(token) - System.currentTimeMillis();
+        jwtBlacklistService.addToBlacklist(token, remainingExpiration);
     }
 }
