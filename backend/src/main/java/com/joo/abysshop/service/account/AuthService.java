@@ -49,12 +49,7 @@ public class AuthService {
 
         String encryptedPassword = PasswordSecurity.encryptPassword(signUpRequest.password());
 
-        User user = User.builder()
-            .username(signUpRequest.username())
-            .nickname(signUpRequest.nickname())
-            .password(encryptedPassword)
-            .pointBalance(0L)
-            .build();
-        userRepository.save(user);
+        User newUser = User.of(signUpRequest, encryptedPassword);
+        userRepository.save(newUser);
     }
 }
