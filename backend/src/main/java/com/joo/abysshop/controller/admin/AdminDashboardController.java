@@ -26,7 +26,8 @@ public class AdminDashboardController {
 
     @GetMapping("/orders")
     public ResponseEntity<OrdersResponse> getOrders(Pageable pageable) {
-        Page<AdminOrderListResponse> pagedOrderList = adminDashboardService.getPagedOrderList(pageable);
+        Page<AdminOrderListResponse> pagedOrderList = adminDashboardService.getPagedOrderList(
+            pageable);
         OrdersResponse response = OrdersResponse.of(pagedOrderList);
         return ResponseEntity.ok(response);
     }

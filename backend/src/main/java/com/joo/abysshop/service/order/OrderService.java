@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    //하나의 서비스는 CQRS 패턴 적용해서 분리하기
 
     public ResultStatus createOrder(CreateOrderRequest createOrderRequest) {
         /*
