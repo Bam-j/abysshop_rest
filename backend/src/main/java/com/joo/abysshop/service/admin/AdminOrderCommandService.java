@@ -1,19 +1,17 @@
 package com.joo.abysshop.service.admin;
 
 import com.joo.abysshop.dto.admin.UpdateOrderStateRequest;
-import com.joo.abysshop.repository.order.OrderRepository;
+import com.joo.abysshop.service.order.OrderCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AdminOrderService {
+public class AdminOrderCommandService {
 
-    private final OrderRepository orderRepository;
+    private final OrderCommandService orderCommandService;
 
     public void updateOrderState(UpdateOrderStateRequest updateOrderStateRequest) {
-        /*
-         *  1. orderId로 탐색해서 update orderState
-         */
+        orderCommandService.updateOrderState(updateOrderStateRequest);
     }
 }

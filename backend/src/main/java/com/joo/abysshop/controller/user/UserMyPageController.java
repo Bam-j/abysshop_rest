@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.user;
 
 import com.joo.abysshop.dto.order.AdminOrderListResponse;
-import com.joo.abysshop.dto.point.PointRechargeListResponse;
+import com.joo.abysshop.dto.point.AdminPointRechargeListResponse;
 import com.joo.abysshop.service.user.UserMyPageService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class UserMyPageController {
         int pageSize = 10;
         int totalPointRecharges = userMyPageService.countPointRechargesByUser(userId);
         int totalPages = (int) Math.ceil((double) totalPointRecharges / pageSize);
-        List<PointRechargeListResponse> pagedUserPointRechargeList = userMyPageService.getPagedUserPointRecharges(
+        List<AdminPointRechargeListResponse> pagedUserPointRechargeList = userMyPageService.getPagedUserPointRecharges(
             userId, page, pageSize);
 
         UserPointRechargeResponse response = new UserPointRechargeResponse(

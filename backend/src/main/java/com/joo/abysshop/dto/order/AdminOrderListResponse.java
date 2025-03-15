@@ -29,6 +29,13 @@ public record AdminOrderListResponse(
         LocalDateTime orderedAt,
         Long totalPrice,
         String orderState) {
-        return new AdminOrderListResponse(orderId, userId, nickname, orderedAt, totalPrice, orderState);
+        return new AdminOrderListResponse(
+            orderId,
+            userId,
+            nickname,
+            orderedAt,
+            totalPrice,
+            orderState
+        );
     }
 }

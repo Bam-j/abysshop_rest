@@ -61,4 +61,8 @@ public class Order {
         this.totalPrice = totalPrice;
         this.orderState = orderState;
     }
+
+    public void updateOrderState(String newState) {
+        this.orderState = OrderState.valueOf(newState);
+    }
 }

@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.admin;
 
 import com.joo.abysshop.dto.admin.UpdatePointRechargeStateRequest;
-import com.joo.abysshop.service.admin.AdminPointRechargeService;
+import com.joo.abysshop.service.admin.AdminPointRechargeCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminPointRechargeController {
 
-    private final AdminPointRechargeService adminPointRechargeService;
+    private final AdminPointRechargeCommandService adminPointRechargeCommandService;
 
     @PatchMapping("/state")
     public ResponseEntity<Void> updatePointRechargeState(
         UpdatePointRechargeStateRequest updatePointRechargeStateRequest) {
-        adminPointRechargeService.updatePointRechargeState(updatePointRechargeStateRequest);
+        adminPointRechargeCommandService.updatePointRechargeState(updatePointRechargeStateRequest);
         return ResponseEntity.noContent().build();
     }
 }

@@ -9,6 +9,7 @@ public record OrdersResponse(
     int totalPages,
     long totalElements
 ) {
+
     public static OrdersResponse of(Page<AdminOrderListResponse> orderPage) {
         return new OrdersResponse(
             orderPage.getContent(),

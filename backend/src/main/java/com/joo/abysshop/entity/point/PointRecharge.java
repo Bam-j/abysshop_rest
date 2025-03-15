@@ -53,4 +53,8 @@ public class PointRecharge {
         this.requestedAt = requestedAt;
         this.rechargeState = rechargeState;
     }
+
+    public void updatePointRechargeState(String newState) {
+        this.rechargeState = RechargeState.valueOf(newState);
+    }
 }

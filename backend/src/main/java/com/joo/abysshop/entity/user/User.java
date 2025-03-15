@@ -87,4 +87,8 @@ public class User {
     public void updatePassword(String newPassword) {
         this.password = newPassword;
     }
+
+    public void updatePointBalance(Long points) {
+        this.pointBalance += points;
+    }
 }

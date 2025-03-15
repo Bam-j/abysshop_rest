@@ -2,17 +2,19 @@ package com.joo.abysshop.controller.admin;
 
 import com.joo.abysshop.dto.order.AdminOrderListResponse;
 import com.joo.abysshop.dto.order.OrdersResponse;
-import com.joo.abysshop.dto.point.PointRechargeDetailListResponse;
-import com.joo.abysshop.dto.point.PointRechargeListResponse;
-import com.joo.abysshop.service.admin.AdminDashboardService;
-import java.util.List;
+import com.joo.abysshop.dto.point.AdminPointRechargeDetailListResponse;
+import com.joo.abysshop.dto.point.AdminPointRechargeListResponse;
+import com.joo.abysshop.dto.point.PointRechargeDetailsResponse;
+import com.joo.abysshop.dto.point.PointRechargesResponse;
+import com.joo.abysshop.dto.product.AdminProductListResponse;
+import com.joo.abysshop.dto.product.AdminProductsResponse;
+import com.joo.abysshop.service.admin.AdminDashboardQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,41 +22,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminDashboardController {
 
-    private static final int PAGE_SIZE = 10;
-
-    private final AdminDashboardService adminDashboardService;
+    private final AdminDashboardQueryService adminDashboardQueryService;
 
     @GetMapping("/orders")
     public ResponseEntity<OrdersResponse> getOrders(Pageable pageable) {
-        Page<AdminOrderListResponse> pagedOrderList = adminDashboardService.getPagedOrderList(
+        Page<AdminOrderListResponse> pagedOrderList = adminDashboardQueryService.getPagedOrderList(
             pageable);
         OrdersResponse response = OrdersResponse.of(pagedOrderList);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/point-recharges")
-    public ResponseEntity<Object> getPointRecharges(
-        @RequestParam(defaultValue = "1") int page) {
-        int totalPointRecharges = adminDashboardService.countPointRecharges();
-        int totalPages = (int) Math.ceil((double) totalPointRecharges / PAGE_SIZE);
-        List<PointRechargeListResponse> pagedPointRechargeList = adminDashboardService.getPagedPointRecharges(
-            page, PAGE_SIZE);
-
-        PointRechargesReponse response = new PointRechargesResponse(pagedPointRechargeList, page,
-            totalPages);
+    public ResponseEntity<Object> getPointRecharges(Pageable pageable) {
+        Page<AdminPointRechargeListResponse> pagedPointRechargeList = adminDashboardQueryService.getPagedPointRechargeList(
+            pageable);
+        PointRechargesResponse response = PointRechargesResponse.of(pagedPointRechargeList);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/point-recharge/details")
-    public ResponseEntity<Object> getPointRechargeDetails(
-        @RequestParam(defaultValue = "1") int page) {
-        int totalPointRechargeDetails = adminDashboardService.countPointRechargeDetails();
-        int totalPages = (int) Math.ceil((double) totalPointRechargeDetails / PAGE_SIZE);
-        List<PointRechargeDetailListResponse> pagedPointRechargeDetailList = adminDashboardService.getPagedPointRechargeDetails(
-            page, PAGE_SIZE);
+    public ResponseEntity<Object> getPointRechargeDetails(Pageable pageable) {
+        Page<AdminPointRechargeDetailListResponse> pagedPointRechargeDetailList = adminDashboardQueryService.getPagedPointRechargeDetailList(
+            pageable);
+        PointRechargeDetailsResponse response = PointRechargeDetailsResponse.of(
+            pagedPointRechargeDetailList);
+        return ResponseEntity.ok(response);
+    }
 
-        PointRechargeDetailResponse response = new PointRechargeDetailResponse(
-            pagedPointRechargeDetailList, page, totalPages);
+    @GetMapping("/products")
+    public ResponseEntity<Object> getProducts(Pageable pageable) {
+        Page<AdminProductListResponse> pagedProductList = adminDashboardQueryService.getPagedProductList(
+            pageable);
+        AdminProductsResponse response = AdminProductsResponse.of(pagedProductList);
         return ResponseEntity.ok(response);
     }
 }

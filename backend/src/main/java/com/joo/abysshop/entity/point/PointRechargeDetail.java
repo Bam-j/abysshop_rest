@@ -1,6 +1,8 @@
 package com.joo.abysshop.entity.point;
 
+import com.joo.abysshop.util.security.CryptoConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,9 +32,11 @@ public class PointRechargeDetail {
     @JoinColumn(name = "point_recharge_id", referencedColumnName = "point_recharge_id", nullable = false)
     private PointRecharge pointRecharge;
 
+    @Convert(converter = CryptoConverter.class)
     @Column(name = "bank")
     private String bank;
 
+    @Convert(converter = CryptoConverter.class)
     @Column(name = "account_number")
     private String accountNumber;
 
@@ -44,9 +48,25 @@ public class PointRechargeDetail {
     private LocalDateTime depositConfirmedAt;
 
     @Builder
-    public PointRechargeDetail(PointRecharge pointRecharge, String bank, String accountNumber,
-        Long depositAmount, LocalDateTime depositConfirmedAt) {
+    public PointRechargeDetail(
+        PointRecharge pointRecharge,
+        String bank,
+        String accountNumber,
+        Long depositAmount,
+        LocalDateTime depositConfirmedAt) {
         this.pointRecharge = pointRecharge;
+        this.bank = bank;
+        this.accountNumber = accountNumber;
+        this.depositAmount = depositAmount;
+        this.depositConfirmedAt = depositConfirmedAt;
+    }
+
+    public void updatePointRechargeDetail(
+        String bank,
+        String accountNumber,
+        Long depositAmount,
+        LocalDateTime depositConfirmedAt
+    ) {
         this.bank = bank;
         this.accountNumber = accountNumber;
         this.depositAmount = depositAmount;

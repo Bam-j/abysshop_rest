@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.admin;
 
 import com.joo.abysshop.dto.admin.ProvidePointRequest;
-import com.joo.abysshop.service.admin.AdminPointService;
+import com.joo.abysshop.service.admin.AdminPointCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminPointController {
 
-    private final AdminPointService adminPointService;
+    private final AdminPointCommandService adminPointCommandService;
 
     @PatchMapping("/provide")
     public ResponseEntity<Void> providePoints(ProvidePointRequest providePointRequest) {
-        adminPointService.providePoints(providePointRequest);
+        adminPointCommandService.providePoints(providePointRequest);
         return ResponseEntity.noContent().build();
     }
 }

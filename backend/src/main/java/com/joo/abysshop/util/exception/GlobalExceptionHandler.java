@@ -28,5 +28,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDuplicateNicknameException(DuplicateNicknameException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
+
+    @ExceptionHandler(ProductAlreadyExistsException.class)
+    public ResponseEntity<String> handleProductAlreadyExistsException(
+        ProductAlreadyExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
 }
 

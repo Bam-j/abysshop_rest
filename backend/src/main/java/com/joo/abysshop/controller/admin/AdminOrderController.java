@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.admin;
 
 import com.joo.abysshop.dto.admin.UpdateOrderStateRequest;
-import com.joo.abysshop.service.admin.AdminOrderService;
+import com.joo.abysshop.service.admin.AdminOrderCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminOrderController {
 
-    private final AdminOrderService adminOrderService;
+    private final AdminOrderCommandService adminOrderCommandService;
 
     @PatchMapping("/state")
     public ResponseEntity<Void> updateOrderState(UpdateOrderStateRequest updateOrderStateRequest) {
-        adminOrderService.updateOrderState(updateOrderStateRequest);
+        adminOrderCommandService.updateOrderState(updateOrderStateRequest);
         return ResponseEntity.noContent().build();
     }
 }

@@ -2,7 +2,7 @@ package com.joo.abysshop.controller.admin;
 
 import com.joo.abysshop.dto.admin.CreateProductRequest;
 import com.joo.abysshop.dto.admin.DeleteProductRequest;
-import com.joo.abysshop.service.admin.AdminProductService;
+import com.joo.abysshop.service.admin.AdminProductCommandService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AdminProductController {
 
-    private final AdminProductService adminProductService;
+    private final AdminProductCommandService adminProductCommandService;
 
     @PostMapping("/create")
     public ResponseEntity<Object> createProduct(CreateProductRequest createProductRequest) {
-        ResultStatus createProductResult = adminProductService.createProduct(createProductRequest);
+        ResultStatus createProductResult = adminProductCommandService.createProduct(createProductRequest);
 
         if (createProductResult.equals(ResultStatus.SUCCESS)) {
             return ResponseEntity.noContent().build();
@@ -37,7 +37,7 @@ public class AdminProductController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteProduct(DeleteProductRequest deleteProductRequest) {
-        adminProductService.deleteProduct(deleteProductRequest);
+        adminProductCommandService.deleteProduct(deleteProductRequest);
         return ResponseEntity.noContent().build();
     }
 }
