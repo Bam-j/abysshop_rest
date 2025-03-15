@@ -1,26 +1,29 @@
 package com.joo.abysshop.dto.point;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public record PointRechargeDetailListResponse(
     Long rechargeDetailId,
-    Long rechargeId,
-    String nickname,
+    Long pointRechargeId,
     String bank,
     String accountNumber,
     Long depositAmount,
-    Date depositConfirmedTime
+    LocalDateTime depositConfirmedAt
 ) {
 
     public static PointRechargeDetailListResponse of(
         Long rechargeDetailId,
-        Long rechargeId,
-        String nickname,
+        Long pointRechargeId,
         String bank,
         String accountNumber,
         Long depositAmount,
-        Date depositConfirmedTime) {
-        return new PointRechargeDetailListResponse(rechargeDetailId, rechargeId, nickname,
-            bank, accountNumber, depositAmount, depositConfirmedTime);
+        LocalDateTime depositConfirmedAt) {
+        return new PointRechargeDetailListResponse(
+            rechargeDetailId,
+            pointRechargeId,
+            bank,
+            accountNumber,
+            depositAmount,
+            depositConfirmedAt);
     }
 }

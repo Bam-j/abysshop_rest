@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.order.OrderListResponse;
+import com.joo.abysshop.dto.order.AdminOrderListResponse;
 import com.joo.abysshop.repository.order.OrderRepository;
 import com.joo.abysshop.repository.point.PointRechargeDetailRepository;
 import com.joo.abysshop.repository.point.PointRechargeRepository;
@@ -17,7 +17,7 @@ public class AdminDashboardService {
     private final PointRechargeRepository pointRechargeRepository;
     private final PointRechargeDetailRepository pointRechargeDetailRepository;
 
-    public Page<OrderListResponse> getPagedOrderList(Pageable pageable) {
-        return orderRepository.findAll(pageable).map(OrderListResponse::new);
+    public Page<AdminOrderListResponse> getPagedOrderList(Pageable pageable) {
+        return orderRepository.findAll(pageable).map(AdminOrderListResponse::new);
     }
 }

@@ -1,18 +1,21 @@
 package com.joo.abysshop.dto.point;
 
 public record UpdatePointRechargeDetailRequest(
-    Long rechargeDetailId,
+    Long pointRechargeDetailId,
     String bank,
     String accountNumber,
     Long depositAmount) {
 
 
     public static UpdatePointRechargeDetailRequest of(
-        Long rechargeDetailId,
+        Long pointRechargeDetailId,
         String bank,
         String accountNumber,
         Long depositAmount) {
-        return new UpdatePointRechargeDetailRequest(rechargeDetailId,
-            bank, accountNumber, depositAmount);
+        return new UpdatePointRechargeDetailRequest(
+            pointRechargeDetailId,
+            bank,
+            accountNumber,
+            depositAmount);
     }
 }

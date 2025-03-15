@@ -5,7 +5,7 @@ public record ProductDetailResponse(
     String productName,
     Long price,
     String description,
-    String originalFileName
+    String fileName
 ) {
 
     public static ProductDetailResponse of(
@@ -13,8 +13,8 @@ public record ProductDetailResponse(
         String productName,
         Long price,
         String description,
-        String originalFileName) {
+        String fileName) {
         return new ProductDetailResponse(
-            productId, productName, price, description, originalFileName);
+            productId, productName, price, description, fileName);
     }
 }

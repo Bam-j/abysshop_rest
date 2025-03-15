@@ -4,14 +4,14 @@ public record ProductListResponse(
     Long productId,
     String productName,
     Long price,
-    String originalFileName
+    String fileName
 ) {
 
     public static ProductListResponse of(
         Long productId,
         String productName,
         Long price,
-        String originalFileName) {
-        return new ProductListResponse(productId, productName, price, originalFileName);
+        String fileName) {
+        return new ProductListResponse(productId, productName, price, fileName);
     }
 }

@@ -6,7 +6,7 @@ public record UserInfoResponse(
     String username,
     String nickname,
     String userType,
-    Long points
+    Long pointBalance
 ) {
 
     public static UserInfoResponse of(
@@ -15,7 +15,7 @@ public record UserInfoResponse(
         String username,
         String nickname,
         String userType,
-        Long points) {
-        return new UserInfoResponse(userId, cartId, username, nickname, userType, points);
+        Long pointBalance) {
+        return new UserInfoResponse(userId, cartId, username, nickname, userType, pointBalance);
     }
 }

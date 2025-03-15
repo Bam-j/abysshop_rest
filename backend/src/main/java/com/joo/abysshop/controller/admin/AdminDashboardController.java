@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.admin;
 
-import com.joo.abysshop.dto.order.OrderListResponse;
+import com.joo.abysshop.dto.order.AdminOrderListResponse;
 import com.joo.abysshop.dto.order.OrdersResponse;
 import com.joo.abysshop.dto.point.PointRechargeDetailListResponse;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
@@ -26,7 +26,7 @@ public class AdminDashboardController {
 
     @GetMapping("/orders")
     public ResponseEntity<OrdersResponse> getOrders(Pageable pageable) {
-        Page<OrderListResponse> pagedOrderList = adminDashboardService.getPagedOrderList(pageable);
+        Page<AdminOrderListResponse> pagedOrderList = adminDashboardService.getPagedOrderList(pageable);
         OrdersResponse response = OrdersResponse.of(pagedOrderList);
         return ResponseEntity.ok(response);
     }

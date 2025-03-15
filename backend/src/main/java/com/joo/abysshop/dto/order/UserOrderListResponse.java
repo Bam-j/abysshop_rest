@@ -3,32 +3,34 @@ package com.joo.abysshop.dto.order;
 import com.joo.abysshop.entity.order.Order;
 import java.time.LocalDateTime;
 
-public record OrderListResponse(
+public record UserOrderListResponse(
     Long orderId,
     Long userId,
-    String nickname,
     LocalDateTime orderedAt,
     Long totalPrice,
     String orderState) {
 
-    public OrderListResponse(Order order) {
+    public UserOrderListResponse(Order order) {
         this(
             order.getOrderId(),
             order.getUser().getUserId(),
-            order.getUser().getNickname(),
             order.getOrderedAt(),
             order.getTotalPrice(),
             order.getOrderState().name()
         );
     }
 
-    public static OrderListResponse of(
+    public static UserOrderListResponse of(
         Long orderId,
         Long userId,
-        String nickname,
         LocalDateTime orderedAt,
         Long totalPrice,
         String orderState) {
-        return new OrderListResponse(orderId, userId, nickname, orderedAt, totalPrice, orderState);
+        return new UserOrderListResponse(
+            orderId,
+            userId,
+            orderedAt,
+            totalPrice,
+            orderState);
     }
 }

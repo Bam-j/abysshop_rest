@@ -1,24 +1,26 @@
 package com.joo.abysshop.dto.point;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public record PointRechargeListResponse(
-    Long rechargeId,
+    Long pointRechargeId,
     Long userId,
-    String nickname,
-    Long points,
-    Date requestTime,
-    String rechargeRequestState
+    Long requestedPoints,
+    LocalDateTime requestedAt,
+    String rechargeState
 ) {
 
     public static PointRechargeListResponse of(
-        Long rechargeId,
+        Long pointRechargeId,
         Long userId,
-        String nickname,
-        Long points,
-        Date requestTime,
-        String rechargeRequestState) {
-        return new PointRechargeListResponse(rechargeId, userId, nickname,
-            points, requestTime, rechargeRequestState);
+        Long requestedPoints,
+        LocalDateTime requestedAt,
+        String rechargeState) {
+        return new PointRechargeListResponse(
+            pointRechargeId,
+            userId,
+            requestedPoints,
+            requestedAt,
+            rechargeState);
     }
 }

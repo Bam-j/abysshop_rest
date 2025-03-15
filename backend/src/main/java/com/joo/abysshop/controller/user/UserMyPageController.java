@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.user;
 
-import com.joo.abysshop.dto.order.OrderListResponse;
+import com.joo.abysshop.dto.order.AdminOrderListResponse;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
 import com.joo.abysshop.service.user.UserMyPageService;
 import java.util.List;
@@ -25,7 +25,7 @@ public class UserMyPageController {
         int pageSize = 10;
         int totalOrders = userMyPageService.countOrdersByUser(userId);
         int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
-        List<OrderListResponse> pagedUserOrderList = userMyPageService.getPagedUserOrders(
+        List<AdminOrderListResponse> pagedUserOrderList = userMyPageService.getPagedUserOrders(
             userId, page, pageSize);
 
         UserOrdersResponse response = new UserOrdersResponse(pagedUserOrderList, page, totalPages);
