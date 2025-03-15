@@ -1,11 +1,14 @@
 package com.joo.abysshop.controller.admin;
 
 import com.joo.abysshop.dto.order.OrderListResponse;
+import com.joo.abysshop.dto.order.OrdersResponse;
 import com.joo.abysshop.dto.point.PointRechargeDetailListResponse;
 import com.joo.abysshop.dto.point.PointRechargeListResponse;
 import com.joo.abysshop.service.admin.AdminDashboardService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +25,9 @@ public class AdminDashboardController {
     private final AdminDashboardService adminDashboardService;
 
     @GetMapping("/orders")
-    public ResponseEntity<Object> getOrders(@RequestParam(defaultValue = "1") int page) {
-        //TODO: Pagination Pageable 사용한 방식으로 교체하기
-        int totalOrders = adminDashboardService.countOrders();
-        int totalPages = (int) Math.ceil((double) totalOrders / PAGE_SIZE);
-        List<OrderListResponse> pagedOrderList = adminDashboardService.getPagedOrders(page,
-            PAGE_SIZE);
-
-        OrdersResponse response = new OrdersResponse(pagedOrderList, page, totalPages);
+    public ResponseEntity<OrdersResponse> getOrders(Pageable pageable) {
+        Page<OrderListResponse> pagedOrderList = adminDashboardService.getPagedOrderList(pageable);
+        OrdersResponse response = OrdersResponse.of(pagedOrderList);
         return ResponseEntity.ok(response);
     }
 
