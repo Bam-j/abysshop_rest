@@ -35,13 +35,6 @@ public class CartItem {
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Product product;
 
-    @Column(name = "product_name")
-    private String productName;
-
-    @Check(constraints = "price >= 0")
-    @Column(name = "price")
-    private Long price;
-
     @Check(constraints = "quantity >= 0")
     @Column(name = "quantity", nullable = false)
     private Long quantity = 1L;
@@ -54,10 +47,8 @@ public class CartItem {
     }
 
     @Builder
-    public CartItem(Product product, String productName, Long price, Long quantity) {
+    public CartItem(Product product, Long quantity) {
         this.product = product;
-        this.productName = productName;
-        this.price = price;
         this.quantity = quantity;
     }
 }

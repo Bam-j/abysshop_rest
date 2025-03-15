@@ -31,4 +31,5 @@
 <hr>
 
 ## ERD
-![Image](https://github.com/user-attachments/assets/750aecb4-f59a-4678-85db-1a3aa73a6955)
+
+![Image](https://github.com/user-attachments/assets/4b367cdc-6014-4522-9d28-68c5e988fcc5)
