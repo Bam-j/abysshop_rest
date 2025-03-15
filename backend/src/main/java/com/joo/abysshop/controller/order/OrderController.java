@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.order;
 
-import com.joo.abysshop.dto.order.CreateOrderRequest;
+import com.joo.abysshop.dto.order.request.CreateOrderRequest;
 import com.joo.abysshop.service.order.OrderService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

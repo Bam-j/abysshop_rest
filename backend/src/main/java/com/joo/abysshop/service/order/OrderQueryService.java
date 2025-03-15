@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.order;
 
-import com.joo.abysshop.dto.order.AdminOrderListResponse;
+import com.joo.abysshop.dto.admin.response.AdminOrderListResponse;
 import com.joo.abysshop.entity.order.Order;
 import com.joo.abysshop.repository.order.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;

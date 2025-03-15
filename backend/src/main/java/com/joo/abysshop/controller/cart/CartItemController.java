@@ -1,8 +1,8 @@
 package com.joo.abysshop.controller.cart;
 
-import com.joo.abysshop.dto.cart.AddItemToCartRequest;
-import com.joo.abysshop.dto.cart.DeleteItemFromCartRequest;
-import com.joo.abysshop.dto.cart.UpdateCartItemsQuantityRequest;
+import com.joo.abysshop.dto.cart.request.AddItemToCartRequest;
+import com.joo.abysshop.dto.cart.request.DeleteItemFromCartRequest;
+import com.joo.abysshop.dto.cart.request.UpdateCartItemsQuantityRequest;
 import com.joo.abysshop.service.cart.CartItemService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

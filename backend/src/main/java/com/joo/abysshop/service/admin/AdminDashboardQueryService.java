@@ -1,9 +1,9 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.order.AdminOrderListResponse;
-import com.joo.abysshop.dto.point.AdminPointRechargeDetailListResponse;
-import com.joo.abysshop.dto.point.AdminPointRechargeListResponse;
-import com.joo.abysshop.dto.product.AdminProductListResponse;
+import com.joo.abysshop.dto.admin.response.AdminOrderListResponse;
+import com.joo.abysshop.dto.admin.response.AdminPointRechargeDetailListResponse;
+import com.joo.abysshop.dto.admin.response.AdminPointRechargeListResponse;
+import com.joo.abysshop.dto.admin.response.AdminProductListResponse;
 import com.joo.abysshop.service.order.OrderQueryService;
 import com.joo.abysshop.service.point.PointRechargeDetailQueryService;
 import com.joo.abysshop.service.point.PointRechargeQueryService;

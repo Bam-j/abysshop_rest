@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.product;
 
-import com.joo.abysshop.dto.product.AdminProductListResponse;
+import com.joo.abysshop.dto.admin.response.AdminProductListResponse;
 import com.joo.abysshop.entity.product.Product;
 import com.joo.abysshop.repository.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;

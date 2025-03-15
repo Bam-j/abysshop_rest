@@ -1,8 +1,8 @@
 package com.joo.abysshop.dto.home;
 
-import com.joo.abysshop.dto.cart.CartResponse;
-import com.joo.abysshop.dto.product.ProductListResponse;
-import com.joo.abysshop.dto.user.UserInfoResponse;
+import com.joo.abysshop.dto.cart.response.CartResponse;
+import com.joo.abysshop.dto.product.response.ProductListResponse;
+import com.joo.abysshop.dto.user.response.UserInfoResponse;
 import java.util.List;
 
 public record HomeResponse(

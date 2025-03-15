@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.order;
 
-import com.joo.abysshop.dto.admin.UpdateOrderStateRequest;
+import com.joo.abysshop.dto.admin.request.UpdateOrderStateRequest;
 import com.joo.abysshop.entity.order.Order;
 import com.joo.abysshop.repository.order.OrderRepository;
 import lombok.RequiredArgsConstructor;

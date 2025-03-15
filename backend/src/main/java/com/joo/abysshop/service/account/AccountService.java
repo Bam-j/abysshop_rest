@@ -1,8 +1,8 @@
 package com.joo.abysshop.service.account;
 
-import com.joo.abysshop.dto.account.WithdrawAccountRequest;
-import com.joo.abysshop.dto.account.UpdateNicknameRequest;
-import com.joo.abysshop.dto.account.UpdatePasswordRequest;
+import com.joo.abysshop.dto.account.request.WithdrawAccountRequest;
+import com.joo.abysshop.dto.user.request.UpdateNicknameRequest;
+import com.joo.abysshop.dto.account.request.UpdatePasswordRequest;
 import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.service.security.JwtBlacklistService;

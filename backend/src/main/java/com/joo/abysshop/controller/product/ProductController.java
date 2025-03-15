@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.product;
 
-import com.joo.abysshop.dto.product.ProductDetailResponse;
+import com.joo.abysshop.dto.product.response.ProductDetailResponse;
 import com.joo.abysshop.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.user;
 
-import com.joo.abysshop.dto.point.CreatePointRechargeRequest;
+import com.joo.abysshop.dto.point.request.CreatePointRechargeRequest;
 import com.joo.abysshop.service.point.PointRechargeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

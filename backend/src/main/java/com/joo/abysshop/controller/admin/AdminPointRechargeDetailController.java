@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.admin;
 
-import com.joo.abysshop.dto.point.UpdatePointRechargeDetailRequest;
+import com.joo.abysshop.dto.point.request.UpdatePointRechargeDetailRequest;
 import com.joo.abysshop.service.admin.AdminPointRechargeDetailCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

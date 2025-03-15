@@ -1,7 +1,7 @@
 package com.joo.abysshop.service.account;
 
-import com.joo.abysshop.dto.account.SignInRequest;
-import com.joo.abysshop.dto.account.SignUpRequest;
+import com.joo.abysshop.dto.account.request.SignInRequest;
+import com.joo.abysshop.dto.account.request.SignUpRequest;
 import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.factory.UserFactory;
 import com.joo.abysshop.repository.cart.CartRepository;

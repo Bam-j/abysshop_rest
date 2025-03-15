@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.cart;
 
-import com.joo.abysshop.dto.cart.CartResponse;
+import com.joo.abysshop.dto.cart.response.CartResponse;
 import com.joo.abysshop.repository.cart.CartItemRepository;
 import com.joo.abysshop.repository.cart.CartRepository;
 import lombok.RequiredArgsConstructor;

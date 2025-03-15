@@ -1,13 +1,11 @@
 package com.joo.abysshop.controller.product;
 
-import com.joo.abysshop.dto.product.ProductImageResourceResponse;
+import com.joo.abysshop.dto.product.response.ProductImageResourceResponse;
 import io.github.cdimascio.dotenv.Dotenv;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.order;
 
-import com.joo.abysshop.dto.order.CreateOrderRequest;
+import com.joo.abysshop.dto.order.request.CreateOrderRequest;
 import com.joo.abysshop.repository.order.OrderRepository;
 import java.util.HashMap;
 import java.util.Map;

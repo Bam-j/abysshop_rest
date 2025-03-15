@@ -1,6 +1,6 @@
 package com.joo.abysshop.factory;
 
-import com.joo.abysshop.dto.account.SignUpRequest;
+import com.joo.abysshop.dto.account.request.SignUpRequest;
 import com.joo.abysshop.entity.user.User;
 
 public class UserFactory {

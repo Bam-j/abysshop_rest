@@ -1,7 +1,7 @@
 package com.joo.abysshop.service.product;
 
-import com.joo.abysshop.dto.admin.CreateProductRequest;
-import com.joo.abysshop.dto.admin.DeleteProductRequest;
+import com.joo.abysshop.dto.product.request.CreateProductRequest;
+import com.joo.abysshop.dto.product.request.DeleteProductRequest;
 import com.joo.abysshop.entity.product.Product;
 import com.joo.abysshop.factory.ProductFactory;
 import com.joo.abysshop.repository.product.ProductRepository;

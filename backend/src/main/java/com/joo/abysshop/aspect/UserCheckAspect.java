@@ -1,8 +1,6 @@
 package com.joo.abysshop.aspect;
 
-import com.joo.abysshop.dto.user.UserInfoResponse;
 import com.joo.abysshop.util.exception.UnauthorizedAccessException;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

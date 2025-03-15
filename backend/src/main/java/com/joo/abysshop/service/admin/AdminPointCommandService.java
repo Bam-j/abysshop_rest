@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.admin.ProvidePointRequest;
+import com.joo.abysshop.dto.admin.request.ProvidePointRequest;
 import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.service.user.UserQueryService;
 import lombok.RequiredArgsConstructor;

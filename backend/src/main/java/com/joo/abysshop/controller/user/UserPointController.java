@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.user;
 
-import com.joo.abysshop.dto.point.CreatePointRechargeRequest;
+import com.joo.abysshop.dto.point.request.CreatePointRechargeRequest;
 import com.joo.abysshop.service.user.UserPointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

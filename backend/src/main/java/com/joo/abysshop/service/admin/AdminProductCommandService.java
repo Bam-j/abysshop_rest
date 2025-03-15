@@ -1,7 +1,7 @@
 package com.joo.abysshop.service.admin;
 
-import com.joo.abysshop.dto.admin.CreateProductRequest;
-import com.joo.abysshop.dto.admin.DeleteProductRequest;
+import com.joo.abysshop.dto.product.request.CreateProductRequest;
+import com.joo.abysshop.dto.product.request.DeleteProductRequest;
 import com.joo.abysshop.service.product.ProductCommandService;
 import com.joo.abysshop.service.product.ProductQueryService;
 import com.joo.abysshop.util.exception.ProductAlreadyExistsException;

@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.user;
 
-import com.joo.abysshop.dto.order.AdminOrderListResponse;
-import com.joo.abysshop.dto.point.AdminPointRechargeListResponse;
+import com.joo.abysshop.dto.admin.response.AdminOrderListResponse;
+import com.joo.abysshop.dto.admin.response.AdminPointRechargeListResponse;
 import com.joo.abysshop.service.user.UserMyPageService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

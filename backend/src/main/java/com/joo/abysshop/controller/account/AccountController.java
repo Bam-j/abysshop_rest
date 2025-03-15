@@ -1,8 +1,8 @@
 package com.joo.abysshop.controller.account;
 
-import com.joo.abysshop.dto.account.WithdrawAccountRequest;
-import com.joo.abysshop.dto.account.UpdateNicknameRequest;
-import com.joo.abysshop.dto.account.UpdatePasswordRequest;
+import com.joo.abysshop.dto.account.request.WithdrawAccountRequest;
+import com.joo.abysshop.dto.user.request.UpdateNicknameRequest;
+import com.joo.abysshop.dto.account.request.UpdatePasswordRequest;
 import com.joo.abysshop.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

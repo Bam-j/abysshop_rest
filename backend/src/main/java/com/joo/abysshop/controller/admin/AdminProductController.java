@@ -1,11 +1,9 @@
 package com.joo.abysshop.controller.admin;
 
-import com.joo.abysshop.dto.admin.CreateProductRequest;
-import com.joo.abysshop.dto.admin.DeleteProductRequest;
+import com.joo.abysshop.dto.product.request.CreateProductRequest;
+import com.joo.abysshop.dto.product.request.DeleteProductRequest;
 import com.joo.abysshop.service.admin.AdminProductCommandService;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,19 +18,9 @@ public class AdminProductController {
     private final AdminProductCommandService adminProductCommandService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createProduct(CreateProductRequest createProductRequest) {
-        ResultStatus createProductResult = adminProductCommandService.createProduct(createProductRequest);
-
-        if (createProductResult.equals(ResultStatus.SUCCESS)) {
-            return ResponseEntity.noContent().build();
-        } else if (createProductResult.equals(ResultStatus.PRODUCT_ALREADY_EXISTS)) {
-            //상품명이 동일한 경우, 같은 상품으로 취급한다.
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(Map.of(Messages.FAILURE_MESSAGE, "이미 존재하는 상품입니다."));
-        } else {
-            return ResponseEntity.badRequest()
-                .body(Map.of(Messages.FAILURE_MESSAGE, "새 상품 생성 요청에 실패하였습니다."));
-        }
+    public ResponseEntity<Void> createProduct(CreateProductRequest createProductRequest) {
+        adminProductCommandService.createProduct(createProductRequest);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete")

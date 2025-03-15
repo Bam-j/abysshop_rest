@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.product;
 
-import com.joo.abysshop.dto.product.ProductDetailResponse;
+import com.joo.abysshop.dto.product.response.ProductDetailResponse;
 import com.joo.abysshop.repository.product.ProductImageRepository;
 import com.joo.abysshop.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;

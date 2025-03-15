@@ -2,9 +2,9 @@ package com.joo.abysshop.controller.home;
 
 import com.joo.abysshop.dto.home.HomeResponse;
 import com.joo.abysshop.service.home.HomeService;
-import com.joo.abysshop.dto.cart.CartResponse;
-import com.joo.abysshop.dto.product.ProductListResponse;
-import com.joo.abysshop.dto.user.UserInfoResponse;
+import com.joo.abysshop.dto.cart.response.CartResponse;
+import com.joo.abysshop.dto.product.response.ProductListResponse;
+import com.joo.abysshop.dto.user.response.UserInfoResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

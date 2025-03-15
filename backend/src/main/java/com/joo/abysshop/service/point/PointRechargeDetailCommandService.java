@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.point;
 
-import com.joo.abysshop.dto.point.UpdatePointRechargeDetailRequest;
+import com.joo.abysshop.dto.point.request.UpdatePointRechargeDetailRequest;
 import com.joo.abysshop.entity.point.PointRechargeDetail;
 import com.joo.abysshop.repository.point.PointRechargeDetailRepository;
 import java.time.LocalDateTime;

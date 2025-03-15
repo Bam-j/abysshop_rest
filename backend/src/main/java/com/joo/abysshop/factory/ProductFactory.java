@@ -1,6 +1,6 @@
 package com.joo.abysshop.factory;
 
-import com.joo.abysshop.dto.admin.CreateProductRequest;
+import com.joo.abysshop.dto.product.request.CreateProductRequest;
 import com.joo.abysshop.entity.product.Product;
 
 public class ProductFactory {

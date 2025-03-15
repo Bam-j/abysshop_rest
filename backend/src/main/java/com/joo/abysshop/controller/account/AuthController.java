@@ -1,7 +1,7 @@
 package com.joo.abysshop.controller.account;
 
-import com.joo.abysshop.dto.account.SignInRequest;
-import com.joo.abysshop.dto.account.SignUpRequest;
+import com.joo.abysshop.dto.account.request.SignInRequest;
+import com.joo.abysshop.dto.account.request.SignUpRequest;
 import com.joo.abysshop.service.account.AuthService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

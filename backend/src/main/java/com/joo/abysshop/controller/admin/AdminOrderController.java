@@ -1,6 +1,6 @@
 package com.joo.abysshop.controller.admin;
 
-import com.joo.abysshop.dto.admin.UpdateOrderStateRequest;
+import com.joo.abysshop.dto.admin.request.UpdateOrderStateRequest;
 import com.joo.abysshop.service.admin.AdminOrderCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

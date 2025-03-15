@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.point;
 
-import com.joo.abysshop.dto.point.AdminPointRechargeDetailListResponse;
+import com.joo.abysshop.dto.admin.response.AdminPointRechargeDetailListResponse;
 import com.joo.abysshop.entity.point.PointRechargeDetail;
 import com.joo.abysshop.repository.point.PointRechargeDetailRepository;
 import jakarta.persistence.EntityNotFoundException;

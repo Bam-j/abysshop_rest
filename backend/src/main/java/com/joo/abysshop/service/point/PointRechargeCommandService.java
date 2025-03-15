@@ -1,6 +1,6 @@
 package com.joo.abysshop.service.point;
 
-import com.joo.abysshop.dto.admin.UpdatePointRechargeStateRequest;
+import com.joo.abysshop.dto.admin.request.UpdatePointRechargeStateRequest;
 import com.joo.abysshop.entity.point.PointRecharge;
 import com.joo.abysshop.repository.point.PointRechargeRepository;
 import lombok.RequiredArgsConstructor;
