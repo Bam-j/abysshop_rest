@@ -62,4 +62,9 @@ public class Cart {
         this.totalQuantity = totalQuantity;
         this.totalPrice = totalPrice;
     }
+
+    public void clearCart() {
+        this.totalQuantity = 0L;
+        this.totalPrice = 0L;
+    }
 }

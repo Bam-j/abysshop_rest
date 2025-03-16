@@ -1,0 +1,33 @@
+package com.joo.abysshop.service.cart;
+
+import com.joo.abysshop.dto.cart.response.CartAndItemsResponse;
+import com.joo.abysshop.dto.cart.response.CartItemResponse;
+import com.joo.abysshop.dto.cart.response.CartResponse;
+import com.joo.abysshop.entity.cart.Cart;
+import com.joo.abysshop.repository.cart.CartRepository;
+import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class CartQueryService {
+
+    private final CartRepository cartRepository;
+    private final CartItemQueryService cartItemQueryService;
+
+    public CartResponse getCart(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId)
+            .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
+        return CartResponse.of(cart);
+    }
+
+    public CartAndItemsResponse getCartAndItem(Long userId) {
+        CartResponse cart = getCart(userId);
+        List<CartItemResponse> cartItemList = cartItemQueryService.getCartItemList(cart.cartId());
+        return CartAndItemsResponse.of(cart, cartItemList);
+    }
+}

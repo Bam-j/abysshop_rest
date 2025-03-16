@@ -1,7 +1,8 @@
 package com.joo.abysshop.controller.cart;
 
-import com.joo.abysshop.dto.cart.response.CartResponse;
-import com.joo.abysshop.service.cart.CartService;
+import com.joo.abysshop.dto.cart.response.CartAndItemsResponse;
+import com.joo.abysshop.service.cart.CartCommandService;
+import com.joo.abysshop.service.cart.CartQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,17 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final CartService cartService;
+    private final CartQueryService cartQueryService;
+    private final CartCommandService cartCommandService;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getCartByUserId(@PathVariable("userId") Long userId) {
-        CartResponse cart = cartService.getCartByUserId(userId);
-        return ResponseEntity.ok(cart);
+    public ResponseEntity<CartAndItemsResponse> getCartByUserId(
+        @PathVariable("userId") Long userId) {
+        CartAndItemsResponse response = cartQueryService.getCartAndItem(userId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{cartId}/clear")
     public ResponseEntity<Void> clearCart(@PathVariable("cartId") Long cartId) {
-        cartService.clearCart(cartId);
+        cartCommandService.clearCart(cartId);
         return ResponseEntity.noContent().build();
     }
 }
