@@ -2,6 +2,7 @@ package com.joo.abysshop.service.product;
 
 import com.joo.abysshop.dto.admin.response.AdminProductListResponse;
 import com.joo.abysshop.dto.cart.response.CartItemDetailResponse;
+import com.joo.abysshop.dto.product.response.ProductListResponse;
 import com.joo.abysshop.entity.product.Product;
 import com.joo.abysshop.repository.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,5 +34,9 @@ public class ProductQueryService {
 
     public Long findPriceById(Long productId) {
         return productRepository.findPriceByProductId(productId);
+    }
+
+    public Page<ProductListResponse> getPagedProductList(Pageable pageable) {
+        return productRepository.findAll(pageable).map(ProductListResponse::new);
     }
 }
