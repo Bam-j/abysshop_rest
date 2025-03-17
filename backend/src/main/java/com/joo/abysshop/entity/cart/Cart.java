@@ -67,4 +67,14 @@ public class Cart {
         this.totalQuantity = 0L;
         this.totalPrice = 0L;
     }
+
+    public void deleteItemFromCart(Long itemQuantity, Long itemTotalPrice) {
+        this.totalQuantity -= itemQuantity;
+        this.totalPrice -= itemTotalPrice;
+    }
+
+    public void updateCart(Long totalQuantity, Long totalPrice) {
+        this.totalQuantity = totalQuantity;
+        this.totalPrice = totalPrice;
+    }
 }

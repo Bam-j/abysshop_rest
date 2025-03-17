@@ -19,14 +19,20 @@ public class CartQueryService {
     private final CartRepository cartRepository;
     private final CartItemQueryService cartItemQueryService;
 
-    public CartResponse getCart(Long userId) {
+    public CartResponse getCartByUserId(Long userId) {
         Cart cart = cartRepository.findByUserId(userId)
             .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
         return CartResponse.of(cart);
     }
 
+    public CartResponse getCartByCartId(Long cartId) {
+        Cart cart = cartRepository.findByUserId(cartId)
+            .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
+        return CartResponse.of(cart);
+    }
+
     public CartAndItemsResponse getCartAndItem(Long userId) {
-        CartResponse cart = getCart(userId);
+        CartResponse cart = getCartByUserId(userId);
         List<CartItemResponse> cartItemList = cartItemQueryService.getCartItemList(cart.cartId());
         return CartAndItemsResponse.of(cart, cartItemList);
     }

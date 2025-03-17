@@ -29,12 +29,12 @@ public class CartItemController {
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteItemFromCart(
         DeleteItemFromCartRequest deleteItemFromCartRequest) {
-        cartItemService.deleteCartItem(deleteItemFromCartRequest);
+        cartItemCommandService.deleteCartItem(deleteItemFromCartRequest);
         return ResponseEntity.noContent().build();
     }
 
     /*
-     *   TODO: 수량증가 방식 변경!
+     *   TODO: 수량증가 방식 변경! > 프론트 구현 후 TODO 삭제
      *       기존에 클릭마다 요청을 보냈던 비효율 방식에서
      *       프론트에서 수량 조절이 감지되면 적당한 시간(1~5초) 후에 데이터를 종합해서
      *       서버로 요청을 보내는 방식으로 변경해서 구현
@@ -42,7 +42,7 @@ public class CartItemController {
     @PatchMapping("/quantity")
     public ResponseEntity<Void> updateCartItemsQuantity(
         List<UpdateCartItemsQuantityRequest> requestList) {
-        cartItemService.updateCartItemsQuantity(requestList);
+        cartItemCommandService.updateCartItemsQuantity(requestList);
         return ResponseEntity.noContent().build();
     }
 }

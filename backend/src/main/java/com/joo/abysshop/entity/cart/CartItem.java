@@ -47,8 +47,17 @@ public class CartItem {
     }
 
     @Builder
-    public CartItem(Product product, Long quantity) {
+    public CartItem(Cart cart, Product product, Long quantity) {
+        this.cart = cart;
         this.product = product;
+        this.quantity = quantity;
+    }
+
+    public void increaseQuantity(Long quantity) {
+        this.quantity += quantity;
+    }
+
+    public void updateQuantity(Long quantity) {
         this.quantity = quantity;
     }
 }
