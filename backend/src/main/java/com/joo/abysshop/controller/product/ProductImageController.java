@@ -1,14 +1,11 @@
 package com.joo.abysshop.controller.product;
 
 import com.joo.abysshop.dto.product.response.ProductImageResourceResponse;
+import com.joo.abysshop.service.product.ProductImageQueryService;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,50 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductImageController {
 
     private final String imageDir;
-    private final ProductImageService productImageService;
+    private final ProductImageQueryService productImageQueryService;
 
-    public ProductImageController(Dotenv dotenv, ProductImageService productImageService) {
+    public ProductImageController(Dotenv dotenv,
+        ProductImageQueryService productImageQueryService) {
         this.imageDir = dotenv.get("IMAGE_DIR");
-        this.productImageService = productImageService;
+        this.productImageQueryService = productImageQueryService;
     }
 
     @GetMapping("/{originalFileName}")
     public ResponseEntity<Resource> getProductImage(
-        @PathVariable("originalFileName") String originalFileName) throws MalformedURLException {
-
-        //TODO: 서비스 레이어 개발할 때 line:32~59, getFileExtension() 서비스 레이어로 이동시키기
-        ProductImageResourceResponse productImage = productImageService.getProductImage(
-            originalFileName);
-        //Resource resource = productImage.resource();
-        //String contentType = productImage.contentType();
-
-        Path path = Paths.get(imageDir + originalFileName);
-
-        if (!Files.exists(path)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        Resource resource = new UrlResource(path.toUri());
-
-        String extension = getFileExtension(originalFileName);
-        String contentType;
-
-        if ("png".equalsIgnoreCase(extension)) {
-            contentType = "image/png";
-        } else if ("jpg".equalsIgnoreCase(extension) || "jpeg".equalsIgnoreCase(extension)) {
-            contentType = "image/jpeg";
-        } else {
-            contentType = "application/octet-stream";
-        }
-
+        @PathVariable("originalFileName") String originalFileName)
+        throws MalformedURLException, FileNotFoundException {
+        ProductImageResourceResponse productImageResource = productImageQueryService.getProductImageResource(
+            originalFileName, imageDir);
         return ResponseEntity.ok()
-            .contentType(MediaType.parseMediaType(contentType))
-            .body(resource);
+            .contentType(MediaType.parseMediaType(productImageResource.contentType()))
+            .body(productImageResource.resource());
     }
-
-    private String getFileExtension(String fileName) {
-        int lastIndex = fileName.lastIndexOf(".");
-        return (lastIndex == -1) ? "" : fileName.substring(lastIndex + 1);
-    }
-
 }
