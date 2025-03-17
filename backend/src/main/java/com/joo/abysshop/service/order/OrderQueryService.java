@@ -1,6 +1,7 @@
 package com.joo.abysshop.service.order;
 
 import com.joo.abysshop.dto.admin.response.AdminOrderListResponse;
+import com.joo.abysshop.dto.user.response.UserOrderListResponse;
 import com.joo.abysshop.entity.order.Order;
 import com.joo.abysshop.repository.order.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,5 +25,9 @@ public class OrderQueryService {
     public Order findById(Long orderId) {
         return orderRepository.findById(orderId)
             .orElseThrow(() -> new EntityNotFoundException("주문이 존재하지 않습니다."));
+    }
+
+    public Page<UserOrderListResponse> getPagedUserOrderList(Long userId, Pageable pageable) {
+        return orderRepository.findByUserId(userId, pageable).map(UserOrderListResponse::new);
     }
 }

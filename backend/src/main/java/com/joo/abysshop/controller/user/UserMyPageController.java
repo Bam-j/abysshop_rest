@@ -1,10 +1,15 @@
 package com.joo.abysshop.controller.user;
 
-import com.joo.abysshop.dto.admin.response.AdminOrderListResponse;
 import com.joo.abysshop.dto.admin.response.AdminPointRechargeListResponse;
-import com.joo.abysshop.service.user.UserMyPageService;
+import com.joo.abysshop.dto.user.response.UserOrderListResponse;
+import com.joo.abysshop.dto.user.response.UserOrdersResponse;
+import com.joo.abysshop.dto.user.response.UserPointRechargeListResponse;
+import com.joo.abysshop.dto.user.response.UserPointRechargesResponse;
+import com.joo.abysshop.service.user.UserMyPageQueryService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,34 +21,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserMyPageController {
 
-    private final UserMyPageService userMyPageService;
+    private final UserMyPageQueryService userMyPageQueryService;
 
     @GetMapping("/orders")
-    public ResponseEntity<Object> getUserOrders(
-        @RequestParam Long userId,
-        @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 10;
-        int totalOrders = userMyPageService.countOrdersByUser(userId);
-        int totalPages = (int) Math.ceil((double) totalOrders / pageSize);
-        List<AdminOrderListResponse> pagedUserOrderList = userMyPageService.getPagedUserOrders(
-            userId, page, pageSize);
-
-        UserOrdersResponse response = new UserOrdersResponse(pagedUserOrderList, page, totalPages);
+    public ResponseEntity<UserOrdersResponse> getUserOrders(@RequestParam("userId") Long userId,
+        Pageable pageable) {
+        Page<UserOrderListResponse> pagedUserOrderList = userMyPageQueryService.getPagedUserOrders(
+            userId, pageable);
+        UserOrdersResponse response = UserOrdersResponse.of(pagedUserOrderList);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/point-recharges")
-    public ResponseEntity<Object> getUserPointRecharges(
-        @RequestParam Long userId,
-        @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 10;
-        int totalPointRecharges = userMyPageService.countPointRechargesByUser(userId);
-        int totalPages = (int) Math.ceil((double) totalPointRecharges / pageSize);
-        List<AdminPointRechargeListResponse> pagedUserPointRechargeList = userMyPageService.getPagedUserPointRecharges(
-            userId, page, pageSize);
+    public ResponseEntity<UserPointRechargesResponse> getUserPointRecharges(
+        @RequestParam("userId") Long userId, Pageable pageable) {
+        Page<UserPointRechargeListResponse> pagedUserPointRechargeList = userMyPageQueryService.getPagedUserPointRecharges(
+            userId, pageable);
 
-        UserPointRechargeResponse response = new UserPointRechargeResponse(
-            pagedUserPointRechargeList, page, totalPages);
+        UserPointRechargesResponse response = UserPointRechargesResponse.of(
+            pagedUserPointRechargeList);
         return ResponseEntity.ok(response);
     }
 }
