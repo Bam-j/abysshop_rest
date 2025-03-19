@@ -8,7 +8,6 @@ import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.service.security.JwtBlacklistService;
 import com.joo.abysshop.util.exception.InvalidPasswordException;
 import com.joo.abysshop.util.security.JwtUtil;
-import com.joo.abysshop.util.security.PasswordSecurity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +45,7 @@ public class AccountCommandService {
         User user = userRepository.findById(withdrawAccountRequest.userId())
             .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다."));
 
-        if (!PasswordSecurity.matches(user.getPassword(), withdrawAccountRequest.password())) {
+        if (!passwordEncoder.matches(user.getPassword(), withdrawAccountRequest.password())) {
             throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
