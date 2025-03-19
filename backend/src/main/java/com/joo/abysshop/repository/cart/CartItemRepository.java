@@ -1,6 +1,8 @@
 package com.joo.abysshop.repository.cart;
 
+import com.joo.abysshop.entity.cart.Cart;
 import com.joo.abysshop.entity.cart.CartItem;
+import com.joo.abysshop.entity.product.Product;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Param;
@@ -11,15 +13,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    List<CartItem> findAllByCartId(Long cartId);
+    List<CartItem> findAllByCart(Cart cart);
 
-    void deleteAllByCartId(Long cartId);
+    void deleteAllByCart(Cart cart);
 
-    Optional<CartItem> findByCartIdAndProductId(Long cartId, Long productId);
+    Optional<CartItem> findByCartAndProduct(Cart cart, Product product);
 
-    Long findQuantityByProductId(Long productId);
+    Long findQuantityByProduct(Product product);
 
-    Optional<CartItem> findByProductId(Long productId);
+    Optional<CartItem> findByProduct(Product product);
 
     @Query("SELECT SUM(ci.quantity * p.price)" +
         "FROM CartItem ci " +

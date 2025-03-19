@@ -13,7 +13,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Query("SELECT c.cartId FROM Cart c WHERE c.user.userId = :userId")
     Long findCartIdByUserId(Long userId);
 
-    Optional<Cart> findByUserId(Long userId);
+    Optional<Cart> findByUser(User user);
 
     Long user(User user);
 }

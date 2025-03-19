@@ -4,7 +4,9 @@ import com.joo.abysshop.dto.cart.response.CartAndItemsResponse;
 import com.joo.abysshop.dto.cart.response.CartItemResponse;
 import com.joo.abysshop.dto.cart.response.CartResponse;
 import com.joo.abysshop.entity.cart.Cart;
+import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.repository.cart.CartRepository;
+import com.joo.abysshop.repository.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CartQueryService {
 
+    private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final CartItemQueryService cartItemQueryService;
 
     public CartResponse getCartByUserId(Long userId) {
-        Cart cart = cartRepository.findByUserId(userId)
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new EntityNotFoundException("계정이 존재하지 않습니다."));
+        Cart cart = cartRepository.findByUser(user)
             .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
-        return CartResponse.of(cart);
-    }
 
-    public CartResponse getCartByCartId(Long cartId) {
-        Cart cart = cartRepository.findByUserId(cartId)
-            .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
         return CartResponse.of(cart);
     }
 

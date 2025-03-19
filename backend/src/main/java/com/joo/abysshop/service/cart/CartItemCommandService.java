@@ -28,7 +28,9 @@ public class CartItemCommandService {
 
     @Transactional
     public void clearCartItems(Long cartId) {
-        cartItemRepository.deleteAllByCartId(cartId);
+        Cart cart = cartRepository.findById(cartId)
+            .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
+        cartItemRepository.deleteAllByCart(cart);
     }
 
     @Transactional
@@ -41,7 +43,7 @@ public class CartItemCommandService {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new EntityNotFoundException("상품이 존재하지 않습니다."));
 
-        cartItemRepository.findByCartIdAndProductId(cartId, productId)
+        cartItemRepository.findByCartAndProduct(cart, product)
             .ifPresentOrElse(
                 cartItem -> {
                     cartItem.increaseQuantity(1L);
@@ -55,7 +57,6 @@ public class CartItemCommandService {
     public void deleteCartItem(DeleteItemFromCartRequest deleteItemFromCartRequest) {
         CartItemDetailResponse cartItemDetail = cartItemQueryService.getCartItemDetail(
             deleteItemFromCartRequest.productId());
-
         Cart cart = cartRepository.findById(deleteItemFromCartRequest.cartId())
             .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
 
@@ -67,8 +68,11 @@ public class CartItemCommandService {
         Long totalPrice = 0L;
 
         for (UpdateCartItemsQuantityRequest request : requestList) {
-            CartItem cartItem = cartItemRepository.findByProductId(request.productId())
+            Product product = productRepository.findById(request.productId())
+                .orElseThrow(() -> new EntityNotFoundException("상품이 존재하지 않습니다."));
+            CartItem cartItem = cartItemRepository.findByProduct(product)
                 .orElseThrow(() -> new EntityNotFoundException("장바구니에 해당 상품이 존재하지 않습니다."));
+
             cartItem.updateQuantity(request.quantity());
             totalPrice += cartItemRepository.findTotalPriceByCartIdAndProductId(request.cartId(),
                 request.productId());

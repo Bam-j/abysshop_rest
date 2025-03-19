@@ -37,12 +37,13 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(
-                SessionCreationPolicy.STATELESS)) // 세션 사용 안함
+                SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "api/home",
-                    "/api/auth/login",
-                    "/api/auth/join")
+                    "/api/home",
+                    "/api/auth/sign-in",
+                    "/api/auth/sign-up",
+                    "/actuator/**")
                 .permitAll()
                 .anyRequest().authenticated()
             )
