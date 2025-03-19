@@ -1,11 +1,11 @@
 package com.joo.abysshop.util.security;
 
 import com.joo.abysshop.entity.user.User;
-import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
@@ -18,10 +18,14 @@ public class JwtUtil {
     @Getter
     private final long expiration;
 
-    public JwtUtil(Dotenv dotenv) {
-        String secretKey = dotenv.get("JWT_SECRET");
-        this.expiration = Long.parseLong(dotenv.get("JWT_EXPIRATION"));
+    public JwtUtil(
+        @Value("${jwt.secret}")
+        String secretKey,
+        @Value("${jwt.expiration}")
+        long expiration
+    ) {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.expiration = expiration;
     }
 
     public String generateToken(User user, Long cartId) {
