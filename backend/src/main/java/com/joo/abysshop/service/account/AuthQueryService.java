@@ -1,26 +1,25 @@
 package com.joo.abysshop.service.account;
 
 import com.joo.abysshop.dto.account.request.SignInRequest;
-import com.joo.abysshop.dto.account.request.SignUpRequest;
 import com.joo.abysshop.entity.user.User;
-import com.joo.abysshop.factory.UserFactory;
 import com.joo.abysshop.repository.cart.CartRepository;
 import com.joo.abysshop.repository.user.UserRepository;
-import com.joo.abysshop.util.exception.DuplicateNicknameException;
-import com.joo.abysshop.util.exception.DuplicateUsernameException;
 import com.joo.abysshop.util.exception.InvalidPasswordException;
 import com.joo.abysshop.util.security.JwtUtil;
-import com.joo.abysshop.util.security.PasswordSecurity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthQueryService {
 
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     public String authenticateUser(SignInRequest signInRequest) {
@@ -29,28 +28,11 @@ public class AuthService {
 
         String encodedPassword = user.getPassword();
 
-        if (!PasswordSecurity.matches(encodedPassword, signInRequest.password())) {
+        if (!passwordEncoder.matches(encodedPassword, signInRequest.password())) {
             throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
         Long cartId = cartRepository.findCartIdByUserId(user.getUserId());
         return jwtUtil.generateToken(user, cartId);
-    }
-
-    public void createUser(SignUpRequest signUpRequest) {
-        userRepository.findByUsername(signUpRequest.username())
-            .ifPresent(user -> {
-                throw new DuplicateUsernameException("이미 존재하는 계정입니다.");
-            });
-
-        userRepository.findByNickname(signUpRequest.nickname())
-            .ifPresent(user -> {
-                throw new DuplicateNicknameException("이미 사용중인 닉네임입니다.");
-            });
-
-        String encryptedPassword = PasswordSecurity.encryptPassword(signUpRequest.password());
-
-        User newUser = UserFactory.of(signUpRequest, encryptedPassword);
-        userRepository.save(newUser);
     }
 }

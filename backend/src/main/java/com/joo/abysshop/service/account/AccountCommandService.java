@@ -11,14 +11,16 @@ import com.joo.abysshop.util.security.JwtUtil;
 import com.joo.abysshop.util.security.PasswordSecurity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService {
+public class AccountCommandService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final JwtBlacklistService jwtBlacklistService;
 
@@ -35,8 +37,7 @@ public class AccountService {
         User user = userRepository.findById(updatePasswordRequest.userId())
             .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다."));
 
-        String encryptedNewPassword = PasswordSecurity.encryptPassword(
-            updatePasswordRequest.newPassword());
+        String encryptedNewPassword = passwordEncoder.encode(updatePasswordRequest.newPassword());
         user.updatePassword(encryptedNewPassword);
     }
 
