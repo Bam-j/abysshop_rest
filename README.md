@@ -32,4 +32,4 @@
 
 ## ERD
 
-![Image](https://github.com/user-attachments/assets/4b367cdc-6014-4522-9d28-68c5e988fcc5)
+![Image](https://github.com/user-attachments/assets/4c5e03ca-c675-4aa1-a464-1856b851808a)
