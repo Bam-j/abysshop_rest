@@ -21,13 +21,6 @@ public class ProductImageController {
     private final String imageDir;
     private final ProductImageQueryService productImageQueryService;
 
-    /*
-    public ProductImageController(Dotenv dotenv,
-        ProductImageQueryService productImageQueryService) {
-        this.imageDir = dotenv.get("IMAGE_DIR");
-        this.productImageQueryService = productImageQueryService;
-    }*/
-
     public ProductImageController(
         @Value("${image.dir}") String imageDir,
         ProductImageQueryService productImageQueryService

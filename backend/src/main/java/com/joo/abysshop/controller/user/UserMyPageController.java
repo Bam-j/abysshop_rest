@@ -1,12 +1,10 @@
 package com.joo.abysshop.controller.user;
 
-import com.joo.abysshop.dto.admin.response.AdminPointRechargeListResponse;
 import com.joo.abysshop.dto.user.response.UserOrderListResponse;
 import com.joo.abysshop.dto.user.response.UserOrdersResponse;
 import com.joo.abysshop.dto.user.response.UserPointRechargeListResponse;
 import com.joo.abysshop.dto.user.response.UserPointRechargesResponse;
 import com.joo.abysshop.service.user.UserMyPageQueryService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

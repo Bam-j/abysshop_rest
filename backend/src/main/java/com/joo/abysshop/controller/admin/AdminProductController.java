@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,13 +19,15 @@ public class AdminProductController {
     private final AdminProductCommandService adminProductCommandService;
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createProduct(CreateProductRequest createProductRequest) {
+    public ResponseEntity<Void> createProduct(
+        @RequestBody CreateProductRequest createProductRequest) {
         adminProductCommandService.createProduct(createProductRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteProduct(DeleteProductRequest deleteProductRequest) {
+    public ResponseEntity<Void> deleteProduct(
+        @RequestBody DeleteProductRequest deleteProductRequest) {
         adminProductCommandService.deleteProduct(deleteProductRequest);
         return ResponseEntity.noContent().build();
     }

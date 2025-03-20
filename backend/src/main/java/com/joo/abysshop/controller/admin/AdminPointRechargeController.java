@@ -5,6 +5,7 @@ import com.joo.abysshop.service.admin.AdminPointRechargeCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class AdminPointRechargeController {
 
     @PatchMapping("/state")
     public ResponseEntity<Void> updatePointRechargeState(
-        UpdatePointRechargeStateRequest updatePointRechargeStateRequest) {
+        @RequestBody UpdatePointRechargeStateRequest updatePointRechargeStateRequest) {
         adminPointRechargeCommandService.updatePointRechargeState(updatePointRechargeStateRequest);
         return ResponseEntity.noContent().build();
     }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,19 +21,22 @@ public class AccountController {
     private final AccountCommandService accountCommandService;
 
     @PatchMapping("/nickname")
-    public ResponseEntity<Object> updateNickname(UpdateNicknameRequest updateNicknameRequest) {
+    public ResponseEntity<Object> updateNickname(
+        @RequestBody UpdateNicknameRequest updateNicknameRequest) {
         accountCommandService.updateNickname(updateNicknameRequest);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/password")
-    public ResponseEntity<Object> updatePassword(UpdatePasswordRequest updatePasswordRequest) {
+    public ResponseEntity<Object> updatePassword(
+        @RequestBody UpdatePasswordRequest updatePasswordRequest) {
         accountCommandService.updatePassword(updatePasswordRequest);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/withdraw")
-    public ResponseEntity<Object> withdraw(WithdrawAccountRequest withdrawAccountRequest,
+    public ResponseEntity<Object> withdraw(
+        @RequestBody WithdrawAccountRequest withdrawAccountRequest,
         @RequestHeader("Authorization") String authorization) {
         String token = authorization.startsWith("Bearer ")
             ? authorization.substring(7) : authorization;

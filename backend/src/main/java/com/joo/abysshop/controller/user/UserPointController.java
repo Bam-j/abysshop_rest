@@ -5,6 +5,7 @@ import com.joo.abysshop.service.user.UserPointCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class UserPointController {
 
     @PostMapping("/recharges")
     public ResponseEntity<Void> createPointRecharge(
-        CreatePointRechargeRequest createPointRechargeRequest) {
+        @RequestBody CreatePointRechargeRequest createPointRechargeRequest) {
         userPointCommandService.createPointRecharge(createPointRechargeRequest);
         return ResponseEntity.noContent().build();
     }

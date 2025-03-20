@@ -5,6 +5,7 @@ import com.joo.abysshop.service.admin.AdminOrderCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,8 @@ public class AdminOrderController {
     private final AdminOrderCommandService adminOrderCommandService;
 
     @PatchMapping("/state")
-    public ResponseEntity<Void> updateOrderState(UpdateOrderStateRequest updateOrderStateRequest) {
+    public ResponseEntity<Void> updateOrderState(
+        @RequestBody UpdateOrderStateRequest updateOrderStateRequest) {
         adminOrderCommandService.updateOrderState(updateOrderStateRequest);
         return ResponseEntity.noContent().build();
     }
