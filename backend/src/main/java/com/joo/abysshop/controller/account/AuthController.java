@@ -6,6 +6,7 @@ import com.joo.abysshop.service.account.AuthCommandService;
 import com.joo.abysshop.service.account.AuthQueryService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,6 @@ public class AuthController {
     @PostMapping("/sign-up")
     public ResponseEntity<Object> createUser(@RequestBody SignUpRequest signUpRequest) {
         authCommandService.createUser(signUpRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
