@@ -5,8 +5,8 @@ import com.joo.abysshop.service.cart.CartCommandService;
 import com.joo.abysshop.service.cart.CartQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,7 @@ public class CartController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{cartId}/clear")
+    @PatchMapping("/{cartId}/clear")
     public ResponseEntity<Void> clearCart(@PathVariable("cartId") Long cartId) {
         cartCommandService.clearCart(cartId);
         return ResponseEntity.noContent().build();
