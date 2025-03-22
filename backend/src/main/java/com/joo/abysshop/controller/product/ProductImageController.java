@@ -29,12 +29,11 @@ public class ProductImageController {
         this.productImageQueryService = productImageQueryService;
     }
 
-    @GetMapping("/{originalFileName}")
-    public ResponseEntity<Resource> getProductImage(
-        @PathVariable("originalFileName") String originalFileName)
+    @GetMapping("/{fileName}")
+    public ResponseEntity<Resource> getProductImage(@PathVariable("fileName") String fileName)
         throws MalformedURLException, FileNotFoundException {
         ProductImageResourceResponse productImageResource = productImageQueryService.getProductImageResource(
-            originalFileName, imageDir);
+            fileName, imageDir);
         return ResponseEntity.ok()
             .contentType(MediaType.parseMediaType(productImageResource.contentType()))
             .body(productImageResource.resource());

@@ -14,7 +14,7 @@ public record ProductListResponse(
             product.getProductId(),
             product.getProductName(),
             product.getPrice(),
-            product.getProductImage().getFileName()
+            product.getProductImage() != null ? product.getProductImage().getFileName() : null
         );
     }
 
