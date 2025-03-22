@@ -16,7 +16,7 @@ public class UserPointController {
 
     private final UserPointCommandService userPointCommandService;
 
-    @PostMapping("/recharges")
+    @PostMapping("/recharge")
     public ResponseEntity<Void> createPointRecharge(
         @RequestBody CreatePointRechargeRequest createPointRechargeRequest) {
         userPointCommandService.createPointRecharge(createPointRechargeRequest);
