@@ -1,7 +1,9 @@
 package com.joo.abysshop.service.account;
 
 import com.joo.abysshop.dto.account.request.SignUpRequest;
+import com.joo.abysshop.entity.cart.Cart;
 import com.joo.abysshop.entity.user.User;
+import com.joo.abysshop.factory.CartFactory;
 import com.joo.abysshop.factory.UserFactory;
 import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.util.exception.DuplicateNicknameException;
@@ -33,6 +35,8 @@ public class AuthCommandService {
         String encryptedPassword = passwordEncoder.encode(signUpRequest.password());
 
         User newUser = UserFactory.of(signUpRequest, encryptedPassword);
+        Cart cart = CartFactory.of(newUser);
+        newUser.setUserCart(cart);
         userRepository.save(newUser);
     }
 }

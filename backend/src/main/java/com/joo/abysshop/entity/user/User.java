@@ -80,6 +80,10 @@ public class User {
         this.pointBalance = pointBalance;
     }
 
+    public void setUserCart(Cart cart) {
+        this.cart = cart;
+    }
+
     public void updateNickname(String newNickname) {
         this.nickname = newNickname;
     }
