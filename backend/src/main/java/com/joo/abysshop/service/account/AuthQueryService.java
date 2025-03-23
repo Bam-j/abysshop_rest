@@ -7,7 +7,6 @@ import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.util.exception.InvalidPasswordException;
 import com.joo.abysshop.util.exception.InvalidUsernameException;
 import com.joo.abysshop.util.security.JwtUtil;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,10 +25,9 @@ public class AuthQueryService {
     public String authenticateUser(SignInRequest signInRequest) {
         User user = userRepository.findByUsername(signInRequest.username())
             .orElseThrow(() -> new InvalidUsernameException("계정이 존재하지 않습니다."));
-
         String encodedPassword = user.getPassword();
 
-        if (!passwordEncoder.matches(encodedPassword, signInRequest.password())) {
+        if (!passwordEncoder.matches(signInRequest.password(), encodedPassword)) {
             throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 

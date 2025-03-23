@@ -44,8 +44,9 @@ public class AccountCommandService {
     public void withdraw(WithdrawAccountRequest withdrawAccountRequest, String token) {
         User user = userRepository.findById(withdrawAccountRequest.userId())
             .orElseThrow(() -> new EntityNotFoundException("회원을 찾을 수 없습니다."));
+        String encodedPassword = user.getPassword();
 
-        if (!passwordEncoder.matches(user.getPassword(), withdrawAccountRequest.password())) {
+        if (!passwordEncoder.matches( withdrawAccountRequest.password(), encodedPassword)) {
             throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
