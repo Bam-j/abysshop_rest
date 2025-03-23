@@ -51,6 +51,7 @@ public class CartItemCommandService {
                 },
                 () -> cartItemRepository.save(CartItemFactory.of(cart, product))
             );
+        updateCart(cartId);
     }
 
     @Transactional
@@ -59,8 +60,12 @@ public class CartItemCommandService {
             deleteItemFromCartRequest.productId());
         Cart cart = cartRepository.findById(deleteItemFromCartRequest.cartId())
             .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
+        Product product = productRepository.findById(deleteItemFromCartRequest.productId())
+            .orElseThrow(() -> new EntityNotFoundException("상품이 존재하지 않습니다."));
 
+        cartItemRepository.deleteByCartAndProduct(cart, product);
         cart.deleteItemFromCart(cartItemDetail.quantity(), cartItemDetail.getTotalPrice());
+        updateCart(cart.getCartId());
     }
 
     public void updateCartItemsQuantity(List<UpdateCartItemsQuantityRequest> requestList) {
@@ -80,6 +85,14 @@ public class CartItemCommandService {
 
         Long totalQuantity = cartItemRepository.findTotalQuantityByCartId(cartId);
 
+        Cart cart = cartRepository.findById(cartId)
+            .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
+        cart.updateCart(totalQuantity, totalPrice);
+    }
+
+    private void updateCart(Long cartId) {
+        Long totalQuantity = cartItemRepository.findTotalQuantityByCartId(cartId);
+        Long totalPrice = cartItemRepository.findTotalPriceByCartId(cartId);
         Cart cart = cartRepository.findById(cartId)
             .orElseThrow(() -> new EntityNotFoundException("장바구니가 존재하지 않습니다."));
         cart.updateCart(totalQuantity, totalPrice);

@@ -76,5 +76,13 @@ public class Cart {
     public void updateCart(Long totalQuantity, Long totalPrice) {
         this.totalQuantity = totalQuantity;
         this.totalPrice = totalPrice;
+
+        if (this.totalQuantity == null) {
+            this.totalQuantity = 0L;
+        }
+
+        if (this.totalPrice == null) {
+            this.totalPrice = 0L;
+        }
     }
 }

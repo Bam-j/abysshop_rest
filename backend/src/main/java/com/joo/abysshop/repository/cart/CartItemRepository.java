@@ -19,6 +19,9 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     Optional<CartItem> findByCartAndProduct(Cart cart, Product product);
 
+    void deleteByCartAndProduct(Cart cart, Product product);
+
+    @Query("SELECT c.quantity FROM CartItem c WHERE c.product = :product")
     Long findQuantityByProduct(Product product);
 
     Optional<CartItem> findByProduct(Product product);
@@ -29,6 +32,12 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
         "WHERE ci.cart.cartId = :cartId AND p.productId = :productId")
     Long findTotalPriceByCartIdAndProductId(@Param("cartId") Long cartId,
         @Param("productId") Long productId);
+
+    @Query("SELECT SUM(ci.quantity * p.price) " +
+        "FROM CartItem ci " +
+        "JOIN ci.product p " +
+        "WHERE ci.cart.cartId = :cartId")
+    Long findTotalPriceByCartId(@Param("cartId") Long cartId);
 
     @Query("SELECT COALESCE(SUM(ci.quantity), 0) AS quantity FROM CartItem ci WHERE ci.cart.cartId = :cartId")
     Long findTotalQuantityByCartId(Long cartId);
