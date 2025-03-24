@@ -2,8 +2,10 @@ package com.joo.abysshop.service.user;
 
 import com.joo.abysshop.dto.point.request.CreatePointRechargeRequest;
 import com.joo.abysshop.entity.point.PointRecharge;
+import com.joo.abysshop.entity.point.PointRechargeDetail;
 import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.factory.PointRechargeFactory;
+import com.joo.abysshop.repository.point.PointRechargeDetailRepository;
 import com.joo.abysshop.repository.point.PointRechargeRepository;
 import com.joo.abysshop.repository.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserPointCommandService {
 
     private final PointRechargeRepository pointRechargeRepository;
+    private final PointRechargeDetailRepository pointRechargeDetailRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -25,5 +28,10 @@ public class UserPointCommandService {
         PointRecharge pointRecharge = PointRechargeFactory.of(user,
             createPointRechargeRequest.requestedPoints());
         pointRechargeRepository.save(pointRecharge);
+
+        PointRechargeDetail detail = PointRechargeDetail.builder()
+            .pointRecharge(pointRecharge)
+            .build();
+        pointRechargeDetailRepository.save(detail);
     }
 }
