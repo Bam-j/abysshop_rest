@@ -68,6 +68,7 @@ public class CartItemCommandService {
         updateCart(cart.getCartId());
     }
 
+    @Transactional
     public void updateCartItemsQuantity(List<UpdateCartItemsQuantityRequest> requestList) {
         Long cartId = requestList.get(0).cartId();
         Long totalPrice = 0L;
@@ -79,7 +80,7 @@ public class CartItemCommandService {
                 .orElseThrow(() -> new EntityNotFoundException("장바구니에 해당 상품이 존재하지 않습니다."));
 
             cartItem.updateQuantity(request.quantity());
-            totalPrice += cartItemRepository.findTotalPriceByCartIdAndProductId(request.cartId(),
+            totalPrice = cartItemRepository.findTotalPriceByCartIdAndProductId(request.cartId(),
                 request.productId());
         }
 
