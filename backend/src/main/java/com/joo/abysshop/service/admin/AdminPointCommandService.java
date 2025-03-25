@@ -20,6 +20,6 @@ public class AdminPointCommandService {
     public void providePoints(ProvidePointRequest providePointRequest) {
         User user = userRepository.findById(providePointRequest.userId())
             .orElseThrow(() -> new EntityNotFoundException("유저가 존재하지 않습니다."));
-        user.updatePointBalance(providePointRequest.points());
+        user.providePointBalance(providePointRequest.points());
     }
 }

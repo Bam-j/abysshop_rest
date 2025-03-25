@@ -92,7 +92,11 @@ public class User {
         this.password = newPassword;
     }
 
-    public void updatePointBalance(Long points) {
+    public void providePointBalance(Long points) {
         this.pointBalance += points;
+    }
+
+    public void deductPointBalance(Long points) {
+        this.pointBalance -= points;
     }
 }

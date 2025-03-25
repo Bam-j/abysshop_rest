@@ -39,5 +39,11 @@ public class GlobalExceptionHandler {
         ProductAlreadyExistsException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
+
+    @ExceptionHandler(InsufficientPointBalanceException.class)
+    public ResponseEntity<String> handleInsufficientPointBalanceException(
+        InsufficientPointBalanceException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
 }
 
