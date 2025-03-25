@@ -4,7 +4,7 @@ import com.joo.abysshop.entity.point.PointRechargeDetail;
 import java.time.LocalDateTime;
 
 public record AdminPointRechargeDetailListResponse(
-    Long rechargeDetailId,
+    Long pointRechargeDetailId,
     Long pointRechargeId,
     String bank,
     String accountNumber,
@@ -24,14 +24,14 @@ public record AdminPointRechargeDetailListResponse(
     }
 
     public static AdminPointRechargeDetailListResponse of(
-        Long rechargeDetailId,
+        Long pointRechargeDetailId,
         Long pointRechargeId,
         String bank,
         String accountNumber,
         Long depositAmount,
         LocalDateTime depositConfirmedAt) {
         return new AdminPointRechargeDetailListResponse(
-            rechargeDetailId,
+            pointRechargeDetailId,
             pointRechargeId,
             bank,
             accountNumber,
