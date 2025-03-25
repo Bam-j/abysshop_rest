@@ -4,7 +4,7 @@ import com.joo.abysshop.dto.product.request.CreateProductRequest;
 import com.joo.abysshop.dto.product.request.DeleteProductRequest;
 import com.joo.abysshop.service.product.ProductCommandService;
 import com.joo.abysshop.service.product.ProductQueryService;
-import com.joo.abysshop.util.exception.ProductAlreadyExistsException;
+import com.joo.abysshop.util.exception.product.ProductAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.joo.abysshop.util.exception;
+package com.joo.abysshop.util.exception.product;
 
 public class ProductAlreadyExistsException extends RuntimeException {
 

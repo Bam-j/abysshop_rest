@@ -9,7 +9,7 @@ import com.joo.abysshop.factory.PointRechargeFactory;
 import com.joo.abysshop.repository.point.PointRechargeDetailRepository;
 import com.joo.abysshop.repository.point.PointRechargeRepository;
 import com.joo.abysshop.repository.user.UserRepository;
-import com.joo.abysshop.util.exception.InsufficientPointBalanceException;
+import com.joo.abysshop.util.exception.point.InsufficientPointBalanceException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

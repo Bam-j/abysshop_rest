@@ -1,5 +1,11 @@
 package com.joo.abysshop.util.exception;
 
+import com.joo.abysshop.util.exception.account.DuplicateNicknameException;
+import com.joo.abysshop.util.exception.account.DuplicateUsernameException;
+import com.joo.abysshop.util.exception.auth.InvalidPasswordException;
+import com.joo.abysshop.util.exception.auth.InvalidUsernameException;
+import com.joo.abysshop.util.exception.point.InsufficientPointBalanceException;
+import com.joo.abysshop.util.exception.product.ProductAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

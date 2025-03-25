@@ -6,7 +6,7 @@ import com.joo.abysshop.dto.account.request.UpdatePasswordRequest;
 import com.joo.abysshop.entity.user.User;
 import com.joo.abysshop.repository.user.UserRepository;
 import com.joo.abysshop.service.security.JwtBlacklistService;
-import com.joo.abysshop.util.exception.InvalidPasswordException;
+import com.joo.abysshop.util.exception.auth.InvalidPasswordException;
 import com.joo.abysshop.util.security.JwtUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
