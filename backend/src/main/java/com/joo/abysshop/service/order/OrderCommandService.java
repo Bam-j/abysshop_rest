@@ -8,6 +8,7 @@ import com.joo.abysshop.entity.order.Order;
 import com.joo.abysshop.factory.OrderFactory;
 import com.joo.abysshop.repository.cart.CartRepository;
 import com.joo.abysshop.repository.order.OrderRepository;
+import com.joo.abysshop.service.cart.CartCommandService;
 import com.joo.abysshop.service.user.UserPointCommandService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class OrderCommandService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final OrderQueryService orderQueryService;
+    private final CartCommandService cartCommandService;
     private final UserPointCommandService userPointCommandService;
 
     @Transactional
@@ -41,5 +43,6 @@ public class OrderCommandService {
 
         userPointCommandService.deductPoints(deductPointsRequest);
         orderRepository.save(order);
+        cartCommandService.clearCart(cart.getCartId());
     }
 }
