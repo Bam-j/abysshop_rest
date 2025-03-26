@@ -43,6 +43,7 @@ public class SecurityConfig {
                     "/api/home",
                     "/api/auth/sign-in",
                     "/api/auth/sign-up",
+                    "/api/products/{productId}",
                     "/actuator/**")
                 .permitAll()
                 .anyRequest().authenticated()

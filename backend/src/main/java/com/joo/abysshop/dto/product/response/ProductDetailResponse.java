@@ -16,7 +16,7 @@ public record ProductDetailResponse(
             product.getProductName(),
             product.getPrice(),
             product.getDescription(),
-            product.getProductImage().getFileName()
+            product.getProductImage() != null ? product.getProductImage().getFileName() : null
         );
     }
 
