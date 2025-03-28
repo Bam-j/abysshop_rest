@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Carousel from '../components/Carousel';
 import PointRecharge from '../components/PointRecharge';
@@ -17,32 +17,32 @@ export const HomePage = () => {
 
   useEffect(() => {
     axios
-    .get("http://localhost:8080/api/home", {
+    .get('http://localhost:8080/api/home', {
       params: {
         page: 0,
         size: 12,
-        sort: "productId,desc",
+        sort: 'productId,desc',
       },
     })
     .then(response => {
       setProducts(response.data.content);
     })
     .catch(error => {
-      console.error("Failed to fetch products:", error);
+      console.error('Failed to fetch products:', error);
     });
   }, []);
 
   return (
-      <>
-        <Carousel images={carouselImages} />
-        {user && (
-            <nav id="point-action-menu">
-              <PointRecharge user={user} />
-              <TransferAndRefundInfo />
-            </nav>
-        )}
-        <ProductList products={products} />
-      </>
+    <>
+      <Carousel images={carouselImages} />
+      {user && (
+        <nav id="point-action-menu">
+          <PointRecharge user={user} />
+          <TransferAndRefundInfo />
+        </nav>
+      )}
+      <ProductList products={products} />
+    </>
   );
 };
 
