@@ -1,22 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/components/product/ProductList.scss';
 
-const ProductList = () => {
+const ProductList = ({products}) => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
-    fetch(``)
-    .then(res => res.json())
-    .then(data => {
-      setProducts(data.products);
-      setTotalPages(data.totalPages);
-    })
-    .catch(error => console.error('Error fetching products:', error));
-  }, [currentPage]);
 
   return (
     <section>
@@ -25,7 +14,7 @@ const ProductList = () => {
           <div className="item" key={product.productId}>
             <Link to={`/product/detail/${product.productId}`}>
               <img
-                src={`/upload/${product.originalFileName}`}
+                src={`/upload/${product.fileName}`}
                 alt={product.productName}
               />
               <div className="card-body">
