@@ -16,6 +16,26 @@ export const HomePage = () => {
   const carouselImages = [abyssblockLogo, abyssblockMark];
 
   useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      axios
+      .get('http://localhost:8080/api/user/me', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        setUser(res.data);
+      })
+      .catch(error => {
+        console.error('Failed to fetch user:', error);
+        setUser(null);
+      });
+    } else {
+      setUser(null);
+    }
+
     axios
     .get('http://localhost:8080/api/home', {
       params: {
