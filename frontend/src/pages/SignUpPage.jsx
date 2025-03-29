@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import '../styles/pages/SignUpPage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
 import { Tooltip } from 'bootstrap';
@@ -18,13 +20,37 @@ const SignUpPage = () => {
   }, []);
 
   const handleSubmit = async e => {
+    //TODO: username에 조건 달기 ex) n 글자 이상 & 대소문자 & 특수문자
     e.preventDefault();
 
-    /*
-    * TODO: 회원가입 처리 요청 보내기 관련 로직
-    *  empty input req, exists username, nickname => failure
-    *  signUp api 요청 보내기 & 실패시 setFailureMessage 설정
-    */
+    if (!username) {
+      setErrorMessage('계정을 입력해주세요.');
+      return;
+    } else if (!nickname) {
+      setErrorMessage('닉네임을 입력해주세요.');
+      return;
+    } else if (!password) {
+      setErrorMessage('비밀번호를 입력해주세요.');
+      return;
+    }
+
+    try {
+      await axios.post('http://localhost:8080/api/auth/sign-up', {
+        username,
+        nickname,
+        password,
+      });
+
+      navigate('/account/sign-in');
+    } catch (error) {
+      const message = error.response?.data?.message;
+
+      if (error.response?.status === 409 && message) {
+        setErrorMessage(message);
+      } else {
+        setErrorMessage('회원가입 중 오류가 발생했습니다.');
+      }
+    }
   };
 
   return (
