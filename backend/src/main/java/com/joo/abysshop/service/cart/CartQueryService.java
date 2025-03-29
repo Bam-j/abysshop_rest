@@ -36,4 +36,8 @@ public class CartQueryService {
         List<CartItemResponse> cartItemList = cartItemQueryService.getCartItemList(cart.cartId());
         return CartAndItemsResponse.of(cart, cartItemList);
     }
+
+    public Long getCartTotalQuantity(Long cartId) {
+        return cartRepository.getTotalQuantityByCartId(cartId);
+    }
 }

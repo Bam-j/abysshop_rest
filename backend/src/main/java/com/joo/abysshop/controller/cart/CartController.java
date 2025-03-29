@@ -31,4 +31,10 @@ public class CartController {
         cartCommandService.clearCart(cartId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("{cartId}/quantity")
+    public ResponseEntity<Long> getCartQuantity(@PathVariable("cartId") Long cartId) {
+        Long cartQuantity = cartQueryService.getCartTotalQuantity(cartId);
+        return ResponseEntity.ok(cartQuantity);
+    }
 }

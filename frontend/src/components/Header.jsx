@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import '../styles/components/Header.scss';
 import logo from '../assets/images/abyssblock_square_64x64.png';
@@ -10,7 +11,42 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //TODO: API로 부터 사용자 데이터(로그인 상태, 장바구니 quantity, points, userId, cartId) 가져오기
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      return;
+    }
+
+    axios.get('http://localhost:8080/api/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      const userInfo = res.data;
+
+      setUser({
+        userId: userInfo.userId,
+        cartId: userInfo.cartId,
+        username: userInfo.username,
+        nickname: userInfo.nickname,
+        userType: userInfo.userType,
+        points: userInfo.pointBalance,
+      });
+
+      return axios.get(
+        `http://localhost:8080/api/carts/${userInfo.cartId}/quantity`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    })
+    .then(res => {
+      setCartQuantity(res.data.quantity);
+    })
+    .catch(error => {
+      console.error('유저 또는 장바구니 정보 가져오기 실패:', error);
+      setUser(null);
+    });
   }, []);
 
   const handleLoginClick = () => {
@@ -18,7 +54,9 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    //TODO: 로그아웃 핸들러, 유저 로그인 인증 해제
+    localStorage.removeItem('accessToken');
+    setUser(null);
+    setCartQuantity(0);
     navigate('/');
   };
 
@@ -33,7 +71,7 @@ const Header = () => {
       <ul className="action-menu">
         {user ? (
           <>
-            {user.userType === 'admin' ? (
+            {user.userType === 'ADMIN' ? (
               <li>
                 <Link to="/admin/my-page?menu=order-management"
                       className="btn btn-primary">
@@ -64,8 +102,7 @@ const Header = () => {
               </>
             )}
             <li>
-              <button onClick={handleLogout} className="btn btn-primary">
-                로그아웃
+              <button onClick={handleLogout} className="btn btn-primary">로그아웃
               </button>
             </li>
           </>
