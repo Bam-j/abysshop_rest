@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import '../styles/pages/ProductDetail.scss';
 
@@ -10,11 +11,47 @@ const ProductDetailPage = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // TODO: 백엔드 API 호출하여 상품 정보 및 사용자 정보 가져오기
-  }, []);
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      setUser({ token });
+    }
+
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/products/${productId}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error('상품 정보를 불러오는 중 오류 발생: ', error);
+      }
+    };
+
+    fetchProduct();
+  }, [productId]);
 
   const handleAddToCart = async () => {
-    //장바구니 담기 동작 제어
+    if (!user) {
+      alert('로그인이 필요한 기능입니다.');
+      return;
+    }
+
+    try {
+      await axios.post(
+        'http://localhost:8080/api/carts/items/add',
+        {
+          productId: product.productId,
+          quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+    } catch (error) {
+      console.error('장바구니 추가 중 오류 발생:', error);
+      alert('장바구니 담기에 실패했습니다. 잠시후 다시 시도해주세요.');
+    }
   };
 
   return (
@@ -27,7 +64,7 @@ const ProductDetailPage = () => {
       </nav>
       <section>
         <img
-          src={`/upload/${product.originalFileName}`}
+          src={`/upload/${product.fileName}`}
           alt="상품 이미지"
           id="product-detail-image"
         />
