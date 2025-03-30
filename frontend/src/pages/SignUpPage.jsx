@@ -20,17 +20,32 @@ const SignUpPage = () => {
   }, []);
 
   const handleSubmit = async e => {
-    //TODO: username에 조건 달기 ex) n 글자 이상 & 대소문자 & 특수문자
     e.preventDefault();
 
     if (!username) {
       setErrorMessage('계정을 입력해주세요.');
       return;
-    } else if (!nickname) {
+    } else if (username.toLowerCase().includes('admin')) {
+      setErrorMessage('계정에 "admin"이라는 단어를 포함할 수 없습니다.');
+      return;
+    }
+
+    if (!nickname) {
       setErrorMessage('닉네임을 입력해주세요.');
       return;
-    } else if (!password) {
+    } else if (nickname.toLowerCase().includes('admin')) {
+      setErrorMessage('닉네임에 "admin"이라는 단어를 포함할 수 없습니다.');
+      return;
+    }
+
+    if (!password) {
       setErrorMessage('비밀번호를 입력해주세요.');
+      return;
+    } else if (password.length < 8) {
+      setErrorMessage('비밀번호는 8자 이상이어야 합니다.');
+      return;
+    } else if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+      setErrorMessage('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.');
       return;
     }
 
@@ -91,6 +106,9 @@ const SignUpPage = () => {
             type="password"
             placeholder="비밀번호"
             value={password}
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="영문과 숫자가 혼용된 8 글자 이상의 비밀번호를 입력해주세요."
             onChange={e => setPassword(e.target.value)}
           />
           <button type="submit" id="sign-up-button" className="btn btn-primary">
