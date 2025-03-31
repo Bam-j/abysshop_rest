@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/components/product/ProductList.scss';
 
-const ProductList = ({products}) => {
-  const [products, setProducts] = useState([]);
+const ProductList = ({ products }) => {
+  const [productList, setProductList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   return (
     <section>
       <div className="item-list">
-        {products.map(product => (
+        {productList.map(product => (
           <div className="item" key={product.productId}>
             <Link to={`/product/detail/${product.productId}`}>
               <img
@@ -28,7 +28,7 @@ const ProductList = ({products}) => {
         ))}
       </div>
 
-      //TODO: 반복 요소인 pagination 버튼 메뉴를 컴포넌트화 시키기
+      {/*TODO: 반복 요소인 pagination 버튼 메뉴를 컴포넌트화 시키기*/}
       <div className="pagination">
         {currentPage > 1 && (
           <button className="page-link"
