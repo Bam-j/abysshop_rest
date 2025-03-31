@@ -1,11 +1,33 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import '../styles/pages/OrderCompletePage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
 
 const OrderCompletePage = () => {
-  //TODO: 회원 마이 페이지 주문 내역 이동을 위해 userId를 백엔드로부터 가져오기
-  const userId = 0;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      return;
+    }
+
+    axios.get('http://localhost:8080/api/users/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      const userInfo = res.data;
+
+      setUser({
+        userId: userInfo.userId,
+        userType: userInfo.userType,
+      });
+    });
+  }, []);
 
   return (
     <div className="order-complete">
@@ -27,7 +49,7 @@ const OrderCompletePage = () => {
           <Link to="/" id="move-home-button" className="btn btn-primary">
             <i className="bi bi-house-door"></i> 메인으로
           </Link>
-          <Link to={`/user/my-page/${userId}?menu=order-management`}
+          <Link to={`/user/my-page/${user.userId}?menu=order-management`}
                 id="move-my-page-button" className="btn btn-success">
             <i className="bi bi-card-list"></i> 주문 내역으로
           </Link>
