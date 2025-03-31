@@ -1,31 +1,66 @@
 import { useState } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const PointRecharge = ({ user }) => {
-  const [points, setPoints] = useState('');
+  const [points, setPoints] = useState(0);
 
   const handleInputChange = e => {
     setPoints(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    if (!points.trim()) {
+    const trimmedInput = String(points).trim();
+
+    if (!trimmedInput) {
       alert('포인트를 입력해주세요.');
       return;
     }
 
-    if (isNaN(points.value)) {
+    if (isNaN(trimmedInput)) {
       alert('숫자만 입력이 가능합니다.');
       return;
     }
 
-    if (Number(points.value) <= 0) {
+    const pointValue = Number(trimmedInput);
+    if (pointValue <= 0) {
       alert('0 이하의 값은 입력할 수 없습니다.');
       return;
     }
 
-    //TODO: 모든 입력 검증이 통과되면 API 호출해서 요청 보내기
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+    try {
+      await axios.post(
+        'http://localhost:8080/api/users/points/recharge',
+        {
+          userId: user.userId,
+          requestedPoints: pointValue,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      setPoints(0);
+
+      const modalEl = document.getElementById('pointRechargeModal');
+      // eslint-disable-next-line no-undef
+      const modalInstance = bootstrap.Modal.getInstance(modalEl);
+      modalInstance.hide();
+    } catch (error) {
+      console.error('포인트 충전 요청 실패:', error);
+      alert('포인트 충전 요청에 실패했습니다.  다시 시도해주세요.');
+    }
   };
 
   return (
