@@ -8,16 +8,20 @@
 [공통]
 0. 반드시 배포 전에 txt 메모들 지우기
 
+1. 이 메모도 지울 것 혹은 ignore
+
 [백엔드]
-0. 개발 완료 이후 불필요한 Dependency 없애기
+0. 개발 완료 이후 불필요한 Dependency 없애기 - 완
 
-1. 기존 Controller를 RestController 방식으로 고치기 (Stateful -> Stateless REST API)
+1. 기존 Controller를 RestController 방식으로 고치기 (Stateful -> Stateless REST API) - 완
 
-2. 이에따라 session 권한 검사를 Spring Security(+JWT) 업무로 변경
+2. 이에따라 session 권한 검사를 Spring Security(+JWT) 업무로 변경 - 완
 
-3. 기존 MyBatis를 활용해 DB에 접근하던 방식을 Spring Data JPA로 변경
+3. 기존 MyBatis를 활용해 DB에 접근하던 방식을 Spring Data JPA로 변경 - 완
 
-4. 개발 완료 단계에서 기존 JSP, MyBatis 매퍼 삭제
+4. 개발 완료 단계에서 기존 JSP, MyBatis 매퍼 삭제 - 완
 
 [프론트엔드]
-1. 회원가입, 로그인, 주문 완료 제외한 페이지의 요소 크기 전체적으로 조금씩 키우기
+1. 전체적으로 페이지 디자인 다시 만지기
+
+2. 첫 구상과 작명 방식에 차이가 발생해서 완성후 hook나 props, 함수 등 이름 점검하기
