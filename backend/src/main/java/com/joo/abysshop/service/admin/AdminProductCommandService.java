@@ -21,7 +21,7 @@ public class AdminProductCommandService {
         if (productQueryService.existsByProductName(createProductRequest.productName())) {
             throw new ProductAlreadyExistsException("이미 존재하는 상품입니다.");
         }
-        //TODO: 이미지 저장과 불러오기 등의 이미지 관련 로직은 후에 추가
+
         productCommandService.createProduct(createProductRequest);
     }
 

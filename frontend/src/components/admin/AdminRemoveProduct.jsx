@@ -1,21 +1,51 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-//TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
 const AdminRemoveProduct = () => {
   const [productList, setProductList] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
-  useEffect(() => {
-  }, []);
+  const handleDeleteProduct = async (productId, productName) => {
+    const confirmed = window.confirm(`'${productName}' 상품을 삭제하시겠습니까?`);
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('accessToken');
+
+      const response = await fetch(
+        'http://localhost:8080/api/admin/products/delete', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId }),
+        });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || '상품 삭제에 실패했습니다.');
+        return;
+      }
+
+      alert('상품이 삭제되었습니다.');
+
+      setProductList(prev =>
+        prev.filter(product => product.productId !== productId),
+      );
+    } catch (error) {
+      console.error('상품 삭제 오류:', error);
+      setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  };
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'remove-product', page: newPage });
-  };
-
-  const handleDeleteProduct = async (productId, productName) => {
   };
 
   return (

@@ -6,17 +6,18 @@ const AdminCreateProduct = () => {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const fileInputRef = useRef(null);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!productName.trim()) {
       alert('상품명을 입력해주세요.');
       return;
     }
-    if (!productPrice.trim() || isNaN(productPrice.value) || Number(
-      productPrice.value) <= 0) {
+    const priceValue = Number(productPrice);
+    if (!productPrice.trim() || isNaN(priceValue) || priceValue <= 0) {
       alert('유효한 가격(숫자)를 입력해주세요.');
       return;
     }
@@ -25,7 +26,56 @@ const AdminCreateProduct = () => {
       return;
     }
 
-    //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
+    const files = fileInputRef.current?.files;
+    if (!files || files.length === 0) {
+      alert('상품 이미지를 선택해주세요.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', files[0]);
+    formData.append('productName', productName);
+    formData.append('price', priceValue);
+    formData.append('description', productDescription);
+
+    try {
+      const token = localStorage.getItem('accessToken');
+
+      const response = await fetch('http://localhost:8080/api/admin/products/create', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        try {
+          const errorData = await response.json();
+          setErrorMessage(errorData.message || '상품 등록에 실패했습니다.');
+        } catch {
+          setErrorMessage('상품 등록 중 알 수 없는 오류가 발생했습니다.');
+        }
+        return;
+      }
+
+      alert('상품이 성공적으로 등록되었습니다.');
+
+      setProductName('');
+      setProductPrice('');
+      setProductDescription('');
+      if (fileInputRef.current) {
+        fileInputRef.current.value = null;
+      }
+    } catch (error) {
+      const message = error.response?.data?.message;
+
+      if (message) {
+        setErrorMessage(message);
+      } else {
+        setErrorMessage('회원가입 중 오류가 발생했습니다.');
+      }
+    }
   };
 
   return (
