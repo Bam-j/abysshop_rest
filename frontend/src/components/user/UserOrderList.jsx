@@ -1,15 +1,50 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const UserOrderList = () => {
+const UserOrderList = ({ user }) => {
   const [orders, setOrders] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
-  //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
   useEffect(() => {
-  }, []);
+    const fetchOrders = async () => {
+      const token = localStorage.getItem('accessToken');
+      const page = currentPage - 1;
+      const size = 10;
+
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/users/my-page/orders?userId=${user.id}&page=${page}&size=${size}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          },
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          setOrders([]);
+          setTotalPages(1);
+          setErrorMessage(errorData.message || '주문 정보를 불러오는 데 실패했습니다.');
+          return;
+        }
+
+        const data = await response.json();
+
+        setOrders(data.orders);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('주문 조회 에러:', error);
+        setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    };
+
+    fetchOrders();
+  }, [currentPage]);
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'order-management', page: newPage });
@@ -30,12 +65,13 @@ const UserOrderList = () => {
         {orders.map(order => (
           <tr key={order.orderId}>
             <td>{order.orderId}</td>
-            <td>{order.totalPoints.toLocaleString()}</td>
-            <td>{new Date(order.orderDate).toLocaleDateString()}</td>
+            <td>{order.totalPrice.toLocaleString()}</td>
+            <td>{new Date(order.orderedAt).toLocaleDateString()}</td>
             <td data-state={order.orderState}>{order.orderState}</td>
           </tr>
         ))}
         </tbody>
+
       </table>
 
       <div className="pagination">

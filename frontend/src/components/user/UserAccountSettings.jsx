@@ -105,7 +105,7 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      const response = await fetch('/api/account/withdraw', {
+      const response = await fetch('http://localhost:8080/api/account/withdraw', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
