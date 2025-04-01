@@ -6,24 +6,136 @@ const UserAccountSettings = ({ user }) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    // TODO: 존재하는 닉네임, 동일 PW 변경 요청, 공백 요청 등에 대한 에러 메시지 Hook
-    if (errorMessage) {
-      alert(errorMessage);
-    }
-  }, [errorMessage]);
-
-  //TODO: 각각 닉네임 변경, 패스워드 변경, 회원 탈퇴 요청. 백엔드 API 설계 후 채워넣기
   const handleNicknameChange = async e => {
     e.preventDefault();
+
+    if (!newNickname.trim()) {
+      setErrorMessage('닉네임을 입력해주세요.');
+      return;
+    } else if (newNickname.toLowerCase().includes('admin')) {
+      setErrorMessage('닉네임에 "admin"이라는 단어를 포함할 수 없습니다.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/api/account/nickname',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            newNickname: newNickname,
+          }),
+        });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || '닉네임 변경에 실패했습니다.');
+        return;
+      }
+
+      alert('닉네임이 성공적으로 변경되었습니다.');
+      setNewNickname('');
+    } catch (error) {
+      const message = error.response?.data?.message;
+
+      if (message) {
+        setErrorMessage(message);
+      } else {
+        setErrorMessage('닉네임 변경 요청 중 오류가 발생했습니다.');
+      }
+    }
   };
 
   const handlePasswordChange = async e => {
     e.preventDefault();
+
+    if (!newPassword.trim()) {
+      setErrorMessage('새 비밀번호를 입력해주세요.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/api/account/password',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            newPassword: newPassword,
+          }),
+        });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || '비밀번호 변경에 실패했습니다.');
+        return;
+      }
+
+      alert('비밀번호가 성공적으로 변경되었습니다.');
+      setNewPassword('');
+    } catch (error) {
+      const message = error.response?.data?.message;
+
+      if (message) {
+        setErrorMessage(message);
+      } else {
+        setErrorMessage('비밀번호 변경 요청 중 오류가 발생했습니다.');
+      }
+    }
   };
 
-  const handleWithdraw = async e => {
+  const handleWithdraw = async (e) => {
     e.preventDefault();
+
+    if (!currentPassword.trim()) {
+      setErrorMessage('비밀번호를 입력해주세요.');
+      return;
+    }
+
+    const token = localStorage.getItem('accessToken'); // 혹은 다른 저장소에서 가져오기
+
+    if (!token) {
+      setErrorMessage('인증 정보가 없습니다. 다시 로그인 해주세요.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/account/withdraw', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          password: currentPassword,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || '회원 탈퇴에 실패했습니다.');
+        return;
+      }
+
+      alert('정상적으로 탈퇴 처리되었습니다.');
+
+      localStorage.removeItem('accessToken');
+      window.location.href = '/';
+    } catch (error) {
+      const message = error.response?.data?.message;
+
+      if (message) {
+        setErrorMessage(message);
+      } else {
+        setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    }
   };
 
   return (
