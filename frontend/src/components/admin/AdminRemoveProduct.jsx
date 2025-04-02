@@ -8,6 +8,27 @@ const AdminRemoveProduct = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/admin/dashboard/products?page=${currentPage
+          - 1}&size=10`);
+        if (!response.ok) {
+          throw new Error('상품 데이터를 불러오는 데 실패했습니다.');
+        }
+        const data = await response.json();
+        setProductList(data.products);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('상품 목록 불러오기 실패:', error);
+        setErrorMessage('상품 목록을 불러오는 중 오류가 발생했습니다.');
+      }
+    };
+
+    fetchProducts();
+  }, [currentPage]);
+
   const handleDeleteProduct = async (productId, productName) => {
     const confirmed = window.confirm(`'${productName}' 상품을 삭제하시겠습니까?`);
     if (!confirmed) {
@@ -18,14 +39,16 @@ const AdminRemoveProduct = () => {
       const token = localStorage.getItem('accessToken');
 
       const response = await fetch(
-        'http://localhost:8080/api/admin/products/delete', {
+        'http://localhost:8080/api/admin/products/delete',
+        {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ productId }),
-        });
+        },
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -50,6 +73,8 @@ const AdminRemoveProduct = () => {
 
   return (
     <section className="remove-product">
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+
       <table className="table table-hover">
         <thead>
         <tr className="table-primary">
@@ -91,7 +116,8 @@ const AdminRemoveProduct = () => {
           <button
             key={i + 1}
             onClick={() => handlePageChange(i + 1)}
-            className={`page-link ${i + 1 === currentPage ? 'active' : ''}`}>
+            className={`page-link ${i + 1 === currentPage ? 'active' : ''}`}
+          >
             {i + 1}
           </button>
         ))}
