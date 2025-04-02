@@ -46,7 +46,6 @@ public class AdminDashboardController {
         Pageable pageable) {
         Page<AdminPointRechargeDetailListResponse> pagedPointRechargeDetailList = adminDashboardQueryService.getPagedPointRechargeDetailList(
             pageable);
-        //TODO: 응답에서 주문자 정보 받아오기(닉네임만)
         AdminPointRechargeDetailsResponse response = AdminPointRechargeDetailsResponse.of(
             pagedPointRechargeDetailList);
         return ResponseEntity.ok(response);

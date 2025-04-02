@@ -26,9 +26,9 @@ const AdminPointRechargeDetailManagement = () => {
         const mapped = data.pointRechargeDetails.map(detail => ({
           rechargeDetailId: detail.pointRechargeDetailId,
           rechargeId: detail.pointRechargeId,
-          nickname: detail.nickname,
           bank: detail.bank,
           accountNumber: detail.accountNumber,
+          depositAmount: detail.depositAmount,
           depositConfirmedTime: detail.depositConfirmedAt,
         }));
 
@@ -61,8 +61,8 @@ const AdminPointRechargeDetailManagement = () => {
         <tr className="table-primary">
           <th>요청 정보 번호</th>
           <th>요청 번호</th>
-          <th>주문자</th>
           <th>입금 확인 일</th>
+          <th>입금액</th>
           <th>은행, 계좌번호</th>
         </tr>
         </thead>
@@ -71,7 +71,7 @@ const AdminPointRechargeDetailManagement = () => {
           <tr key={detail.rechargeDetailId}>
             <td>{detail.rechargeDetailId}</td>
             <td>{detail.rechargeId}</td>
-            <td>{detail.nickname}</td>
+            <td>{detail.depositAmount.toLocaleString()}</td>
             <td>{new Date(
               detail.depositConfirmedTime).toLocaleDateString()}</td>
             <td>
