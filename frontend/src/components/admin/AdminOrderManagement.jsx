@@ -1,17 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminOrderManagement = () => {
   const [orders, setOrders] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
-  //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
-
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/admin/dashboard/orders', {
+          params: {
+            page: currentPage - 1,
+            size: 10,
+            sort: 'orderedAt,desc',
+          },
+        });
 
-  }, []);
+        const data = response.data;
+
+        setOrders(data.orders);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('주문 목록 불러오기 실패:', error);
+        setErrorMessage('주문 데이터를 불러오지 못했습니다.');
+      }
+    };
+
+    fetchOrders();
+  }, [currentPage]);
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'order-management', page: newPage });

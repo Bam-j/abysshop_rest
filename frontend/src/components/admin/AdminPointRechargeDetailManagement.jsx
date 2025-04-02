@@ -1,15 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminPointRechargeDetailManagement = () => {
   const [rechargeDetails, setRechargeDetails] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
-  //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
   useEffect(() => {
-  }, []);
+    const fetchRechargeDetails = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:8080/api/admin/dashboard/point-recharge/details', {
+            params: {
+              page: currentPage - 1,
+              size: 10,
+              sort: 'depositConfirmedAt,desc',
+            },
+          });
+
+        const data = response.data;
+
+        const mapped = data.pointRechargeDetails.map(detail => ({
+          rechargeDetailId: detail.pointRechargeDetailId,
+          rechargeId: detail.pointRechargeId,
+          nickname: detail.nickname,
+          bank: detail.bank,
+          accountNumber: detail.accountNumber,
+          depositConfirmedTime: detail.depositConfirmedAt,
+        }));
+
+        setRechargeDetails(mapped);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('충전 상세 정보 로딩 실패:', error);
+        setErrorMessage('충전 상세 정보를 불러오는 데 실패했습니다.');
+      }
+    };
+
+    fetchRechargeDetails();
+  }, [currentPage]);
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'point-recharge-detail', page: newPage });

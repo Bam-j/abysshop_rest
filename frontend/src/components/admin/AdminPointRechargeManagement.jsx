@@ -1,15 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminPointRechargeManagement = () => {
   const [pointRequests, setPointRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
-  //TODO: 추후 요청, 데이터는 백엔드 API 설계 이후 재작성
   useEffect(() => {
-  }, []);
+    const fetchPointRecharges = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:8080/api/admin/dashboard/point-recharges', {
+            params: {
+              page: currentPage - 1,
+              size: 10,
+              sort: 'requestedAt,desc',
+            },
+          });
+
+        const data = response.data;
+
+        const mapped = data.pointRecharges.map(item => ({
+          rechargeId: item.pointRechargeId,
+          userId: item.userId,
+          nickname: item.nickname,
+          points: item.requestedPoints,
+          requestTime: item.requestedAt,
+          rechargeRequestState: item.rechargeState,
+        }));
+
+        setPointRequests(mapped);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('포인트 요청 목록 불러오기 실패:', error);
+        setErrorMessage('포인트 요청 데이터를 불러오는 데 실패했습니다.');
+      }
+    };
+
+    fetchPointRecharges();
+  }, [currentPage]);
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'point-recharge-management', page: newPage });
