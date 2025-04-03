@@ -7,7 +7,7 @@ import logo from '../assets/images/abyssblock_square_64x64.png';
 import useUserStore from '../stores/userUserStore';
 
 const Header = () => {
-  const { user, setUser, setCartQuantity, resetUser } = useUserStore();
+  const { user, setUser, cartQuantity, setCartQuantity, resetUser } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
