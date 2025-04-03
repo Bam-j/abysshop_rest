@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import '../styles/components/Header.scss';
 import logo from '../assets/images/abyssblock_square_64x64.png';
+import useUserStore from '../stores/userUserStore';
 
 const Header = () => {
-  const [user, setUser] = useState(null);
-  const [cartQuantity, setCartQuantity] = useState(0);
+  const { user, setUser, setCartQuantity, resetUser } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Header = () => {
       return axios.get(
         `http://localhost:8080/api/carts/${userInfo.cartId}/quantity`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
         });
     })
@@ -45,7 +45,7 @@ const Header = () => {
     })
     .catch(error => {
       console.error('유저 또는 장바구니 정보 가져오기 실패:', error);
-      setUser(null);
+      resetUser();
     });
   }, []);
 
@@ -55,8 +55,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    setUser(null);
-    setCartQuantity(0);
+    resetUser();
     navigate('/');
   };
 
