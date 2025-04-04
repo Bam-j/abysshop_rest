@@ -15,7 +15,7 @@ const CarouselComponent = ({ images }) => {
 
   return (
     <aside>
-      <div id="carouselIndicators" className="carousel slide">
+      <div id="carouselIndicators" className="carousel">
         <div className="carousel-indicators">
           {images.map((_, index) => (
             <button
@@ -39,6 +39,15 @@ const CarouselComponent = ({ images }) => {
           ))}
         </div>
 
+        <button className="carousel-control-prev" onClick={goToPrevSlide}>
+          <span className="custom-arrow prev-arrow" aria-hidden="true"></span>
+        </button>
+        <button className="carousel-control-next" onClick={goToNextSlide}>
+          <span className="custom-arrow next-arrow" aria-hidden="true"></span>
+        </button>
+
+
+        {/*
         <button className="carousel-control-prev" type="button"
                 onClick={goToPrevSlide}>
           <span className="carousel-control-prev-icon"
@@ -51,6 +60,7 @@ const CarouselComponent = ({ images }) => {
                 aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
+        */}
       </div>
     </aside>
   );

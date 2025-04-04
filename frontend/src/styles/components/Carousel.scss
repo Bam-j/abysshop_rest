@@ -1,12 +1,22 @@
 #carouselIndicators {
   width: 100%;
-  height: 12.5rem;
   margin: 1rem 1rem;
   display: flex;
-  align-items: center;
+  justify-content: center;
+}
+
+aside {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+
   .carousel-indicators {
     button {
       width: 10px;
@@ -26,23 +36,84 @@
     }
   }
 
-  .carousel-inner img {
-    object-fit: contain;
-    width: 100%;
-    height: 12.5rem;
+  .carousel-inner {
+    position: relative;
+
+    img {
+      object-fit: contain;
+      width: 100%;
+      height: 12.5rem;
+    }
   }
 
-  .carousel-control-prev, .carousel-control-next {
-    filter: invert(1);
-    opacity: 0.5;
+  .carousel-control-prev,
+  .carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: white;
+    z-index: 10;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
 
     &:hover {
-      opacity: 0.8;
-    }
-
-    &.active {
-      background-color: white;
       opacity: 1;
     }
   }
+
+  .custom-arrow {
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    padding: 3px;
+    transform: rotate(45deg);
+  }
+
+  .prev-arrow {
+    transform: rotate(135deg);
+  }
+
+  .next-arrow {
+    transform: rotate(-45deg);
+  }
+
+  /*
+  .carousel-control-prev,
+  .carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 1.5rem;
+    z-index: 10;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    filter: invert(1) brightness(1.2) contrast(1.2);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  .carousel-control-prev {
+    left: 1rem;
+  }
+
+  .carousel-control-next {
+    right: 1rem;
+  } */
 }
