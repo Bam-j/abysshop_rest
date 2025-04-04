@@ -40,10 +40,9 @@ public class SecurityConfig {
                 SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/home",
-                    "/api/auth/sign-in",
-                    "/api/auth/sign-up",
-                    "/api/products/{productId}",
+                    "/api/home/**",
+                    "/api/auth/**",
+                    "/api/products/**",
                     "/actuator/**")
                 .permitAll()
                 .anyRequest().authenticated()

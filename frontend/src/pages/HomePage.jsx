@@ -5,6 +5,8 @@ import PointRecharge from '../components/PointRecharge';
 import TransferAndRefundInfo from '../components/TransferAndRefundInfo';
 import ProductList from '../components/product/ProductList';
 
+import '../styles/pages/Homepage.scss';
+
 /* 캐러셀 이미지 관련 import */
 import abyssblockLogo from '../assets/images/abyssblock_logo.png';
 import abyssblockMark from '../assets/images/abyssblock_mark.png';
@@ -45,7 +47,8 @@ export const HomePage = () => {
       },
     })
     .then(response => {
-      setProducts(response.data.content);
+      const productList = response.data.productList?.content ?? [];
+      setProducts(productList);
     })
     .catch(error => {
       console.error('Failed to fetch products:', error);
@@ -53,7 +56,7 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <>
+    <div className="homepage-wrapper">
       <Carousel images={carouselImages} />
       {user && (
         <nav id="point-action-menu">
@@ -62,7 +65,7 @@ export const HomePage = () => {
         </nav>
       )}
       <ProductList products={products} />
-    </>
+    </div>
   );
 };
 

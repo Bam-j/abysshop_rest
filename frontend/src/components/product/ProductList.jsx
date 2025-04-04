@@ -1,16 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import '../../styles/components/product/ProductList.scss';
 
 const ProductList = ({ products }) => {
-  const [productList, setProductList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
   const [totalPages, setTotalPages] = useState(1);
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    if (Array.isArray(products)) {
+      setProductList(products);
+      setTotalPages(Math.ceil(products.length / itemsPerPage));
+    } else {
+      setProductList([]);
+      setTotalPages(1);
+    }
+  }, [products]);
+
+  const paginatedProducts = productList.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <section>
       <div className="item-list">
-        {productList.map(product => (
+        {paginatedProducts.map(product => (
           <div className="item" key={product.productId}>
             <Link to={`/product/detail/${product.productId}`}>
               <img
@@ -28,11 +45,10 @@ const ProductList = ({ products }) => {
         ))}
       </div>
 
-      {/*TODO: 반복 요소인 pagination 버튼 메뉴를 컴포넌트화 시키기*/}
+      {/* 페이지네이션 버튼 */}
       <div className="pagination">
         {currentPage > 1 && (
-          <button className="page-link"
-                  onClick={() => setCurrentPage(currentPage - 1)}>
+          <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>
             &laquo;
           </button>
         )}
@@ -46,8 +62,7 @@ const ProductList = ({ products }) => {
           </button>
         ))}
         {currentPage < totalPages && (
-          <button className="page-link"
-                  onClick={() => setCurrentPage(currentPage + 1)}>
+          <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>
             &raquo;
           </button>
         )}

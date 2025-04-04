@@ -17,7 +17,6 @@ const App = () => {
     <div className="App">
       <Router>
         <Routes>
-          {/* TODO: 마이페이지, 장바구니는 userId를 받아와서 처리하게끔 변경 */}
           <Route element={<Layout />}>
             {/* Header, Footer 컴포넌트가 포함된 페이지들은 여기에 */}
             <Route path="/" element={<HomePage />} />
