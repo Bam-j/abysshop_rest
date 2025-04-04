@@ -29,7 +29,7 @@ const ProductList = ({ products }) => {
       <div className="item-list">
         {paginatedProducts.map(product => (
           <div className="item" key={product.productId}>
-            <Link to={`/product/detail/${product.productId}`}>
+            <Link to={`/products/detail/${product.productId}`}>
               <img
                 src={`/upload/${product.fileName}`}
                 alt={product.productName}

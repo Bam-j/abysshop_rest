@@ -45,22 +45,6 @@ const CarouselComponent = ({ images }) => {
         <button className="carousel-control-next" onClick={goToNextSlide}>
           <span className="custom-arrow next-arrow" aria-hidden="true"></span>
         </button>
-
-
-        {/*
-        <button className="carousel-control-prev" type="button"
-                onClick={goToPrevSlide}>
-          <span className="carousel-control-prev-icon"
-                aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button"
-                onClick={goToNextSlide}>
-          <span className="carousel-control-next-icon"
-                aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
-        */}
       </div>
     </aside>
   );

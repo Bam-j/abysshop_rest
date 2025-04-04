@@ -20,10 +20,10 @@ const App = () => {
           <Route element={<Layout />}>
             {/* Header, Footer 컴포넌트가 포함된 페이지들은 여기에 */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/users/my-page" element={<UserMyPage />} />
+            <Route path="/users/my-page/:userId" element={<UserMyPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-            <Route path="/users/cart" element={<CartPage />} />
-            <Route path="/products/detail" element={<ProductDetailPage />} />
+            <Route path="/users/cart/:cartId" element={<CartPage />} />
+            <Route path="/products/detail/:productId" element={<ProductDetailPage />} />
           </Route>
 
           {/* Header, Footer가 포함되지 않는 단독 페이지는 여기에 */}
