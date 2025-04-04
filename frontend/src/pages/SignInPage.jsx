@@ -77,7 +77,7 @@ const SignInPage = () => {
             </button>
           </form>
 
-          <Link to="/account/sign-up" className="btn btn-secondary">
+          <Link to="/auth/sign-up" className="btn btn-secondary">
             회원가입
           </Link>
         </section>

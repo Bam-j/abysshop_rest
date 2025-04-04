@@ -56,7 +56,7 @@ const SignUpPage = () => {
         password,
       });
 
-      navigate('/account/sign-in');
+      navigate('/auth/sign-in');
     } catch (error) {
       const message = error.response?.data?.message;
 
@@ -71,7 +71,7 @@ const SignUpPage = () => {
   return (
     <main>
       <aside>
-        <Link className="btn btn-outline-primary btn-sm" to="/account/sign-in">
+        <Link className="btn btn-outline-primary btn-sm" to="/auth/sign-in">
           <i className="bi bi-arrow-left"></i> 로그인
         </Link>
       </aside>

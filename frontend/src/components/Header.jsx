@@ -50,7 +50,7 @@ const Header = () => {
   }, []);
 
   const handleLoginClick = () => {
-    navigate('/account/sign-in');
+    navigate('/auth/sign-in');
   };
 
   const handleLogout = () => {
