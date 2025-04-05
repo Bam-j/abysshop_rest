@@ -14,7 +14,6 @@
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 1rem;
   width: 150px;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
@@ -34,7 +33,8 @@
     width: 128px;
     height: 128px;
     object-fit: cover;
-    margin-bottom: 0.5rem;
+    display: block;
+    margin: 0.5rem auto;
   }
 
   .card-body {

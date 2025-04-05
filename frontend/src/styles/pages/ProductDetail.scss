@@ -1,14 +1,25 @@
-nav {
-  margin: 0 0.825rem;
-  padding: 0;
-}
-
 main {
+  position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.25rem;
   margin: 0.125rem 0.825rem;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 1rem;
+  z-index: 10;
+
+  button {
+    width: 150%;
+    height: 150%;
+    font-weight: 600 !important;
+  }
 }
 
 section {
@@ -56,10 +67,7 @@ section {
   }
 
   button {
-    padding: 10px 15px;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    font-weight: 600;
+    height: 150%;
   }
 }

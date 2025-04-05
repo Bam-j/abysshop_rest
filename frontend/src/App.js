@@ -23,7 +23,7 @@ const App = () => {
             <Route path="/users/my-page/:userId" element={<UserMyPage />} />
             <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
             <Route path="/users/cart/:cartId" element={<CartPage />} />
-            <Route path="/products/detail/:productId" element={<ProductDetailPage />} />
+            <Route path="/products/:productId" element={<ProductDetailPage />} />
           </Route>
 
           {/* Header, Footer가 포함되지 않는 단독 페이지는 여기에 */}

@@ -21,7 +21,7 @@ const ProductList = ({ products }) => {
 
   const paginatedProducts = productList.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
 
   return (
@@ -29,15 +29,18 @@ const ProductList = ({ products }) => {
       <div className="item-list">
         {paginatedProducts.map(product => (
           <div className="item" key={product.productId}>
-            <Link to={`/products/detail/${product.productId}`}>
+            <Link to={`/products/${product.productId}`}>
               <img
-                src={`/upload/${product.fileName}`}
+                src={
+                  product.fileName ?
+                    `/upload/${product.fileName}` : '/product_temp_128x128.png'
+                }
                 alt={product.productName}
               />
               <div className="card-body">
                 <h5 className="card-title">{product.productName}</h5>
                 <p className="card-text">
-                  {new Intl.NumberFormat('ko-KR').format(product.price)}원
+                  {new Intl.NumberFormat('ko-KR').format(product.price)} 포인트
                 </p>
               </div>
             </Link>
@@ -48,7 +51,8 @@ const ProductList = ({ products }) => {
       {/* 페이지네이션 버튼 */}
       <div className="pagination">
         {currentPage > 1 && (
-          <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>
+          <button className="page-link"
+                  onClick={() => setCurrentPage(currentPage - 1)}>
             &laquo;
           </button>
         )}
@@ -62,7 +66,8 @@ const ProductList = ({ products }) => {
           </button>
         ))}
         {currentPage < totalPages && (
-          <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>
+          <button className="page-link"
+                  onClick={() => setCurrentPage(currentPage + 1)}>
             &raquo;
           </button>
         )}
