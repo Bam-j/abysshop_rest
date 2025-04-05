@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import useUserStore from '../../stores/userUserStore';
 import axios from 'axios';
 
-import '../styles/components/Header.scss';
-import logo from '../assets/images/abyssblock_square_64x64.png';
-import useUserStore from '../stores/userUserStore';
+import '../../styles/components/common/Header.scss';
+import logo from '../../assets/images/abyssblock_square_64x64.png';
 
 const Header = () => {
   const { user, setUser, cartQuantity, setCartQuantity, resetUser } = useUserStore();

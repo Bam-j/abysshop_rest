@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 
-import '../styles/components/Nav.scss';
+import '../styles/components/common/Nav.scss';
 
 import AdminDashboardPageNav from '../components/admin/AdminDashboardPageNav';
 import AdminPointRechargeManagement

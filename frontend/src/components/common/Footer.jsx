@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import logo from '../assets/images/abyssblock_square_64x64.png';
-import '../styles/components/Footer.scss';
 import { Link } from 'react-router-dom';
+
+import logo from '../../assets/images/abyssblock_square_64x64.png';
+import '../../styles/components/common/Footer.scss';
 
 const Footer = () => {
   const [serverAddress] = useState('서버 주소');

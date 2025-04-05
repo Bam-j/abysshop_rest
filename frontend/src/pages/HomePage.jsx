@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Carousel from '../components/Carousel';
-import PointRecharge from '../components/PointRecharge';
-import TransferAndRefundInfo from '../components/TransferAndRefundInfo';
+import Carousel from '../components/home/Carousel';
+import PointRecharge from '../components/home/PointRecharge';
+import TransferAndRefundInfo from '../components/home/TransferAndRefundInfo';
 import ProductList from '../components/product/ProductList';
-import Pagination from '../components/Pagination';
+import Pagination from '../components/common/Pagination';
 
 import '../styles/pages/Homepage.scss';
 

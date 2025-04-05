@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 
-import '../styles/components/Nav.scss';
+import '../styles/components/common/Nav.scss';
 
 import UserMyPageNav from '../components/user/UserMyPageNav';
 import UserPointRechargeList from '../components/user/UserPointRechargeList';

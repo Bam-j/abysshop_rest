@@ -1,4 +1,4 @@
-import '../styles/components/Pagination.scss';
+import '../../styles/components/common/Pagination.scss';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   return (

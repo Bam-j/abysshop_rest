@@ -8,7 +8,7 @@ import SignUpPage from './pages/SignUpPage';
 import UserMyPage from './pages/UserMyPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import CartPage from './pages/CartPage';
-import Layout from './components/Layout';
+import Layout from './components/common/Layout';
 import OrderCompletePage from './pages/OrderCompletePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 
