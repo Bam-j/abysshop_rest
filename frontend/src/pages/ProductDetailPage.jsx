@@ -57,50 +57,52 @@ const ProductDetailPage = () => {
 
   return (
     <>
-      <nav>
+      <nav className={'detail-nav-menu'}>
         <button onClick={() => navigate('/')}
                 className="btn btn-outline-primary btn-sm">
           <i className="bi bi-arrow-left"></i> 목록으로
         </button>
       </nav>
 
-      {!product ? (
-        <div className="d-flex justify-content-center align-items-center"
-             style={{ height: '300px' }}>
-          <Spinner animation="border" variant="primary" role="status">
-            <span className="visually-hidden">로딩 중...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <section>
-          <img
-            src={
-              product.fileName ?
-                `/upload/${product.fileName}` : '/product_temp_128x128.png'
-            }
-            alt="상품 이미지"
-            id="product-detail-image"
-          />
-          <ul id="product-detail-info">
-            <li>
-              <h2><strong>{product.productName}</strong></h2>
-            </li>
-            <li>
-              <h3>
-                <strong>{product.price.toLocaleString()} 포인트</strong>
-              </h3>
-            </li>
-            <li id="product-description">
-              <pre>{product.description}</pre>
-            </li>
-            <li>
-              <button onClick={handleAddToCart} className="btn btn-primary">
-                <i className="bi bi-cart"></i> 장바구니 담기
-              </button>
-            </li>
-          </ul>
-        </section>
-      )}
+      <div className={'detail-wrapper'}>
+        {!product ? (
+          <div className="d-flex justify-content-center align-items-center"
+               style={{ height: '300px' }}>
+            <Spinner animation="border" variant="primary" role="status">
+              <span className="visually-hidden">로딩 중...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <section className={'detail-content'}>
+            <img
+              src={
+                product.fileName ?
+                  `/upload/${product.fileName}` : '/product_temp_128x128.png'
+              }
+              alt="상품 이미지"
+              id="product-detail-image"
+            />
+            <ul id="product-detail-info">
+              <li>
+                <h2><strong>{product.productName}</strong></h2>
+              </li>
+              <li>
+                <h3>
+                  <strong>{product.price.toLocaleString()} 포인트</strong>
+                </h3>
+              </li>
+              <li id="product-description">
+                <pre>{product.description}</pre>
+              </li>
+              <li>
+                <button onClick={handleAddToCart} className="btn btn-primary">
+                  <i className="bi bi-cart"></i> 장바구니 담기
+                </button>
+              </li>
+            </ul>
+          </section>
+        )}
+      </div>
     </>
   );
 };
