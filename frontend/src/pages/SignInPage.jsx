@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/pages/SignInPage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
@@ -17,7 +17,7 @@ const SignInPage = () => {
       setFailureMessage('아이디를 입력해주세요.');
       return;
     } else if (!password) {
-      setFailureMessage('비밀번호를 입력해주세요.')
+      setFailureMessage('비밀번호를 입력해주세요.');
       return;
     }
 
@@ -42,6 +42,7 @@ const SignInPage = () => {
   };
 
   return (
+    <div className={'sign-in-page-wrapper'}>
       <main>
         <aside>
           <Link className="btn btn-outline-primary btn-sm" to="/">
@@ -58,30 +59,32 @@ const SignInPage = () => {
 
           <form id="sign-in-form" onSubmit={handleSubmit}>
             <input
-                className="username-input"
-                type="text"
-                placeholder="계정"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
+              className="username-input"
+              type="text"
+              placeholder="계정"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
             <input
-                className="password-input"
-                type="password"
-                placeholder="비밀번호"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+              className="password-input"
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
             />
             <button type="submit" id="sign-in-button"
                     className="btn btn-primary">
               로그인
             </button>
-          </form>
 
-          <Link to="/auth/sign-up" className="btn btn-secondary">
-            회원가입
-          </Link>
+            <Link to="/auth/sign-up"
+                  className="btn btn-secondary move-sign-up-page">
+              회원가입
+            </Link>
+          </form>
         </section>
       </main>
+    </div>
   );
 };
 

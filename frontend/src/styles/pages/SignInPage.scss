@@ -1,85 +1,88 @@
 @import './../variables';
 
-body {
+.sign-in-page-wrapper {
   background-color: $third-color;
+  height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-}
 
-main {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  height: auto;
-}
-
-aside {
-  a {
-    margin-left: 0.25rem;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    transform: scale(1.2);
+  main {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 600px;
   }
-}
 
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  aside a {
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
 
-.mark-logo {
-  img {
-    width: 400px;
-    margin: 0.25rem 0;
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mark-logo img {
+    width: 300px;
+    margin-bottom: 1.5rem;
     user-select: none;
   }
-}
 
-input {
-  width: 250px;
-  height: 40px;
-  margin-top: 1rem;
-  padding: 10px;
-  border: none;
-  border-bottom: 3px solid #6ab4ff;
-  font-size: 1.1rem;
-  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-
-  &:focus {
-    outline: none;
-    border-bottom: 3px solid #165fe9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-}
-
-button {
-  width: 250px;
-  margin-top: 1.25rem;
-}
-
-#sign-in-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#sign-in-button {
-  margin-top: 1.5rem;
-  font-size: 1.1rem;
-}
-
-form {
   input {
+    height: 40px;
+    padding: 10px;
     margin-top: 1rem;
-  }
-}
+    border: none;
+    border-bottom: 3px solid #6ab4ff;
+    font-size: 1.1rem;
 
-.error-message {
-  color: red;
-  font-weight: bold;
-  margin-top: 1rem;
+    &:focus {
+      outline: none;
+      border-bottom-color: #165fe9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  #sign-in-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #sign-in-button {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .move-sign-up-page {
+    width: 100%;
+    display: block;
+    margin-top: 1rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.1rem;
+
+    &:hover {
+      background-color: #666;
+    }
+  }
+
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 1rem;
+    text-align: center;
+  }
 }
