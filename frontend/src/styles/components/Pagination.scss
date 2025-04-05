@@ -1,0 +1,30 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 1.5rem;
+
+  button.page-link {
+    all: unset;
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+    min-width: auto;
+    height: auto;
+    background-color: #f0f0f0;
+    color: #052e57;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+
+    &.active {
+      background-color: #3f99f5;
+      color: white;
+      font-weight: bold;
+    }
+
+    &:hover {
+      background-color: #dbeeff;
+    }
+  }
+}

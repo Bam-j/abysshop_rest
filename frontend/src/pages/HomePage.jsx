@@ -4,6 +4,7 @@ import Carousel from '../components/Carousel';
 import PointRecharge from '../components/PointRecharge';
 import TransferAndRefundInfo from '../components/TransferAndRefundInfo';
 import ProductList from '../components/product/ProductList';
+import Pagination from '../components/Pagination';
 
 import '../styles/pages/Homepage.scss';
 
@@ -14,6 +15,8 @@ import abyssblockMark from '../assets/images/abyssblock_mark.png';
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState(null);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
   const carouselImages = [abyssblockLogo, abyssblockMark];
 
@@ -27,9 +30,7 @@ export const HomePage = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(res => {
-        setUser(res.data);
-      })
+      .then(res => setUser(res.data))
       .catch(error => {
         console.error('Failed to fetch user:', error);
         setUser(null);
@@ -37,34 +38,47 @@ export const HomePage = () => {
     } else {
       setUser(null);
     }
+  }, []);
 
+  useEffect(() => {
     axios
     .get('http://localhost:8080/api/home', {
       params: {
-        page: 0,
+        page,
         size: 12,
         sort: 'productId,desc',
       },
     })
     .then(response => {
-      const productList = response.data.productList?.content ?? [];
-      setProducts(productList);
+      const data = response.data.productList;
+      setProducts(data.content);
+      setTotalPages(data.totalPages);
     })
     .catch(error => {
       console.error('Failed to fetch products:', error);
     });
-  }, []);
+  }, [page]);
 
   return (
     <div className="homepage-wrapper">
       <Carousel images={carouselImages} />
+
       {user && (
         <nav id="point-action-menu">
           <PointRecharge user={user} />
           <TransferAndRefundInfo />
         </nav>
       )}
+
       <ProductList products={products} />
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
+      )}
     </div>
   );
 };
