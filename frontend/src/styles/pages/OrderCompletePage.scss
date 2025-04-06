@@ -1,59 +1,59 @@
 @import './../variables';
 
-
-.order-complete {
+.order-complete-wrapper {
   background-color: $third-color;
+  height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-}
 
-main {
-  background-color: #fff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  height: auto;
-}
-
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h3 {
-    margin: 0.4rem 0;
+  main {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    height: auto;
   }
-}
 
-#order-complete-info {
-  width: 90%;
-  padding: 1.2rem;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  border-radius: 10px;
-}
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.mark-logo {
-  img {
+    h3 {
+      margin: 0.4rem 0;
+    }
+  }
+
+  #order-complete-info {
+    width: 90%;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border-radius: 10px;
+  }
+
+  .mark-logo img {
     width: 350px;
     margin: 0.825rem 0;
     user-select: none;
   }
-}
 
-.button-container {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
+  .button-container {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
 
-#move-home-button,
-#move-my-page-button {
-  width: 200px;
-  margin: 0.25rem 0;
-  display: inline-block;
-  text-align: center;
+  #move-home-button,
+  #move-my-page-button {
+    width: 200px;
+    margin: 0.25rem 0;
+    display: inline-block;
+    text-align: center;
+  }
 }

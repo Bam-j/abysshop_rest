@@ -7,7 +7,6 @@
   width: 100%;
   margin: 0;
   padding: 0;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,6 +60,7 @@
   #sign-in-button {
     margin-top: 1.5rem;
     font-size: 1.1rem;
+    width: 100%;
   }
 
   .move-sign-up-page {

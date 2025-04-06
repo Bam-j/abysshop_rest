@@ -42,7 +42,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div className={'sign-in-page-wrapper'}>
+    <div className="sign-in-page-wrapper">
       <main>
         <aside>
           <Link className="btn btn-outline-primary btn-sm" to="/">

@@ -30,7 +30,7 @@ const OrderCompletePage = () => {
   }, []);
 
   return (
-    <div className="order-complete">
+    <div className="order-complete-wrapper">
       <section>
         <div className="mark-logo">
           <img src={logo} alt="abyssblock 로고" />

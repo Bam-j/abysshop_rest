@@ -69,54 +69,57 @@ const SignUpPage = () => {
   };
 
   return (
-    <main>
-      <aside>
-        <Link className="btn btn-outline-primary btn-sm" to="/auth/sign-in">
-          <i className="bi bi-arrow-left"></i> 로그인
-        </Link>
-      </aside>
+    <div className="sign-up-page-wrapper">
+      <main>
+        <aside>
+          <Link className="btn btn-outline-primary btn-sm" to="/auth/sign-in">
+            <i className="bi bi-arrow-left"></i> 로그인
+          </Link>
+        </aside>
 
-      <section>
-        <div id="logo">
-          <img src={logo} alt="어비스블록 로고" />
-        </div>
+        <section>
+          <div className="mark-logo">
+            <img src={logo} alt="어비스블록 로고" />
+          </div>
 
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <form id="sign-up-form" onSubmit={handleSubmit}>
-          <input
-            className="username-input"
-            type="text"
-            placeholder="계정"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <input
-            className="nickname-input"
-            type="text"
-            placeholder="마인크래프트 닉네임"
-            value={nickname}
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            title="인게임 닉네임과 동일하게 가입해주세요. 거래 과정에서 문제가 발생할 수 있습니다."
-            onChange={e => setNickname(e.target.value)}
-          />
-          <input
-            className="password-input"
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            title="영문과 숫자가 혼용된 8 글자 이상의 비밀번호를 입력해주세요."
-            onChange={e => setPassword(e.target.value)}
-          />
-          <button type="submit" id="sign-up-button" className="btn btn-primary">
-            회원가입
-          </button>
-        </form>
-      </section>
-    </main>
+          <form id="sign-up-form" onSubmit={handleSubmit}>
+            <input
+              className="username-input"
+              type="text"
+              placeholder="계정"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+            <input
+              className="nickname-input"
+              type="text"
+              placeholder="마인크래프트 닉네임"
+              value={nickname}
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="인게임 닉네임과 동일하게 가입해주세요. 거래 과정에서 문제가 발생할 수 있습니다."
+              onChange={e => setNickname(e.target.value)}
+            />
+            <input
+              className="password-input"
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              data-bs-toggle="tooltip"
+              data-bs-placement="right"
+              title="영문과 숫자가 혼용된 8 글자 이상의 비밀번호를 입력해주세요."
+              onChange={e => setPassword(e.target.value)}
+            />
+            <button type="submit" id="sign-up-button"
+                    className="btn btn-primary">
+              회원가입
+            </button>
+          </form>
+        </section>
+      </main>
+    </div>
   );
 };
 
