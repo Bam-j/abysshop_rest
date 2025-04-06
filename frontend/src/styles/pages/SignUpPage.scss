@@ -22,6 +22,7 @@
   aside a {
     display: inline-block;
     margin-bottom: 1rem;
+    font-size: 1.1rem;
   }
 
   section {
@@ -68,33 +69,36 @@
     font-weight: bold;
     margin-top: 1rem;
   }
+}
 
-  /* 부트스트랩 툴팁 디자인 */
-  .tooltip-inner {
-    background-color: #f0ad4e !important;
-    color: white !important;
-    font-size: 14px;
-    padding: 10px 15px;
-    border-radius: 8px;
-  }
+/* 부트스트랩 툴팁 디자인 */
+.tooltip-inner {
+  background-color: #e38b06  !important;
+  color: white !important;
+  padding: 10px 15px;
+  border-radius: 8px;
+  line-height: 1.6;
+  text-align: left;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
 
-  .tooltip.show {
-    opacity: 1 !important;
-  }
+.tooltip.show {
+  opacity: 1 !important;
+}
 
-  .bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
-    border-right-color: #f0ad4e !important;
-  }
+.bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
+  border-right-color: #f0ad4e !important;
+}
 
-  .bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
-    border-left-color: #f0ad4e !important;
-  }
+.bs-tooltip-auto[data-popper-placement^="left"] .tooltip-arrow::before {
+  border-left-color: #f0ad4e !important;
+}
 
-  .bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
-    border-top-color: #f0ad4e !important;
-  }
+.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+  border-top-color: #f0ad4e !important;
+}
 
-  .bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
-    border-bottom-color: #f0ad4e !important;
-  }
+.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+  border-bottom-color: #f0ad4e !important;
 }

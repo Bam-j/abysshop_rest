@@ -99,7 +99,8 @@ const SignUpPage = () => {
               value={nickname}
               data-bs-toggle="tooltip"
               data-bs-placement="right"
-              title="인게임 닉네임과 동일하게 가입해주세요. 거래 과정에서 문제가 발생할 수 있습니다."
+              data-bs-html="true"
+              title="인게임 닉네임과 동일하게 가입해주세요.<br> 거래 과정에서 문제가 발생할 수 있습니다."
               onChange={e => setNickname(e.target.value)}
             />
             <input
@@ -109,7 +110,8 @@ const SignUpPage = () => {
               value={password}
               data-bs-toggle="tooltip"
               data-bs-placement="right"
-              title="영문과 숫자가 혼용된 8 글자 이상의 비밀번호를 입력해주세요."
+              data-bs-html="true"
+              title="8글자 이상의<br> 영문 대소문자, 숫자,<br> 특수문자만 사용가능합니다."
               onChange={e => setPassword(e.target.value)}
             />
             <button type="submit" id="sign-up-button"
