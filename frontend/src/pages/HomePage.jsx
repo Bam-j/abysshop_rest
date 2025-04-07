@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
+
+import '../styles/pages/Homepage.scss';
+
 import Carousel from '../components/home/Carousel';
 import PointRecharge from '../components/home/PointRecharge';
 import TransferAndRefundInfo from '../components/home/TransferAndRefundInfo';
 import ProductList from '../components/product/ProductList';
 import Pagination from '../components/common/Pagination';
-
-import '../styles/pages/Homepage.scss';
 
 /* 캐러셀 이미지 관련 import */
 import abyssblockLogo from '../assets/images/abyssblock_logo.png';
@@ -61,6 +63,10 @@ export const HomePage = () => {
 
   return (
     <div className="homepage-wrapper">
+      <Helmet>
+        <title>홈 | Abysshop</title>
+      </Helmet>
+
       <Carousel images={carouselImages} />
 
       {user && (

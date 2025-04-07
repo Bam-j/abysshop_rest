@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 
 import '../styles/pages/ProductDetail.scss';
-import Spinner from 'react-bootstrap/Spinner';
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -57,6 +58,12 @@ const ProductDetailPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          {product ? `상품 상세 - ${product.productName}` : '상품 상세 - 로딩 중'}
+        </title>
+      </Helmet>
+
       <nav className={'detail-nav-menu'}>
         <button onClick={() => navigate('/')}
                 className="btn btn-outline-primary btn-sm">

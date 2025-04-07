@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import '../styles/components/common/Nav.scss';
 
@@ -24,6 +25,10 @@ const UserMyPage = () => {
 
   return (
     <div className="user-my-page">
+      <Helmet>
+        <title>마이페이지</title>
+      </Helmet>
+
       <UserMyPageNav />
       <div id="content" className="user-my-page-content">
         {renderContent()}

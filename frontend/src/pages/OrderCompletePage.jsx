@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
+import axios from 'axios';
 import '../styles/pages/OrderCompletePage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
 
@@ -31,6 +32,10 @@ const OrderCompletePage = () => {
 
   return (
     <div className="order-complete-wrapper">
+      <Helmet>
+        <title>주문 완료</title>
+      </Helmet>
+
       <section>
         <div className="mark-logo">
           <img src={logo} alt="abyssblock 로고" />

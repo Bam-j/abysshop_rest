@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Tooltip } from 'bootstrap';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
 import '../styles/pages/SignUpPage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
-import { Tooltip } from 'bootstrap';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -70,6 +71,8 @@ const SignUpPage = () => {
 
   return (
     <div className="sign-up-page-wrapper">
+      <Helmet>회원가입</Helmet>
+
       <main>
         <aside>
           <Link className="btn btn-outline-primary btn-sm" to="/auth/sign-in">

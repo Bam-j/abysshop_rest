@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import '../styles/components/common/Nav.scss';
 
@@ -33,6 +34,10 @@ const AdminDashboardPage = () => {
 
   return (
     <div className="admin-page">
+      <Helmet>
+        <title>관리자 페이지</title>
+      </Helmet>
+
       <AdminDashboardPageNav />
       <div id="content" className="admin-page-content">
         {renderContent()}

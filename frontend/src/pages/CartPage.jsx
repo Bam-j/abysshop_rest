@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 
 import '../styles/pages/CartPage.scss';
@@ -177,6 +178,10 @@ const ShoppingCartPage = () => {
 
   return (
     <div className="cart-content">
+      <Helmet>
+        <title>장바구니</title>
+      </Helmet>
+
       <nav>
         <Link to="/" className="btn btn-outline-primary">
           <i className="bi bi-arrow-left"></i> 메인으로

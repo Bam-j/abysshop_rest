@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import '../styles/pages/SignInPage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
 
@@ -43,6 +45,10 @@ const SignInPage = () => {
 
   return (
     <div className="sign-in-page-wrapper">
+      <Helmet>
+        <title>로그인</title>
+      </Helmet>
+
       <main>
         <aside>
           <Link className="btn btn-outline-primary btn-sm" to="/">
