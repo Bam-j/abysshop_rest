@@ -4,8 +4,7 @@ header {
   margin: 0.825rem 1rem;
 }
 
-.square-logo {
-  img {
+.square-logo img {
     margin-top: 0.625rem;
     margin-left: 0.625rem;
     margin-bottom: 0.625rem;
@@ -14,7 +13,6 @@ header {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
 }
 
 .action-menu {

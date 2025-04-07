@@ -8,12 +8,10 @@ $spacing-large: 1rem;
   align-items: center;
   margin: $spacing-medium $spacing-large;
 
-  .square-logo {
-    img {
-      margin: $spacing-small;
-      object-fit: scale-down;
-      user-select: none;
-    }
+  .square-logo img {
+    margin: $spacing-small;
+    object-fit: scale-down;
+    user-select: none;
   }
 
   .address-menu {
