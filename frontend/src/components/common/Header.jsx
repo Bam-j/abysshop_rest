@@ -7,7 +7,13 @@ import '../../styles/components/common/Header.scss';
 import logo from '../../assets/images/abyssblock_square_64x64.png';
 
 const Header = () => {
-  const { user, setUser, cartQuantity, setCartQuantity, resetUser } = useUserStore();
+  const {
+    user,
+    setUser,
+    cartQuantity,
+    setCartQuantity,
+    resetUser,
+  } = useUserStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,20 +29,19 @@ const Header = () => {
     })
     .then(res => {
       const userInfo = res.data;
-
       setUser({
         userId: userInfo.userId,
         cartId: userInfo.cartId,
         username: userInfo.username,
         nickname: userInfo.nickname,
         userType: userInfo.userType,
-        points: userInfo.pointBalance,
+        pointBalance: userInfo.pointBalance,
       });
 
       return axios.get(
         `http://localhost:8080/api/carts/${userInfo.cartId}/quantity`, {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         });
     })
@@ -47,7 +52,7 @@ const Header = () => {
       console.error('유저 또는 장바구니 정보 가져오기 실패:', error);
       resetUser();
     });
-  }, []);
+  }, [resetUser, setUser, setCartQuantity]);
 
   const handleLoginClick = () => {
     navigate('/auth/sign-in');
@@ -72,7 +77,7 @@ const Header = () => {
           <>
             {user.userType === 'ADMIN' ? (
               <li>
-                <Link to="/admin/my-page?menu=order-management"
+                <Link to="/admin/dashboard?menu=order-management"
                       className="btn btn-primary">
                   관리자 페이지
                 </Link>
@@ -81,19 +86,21 @@ const Header = () => {
               <>
                 <li>
                   <button type="button" className="btn btn-success disabled">
-                    {user.points} 포인트
+                    {user.pointBalance} 포인트
                   </button>
                 </li>
                 <li>
-                  <Link to={`/user/cart/${user.cartId}`}
+                  <Link to={`/users/cart/${user.cartId}`}
                         className="btn btn-primary">
-                    <i className="bi bi-cart"></i> 장바구니{' '}
-                    <span className="badge bg-secondary">{cartQuantity}</span>
+                    <i className="bi bi-cart"></i> 장바구니
+                    <span className="badge bg-secondary ms-2 px-2">
+                      {String(cartQuantity ?? 0)}
+                    </span>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to={`/user/my-page/${user.userId}?menu=order-management`}
+                    to={`/users/my-page/${user.userId}?menu=order-management`}
                     className="btn btn-primary">
                     마이페이지
                   </Link>
