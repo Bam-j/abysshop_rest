@@ -1,0 +1,29 @@
+.point-recharge-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  text-align: left;
+}
+
+.point-recharge-wrapper .btn-primary {
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+}
+
+.modal-footer .input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  input.form-control {
+    flex: 1;
+  }
+
+  button.btn-primary {
+    white-space: nowrap;
+  }
+}

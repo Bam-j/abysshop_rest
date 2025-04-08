@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+import '../../styles/components/home/PointRecharge.scss';
 
 const PointRecharge = ({ user }) => {
   const [points, setPoints] = useState(0);
@@ -64,8 +65,8 @@ const PointRecharge = ({ user }) => {
   };
 
   return (
-    <div>
-      {user && user.userType === 'user' && (
+    <div className="point-recharge-wrapper">
+      {user && user.userType?.toUpperCase() === 'USER' && (
         <button
           type="button"
           className="btn btn-primary"

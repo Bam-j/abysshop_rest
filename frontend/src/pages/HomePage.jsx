@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
+import useUserStore from '../stores/userUserStore';
 
 import '../styles/pages/Homepage.scss';
 
@@ -16,9 +17,10 @@ import abyssblockMark from '../assets/images/abyssblock_mark.png';
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
-  const [user, setUser] = useState(null);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+
+  const { user, setUser, resetUser } = useUserStore();
 
   const carouselImages = [abyssblockLogo, abyssblockMark];
 
@@ -35,12 +37,12 @@ export const HomePage = () => {
       .then(res => setUser(res.data))
       .catch(error => {
         console.error('Failed to fetch user:', error);
-        setUser(null);
+        resetUser();
       });
     } else {
-      setUser(null);
+      resetUser();
     }
-  }, []);
+  }, [setUser, resetUser]);
 
   useEffect(() => {
     axios
@@ -69,14 +71,16 @@ export const HomePage = () => {
 
       <Carousel images={carouselImages} />
 
-      {user && (
-        <nav id="point-action-menu">
-          <PointRecharge user={user} />
-          <TransferAndRefundInfo />
-        </nav>
-      )}
+      <div className="product-menu">
+        {user && (
+          <nav className="point-action-menu">
+            <PointRecharge user={user} />
+            <TransferAndRefundInfo />
+          </nav>
+        )}
 
-      <ProductList products={products} />
+        <ProductList products={products} />
+      </div>
 
       {totalPages > 1 && (
         <Pagination
