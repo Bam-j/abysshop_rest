@@ -29,6 +29,12 @@ const SignUpPage = () => {
     } else if (username.toLowerCase().includes('admin')) {
       setErrorMessage('계정에 "admin"이라는 단어를 포함할 수 없습니다.');
       return;
+    } else if (username.length < 3) {
+      setErrorMessage('계정은 4글자 이상 입력해주세요.');
+      return;
+    } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      setErrorMessage('계정은 영문자와 숫자만 사용할 수 있습니다.');
+      return;
     }
 
     if (!nickname) {
@@ -36,6 +42,9 @@ const SignUpPage = () => {
       return;
     } else if (nickname.toLowerCase().includes('admin')) {
       setErrorMessage('닉네임에 "admin"이라는 단어를 포함할 수 없습니다.');
+      return;
+    } else if (nickname.length < 2) {
+      setErrorMessage('닉네임은 3글자 이상 입력해주세요.');
       return;
     }
 

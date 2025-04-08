@@ -24,7 +24,7 @@ const SignInPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/sign-in', {
+      const response = await axios.post('http://localhost:8080/api/auth/sign-in', {
         username,
         password,
       });
