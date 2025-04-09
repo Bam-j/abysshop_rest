@@ -1,19 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+
+import '../../styles/components/user/UserAccountSettings.scss';
 
 const UserAccountSettings = ({ user }) => {
   const [newNickname, setNewNickname] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [withdrawErrorMessage, setWithdrawErrorMessage] = useState('');
 
   const handleNicknameChange = async e => {
     e.preventDefault();
 
     if (!newNickname.trim()) {
-      setErrorMessage('닉네임을 입력해주세요.');
+      setNicknameErrorMessage('닉네임을 입력해주세요.');
       return;
     } else if (newNickname.toLowerCase().includes('admin')) {
-      setErrorMessage('닉네임에 "admin"이라는 단어를 포함할 수 없습니다.');
+      setNicknameErrorMessage('닉네임에 "admin"이라는 단어를 포함할 수 없습니다.');
       return;
     }
 
@@ -32,7 +36,7 @@ const UserAccountSettings = ({ user }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || '닉네임 변경에 실패했습니다.');
+        setNicknameErrorMessage(errorData.message || '닉네임 변경에 실패했습니다.');
         return;
       }
 
@@ -42,9 +46,9 @@ const UserAccountSettings = ({ user }) => {
       const message = error.response?.data?.message;
 
       if (message) {
-        setErrorMessage(message);
+        setNicknameErrorMessage(message);
       } else {
-        setErrorMessage('닉네임 변경 요청 중 오류가 발생했습니다.');
+        setNicknameErrorMessage('닉네임 변경 요청 중 오류가 발생했습니다.');
       }
     }
   };
@@ -53,7 +57,7 @@ const UserAccountSettings = ({ user }) => {
     e.preventDefault();
 
     if (!newPassword.trim()) {
-      setErrorMessage('새 비밀번호를 입력해주세요.');
+      setPasswordErrorMessage('새 비밀번호를 입력해주세요.');
       return;
     }
 
@@ -72,7 +76,7 @@ const UserAccountSettings = ({ user }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || '비밀번호 변경에 실패했습니다.');
+        setPasswordErrorMessage(errorData.message || '비밀번호 변경에 실패했습니다.');
         return;
       }
 
@@ -82,9 +86,9 @@ const UserAccountSettings = ({ user }) => {
       const message = error.response?.data?.message;
 
       if (message) {
-        setErrorMessage(message);
+        setPasswordErrorMessage(message);
       } else {
-        setErrorMessage('비밀번호 변경 요청 중 오류가 발생했습니다.');
+        setPasswordErrorMessage('비밀번호 변경 요청 중 오류가 발생했습니다.');
       }
     }
   };
@@ -93,33 +97,34 @@ const UserAccountSettings = ({ user }) => {
     e.preventDefault();
 
     if (!currentPassword.trim()) {
-      setErrorMessage('비밀번호를 입력해주세요.');
+      setWithdrawErrorMessage('비밀번호를 입력해주세요.');
       return;
     }
 
     const token = localStorage.getItem('accessToken'); // 혹은 다른 저장소에서 가져오기
 
     if (!token) {
-      setErrorMessage('인증 정보가 없습니다. 다시 로그인 해주세요.');
+      setWithdrawErrorMessage('인증 정보가 없습니다. 다시 로그인 해주세요.');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/account/withdraw', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          password: currentPassword,
-        }),
-      });
+      const response = await fetch('http://localhost:8080/api/account/withdraw',
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            userId: user.id,
+            password: currentPassword,
+          }),
+        });
 
       if (!response.ok) {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || '회원 탈퇴에 실패했습니다.');
+        setWithdrawErrorMessage(errorData.message || '회원 탈퇴에 실패했습니다.');
         return;
       }
 
@@ -131,61 +136,67 @@ const UserAccountSettings = ({ user }) => {
       const message = error.response?.data?.message;
 
       if (message) {
-        setErrorMessage(message);
+        setWithdrawErrorMessage(message);
       } else {
-        setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        setWithdrawErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
       }
     }
   };
 
   return (
     <section className="user-info">
-      {errorMessage && (
-        <div className="alert alert-danger">{errorMessage}</div>
-      )}
-
-      <form onSubmit={handleNicknameChange}>
-        <div className="alert alert-danger">
-          <strong>반드시 인게임 닉네임과 동일한 닉네임으로 설정해주세요.</strong>
-          <br />
-          인게임 닉네임과 상점 페이지 닉네임이 다른 경우 후원 과정에서 문제가 발생할 가능성이 높습니다.
-        </div>
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="변경할 닉네임 입력"
-            value={newNickname}
-            onChange={e => setNewNickname(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          닉네임 변경
-        </button>
-      </form>
-
       <hr />
-
-      <form onSubmit={handlePasswordChange}>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="변경할 비밀번호 입력"
-            value={newPassword}
-            onChange={e => setNewPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          비밀번호 변경
-        </button>
-      </form>
-
+      <div className="settings-form-group">
+        <form onSubmit={handleNicknameChange}>
+          <h3>닉네임 변경</h3>
+          <div className="alert alert-warning">
+            <strong>반드시 인게임 닉네임과 동일한 닉네임으로 설정해주세요.</strong>
+            <br />
+            인게임 닉네임과 상점 페이지 닉네임이 다른 경우 후원 과정에서 문제가 발생할 가능성이 높습니다.
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="변경할 닉네임 입력"
+              value={newNickname}
+              onChange={e => setNewNickname(e.target.value)}
+            />
+          </div>
+          {nicknameErrorMessage && <p
+            className="error-message">{nicknameErrorMessage}</p>}
+          <button type="submit"
+                  className="btn btn-primary settings-button-group">
+            닉네임 변경
+          </button>
+        </form>
+      </div>
       <hr />
-
+      <div className="settings-form-group">
+        <form onSubmit={handlePasswordChange}>
+          <h3>비밀번호 변경</h3>
+          <div className="mb-3">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="변경할 비밀번호 입력"
+              value={newPassword}
+              onChange={e => setNewPassword(e.target.value)}
+            />
+          </div>
+          {passwordErrorMessage && <p
+            className="error-message">{passwordErrorMessage}</p>}
+          <button type="submit"
+                  className="btn btn-primary settings-button-group">
+            비밀번호 변경
+          </button>
+        </form>
+      </div>
+      <hr />
+      <h3>회원 탈퇴</h3>
       <button
         type="button"
-        className="btn btn-danger"
+        className="btn btn-danger settings-button-group"
         data-bs-toggle="modal"
         data-bs-target="#withdraw-modal"
       >
@@ -197,8 +208,7 @@ const UserAccountSettings = ({ user }) => {
         id="withdraw-modal"
         tabIndex="-1"
         aria-labelledby="withdraw-modal-label"
-        aria-hidden="true"
-      >
+        aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -223,6 +233,8 @@ const UserAccountSettings = ({ user }) => {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
               />
+              {withdrawErrorMessage && <p
+                className="error-message">{withdrawErrorMessage}</p>}
             </div>
             <div className="modal-footer">
               <button
