@@ -5,9 +5,7 @@ const UserMyPageNav = ({ user }) => {
 
   const isMenuActive = (selectedMenu) => {
     const params = new URLSearchParams(location.search);
-    const current = params.get('menu');
-    console.log(`[isMenuActive] menu=${current}, selected=${selectedMenu}, active=${current === selectedMenu}`);
-    return current === selectedMenu;
+    return params.get('menu') === selectedMenu;
   };
 
   return (

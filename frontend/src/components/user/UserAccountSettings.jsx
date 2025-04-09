@@ -12,6 +12,7 @@ const UserAccountSettings = ({ user }) => {
 
   const handleNicknameChange = async e => {
     e.preventDefault();
+    console.log(user);
 
     if (!newNickname.trim()) {
       setNicknameErrorMessage('닉네임을 입력해주세요.');
@@ -21,15 +22,21 @@ const UserAccountSettings = ({ user }) => {
       return;
     }
 
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8080/api/account/nickname',
         {
           method: 'PATCH',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userId: user.id,
+            userId: user.userId,
             newNickname: newNickname,
           }),
         });
@@ -42,14 +49,10 @@ const UserAccountSettings = ({ user }) => {
 
       alert('닉네임이 성공적으로 변경되었습니다.');
       setNewNickname('');
+      setNicknameErrorMessage('');
     } catch (error) {
-      const message = error.response?.data?.message;
-
-      if (message) {
-        setNicknameErrorMessage(message);
-      } else {
-        setNicknameErrorMessage('닉네임 변경 요청 중 오류가 발생했습니다.');
-      }
+      console.error('네트워크 오류 또는 서버 미응답:', error);
+      setNicknameErrorMessage('서버와의 통신 중 오류가 발생했습니다.');
     }
   };
 
@@ -61,15 +64,21 @@ const UserAccountSettings = ({ user }) => {
       return;
     }
 
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8080/api/account/password',
         {
           method: 'PATCH',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userId: user.id,
+            userId: user.userId,
             newPassword: newPassword,
           }),
         });
@@ -101,10 +110,8 @@ const UserAccountSettings = ({ user }) => {
       return;
     }
 
-    const token = localStorage.getItem('accessToken'); // 혹은 다른 저장소에서 가져오기
-
+    const token = localStorage.getItem('accessToken');
     if (!token) {
-      setWithdrawErrorMessage('인증 정보가 없습니다. 다시 로그인 해주세요.');
       return;
     }
 
@@ -113,11 +120,11 @@ const UserAccountSettings = ({ user }) => {
         {
           method: 'DELETE',
           headers: {
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userId: user.id,
+            userId: user.userId,
             password: currentPassword,
           }),
         });
