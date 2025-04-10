@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import * as bootstrap from 'bootstrap';
 import axios from 'axios';
 
 import '../../styles/components/home/PointRecharge.scss';
 
 const PointRecharge = ({ user }) => {
   const [points, setPoints] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = e => {
     setPoints(e.target.value);
@@ -16,18 +18,21 @@ const PointRecharge = ({ user }) => {
     const trimmedInput = String(points).trim();
 
     if (!trimmedInput) {
-      alert('포인트를 입력해주세요.');
+      setErrorMessage('포인트를 입력해주세요.');
       return;
     }
 
     if (isNaN(trimmedInput)) {
-      alert('숫자만 입력이 가능합니다.');
+      setErrorMessage('숫자만 입력이 가능합니다.');
       return;
     }
 
     const pointValue = Number(trimmedInput);
     if (pointValue <= 0) {
-      alert('0 이하의 값은 입력할 수 없습니다.');
+      setErrorMessage('0 이하의 값은 입력할 수 없습니다.');
+      return;
+    } else if (pointValue <= 999) {
+      setErrorMessage('최소 1,000포인트 부터 충전 가능합니다.');
       return;
     }
 
@@ -53,6 +58,7 @@ const PointRecharge = ({ user }) => {
       );
 
       setPoints(0);
+      alert(`포인트 충전 요청에 성공했습니다.\n포인트 지급은 10분에서 최대 24시간까지 소요됩니다.`);
 
       const modalEl = document.getElementById('pointRechargeModal');
       // eslint-disable-next-line no-undef
@@ -60,7 +66,7 @@ const PointRecharge = ({ user }) => {
       modalInstance.hide();
     } catch (error) {
       console.error('포인트 충전 요청 실패:', error);
-      alert('포인트 충전 요청에 실패했습니다.  다시 시도해주세요.');
+      setErrorMessage('포인트 충전 요청에 실패했습니다.  다시 시도해주세요.');
     }
   };
 
@@ -93,13 +99,18 @@ const PointRecharge = ({ user }) => {
                   <li><strong>반드시 아래 안내 사항들을 읽고 송금을 한 후 송금 완료 버튼을
                     클릭해주세요.</strong></li>
                   <li>송금하실 때 송금자를 닉네임과 동일하게 설정해주세요.</li>
-                  <li>입금 후 포인트 지급까지 <strong>10분에서 24시간</strong>까지 소요될 수 있습니다.
+                  <li>
+                    입금 후 포인트 지급까지 <strong>10분에서 24시간</strong>까지 소요될 수 있습니다.
                   </li>
+                  <li>최소 1,000원부터 요청 가능합니다.</li>
                   <li>결제 과정에서 문의는 디스코드에서 받고있습니다.</li>
                 </ul>
               </div>
             </div>
             <div className="modal-footer">
+
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+
               <form onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
                   <input

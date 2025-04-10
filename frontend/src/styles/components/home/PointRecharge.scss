@@ -14,6 +14,12 @@
   padding: 0.5rem 1rem;
 }
 
+.modal-footer .error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
 .modal-footer .input-group {
   display: flex;
   align-items: center;
@@ -27,3 +33,4 @@
     white-space: nowrap;
   }
 }
+

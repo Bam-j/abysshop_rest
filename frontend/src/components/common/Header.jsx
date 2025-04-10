@@ -86,7 +86,7 @@ const Header = () => {
               <>
                 <li>
                   <button type="button" className="btn btn-success disabled">
-                    {user.pointBalance} 포인트
+                    {user.pointBalance.toLocaleString()} 포인트
                   </button>
                 </li>
                 <li>

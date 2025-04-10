@@ -23,7 +23,7 @@ const TransferRefundInfo = () => {
               </div>
               <div className="modal-body">
                 <div className="alert alert-warning" role="alert">
-                  <h2>[계좌 이체 안내]</h2>
+                  <h2>계좌 이체 안내</h2>
                   <h3><strong>[계좌 번호를 적을 공간]</strong></h3>
                   <ul>
                     <li>송금하실 때 송금자를 닉네임과 동일하게 설정해주세요.</li>
@@ -32,7 +32,7 @@ const TransferRefundInfo = () => {
                     <li>결제 과정에서 문의는 디스코드에서 받고 있습니다.</li>
                   </ul>
                   <hr />
-                  <h2>[환불 안내]</h2>
+                  <h2>환불 안내</h2>
                   <ul>
                     <li>환불 요청은 주문 번호, 송금자, 계좌번호, 금액, 이체 증명(이미지 등)를 첨부해서 디스코드로
                       요청해주세요.
