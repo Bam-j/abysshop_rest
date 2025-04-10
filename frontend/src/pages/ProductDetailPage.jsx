@@ -4,20 +4,17 @@ import { Helmet } from 'react-helmet-async';
 import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 
+import useUserStore from '../stores/userUserStore';
+
 import '../styles/pages/ProductDetail.scss';
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const [user, setUser] = useState(null);
+  const { user } = useUserStore();
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      setUser({ token });
-    }
-
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
@@ -34,6 +31,11 @@ const ProductDetailPage = () => {
   const handleAddToCart = async () => {
     if (!user) {
       alert('로그인이 필요한 기능입니다.');
+      return;
+    }
+
+    if (user.userType === 'ADMIN') {
+      alert('관리자는 장바구니 기능을 사용할 수 없습니다.');
       return;
     }
 
