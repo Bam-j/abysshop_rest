@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import Spinner from 'react-bootstrap/Spinner';
+
 const UserOrderList = ({ user }) => {
   const [orders, setOrders] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -16,7 +18,7 @@ const UserOrderList = ({ user }) => {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/users/my-page/orders?userId=${user.id}&page=${page}&size=${size}`,
+          `http://localhost:8080/api/users/my-page/orders?userId=${user.userId}&page=${page}&size=${size}`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -56,22 +58,51 @@ const UserOrderList = ({ user }) => {
         <thead>
         <tr className="table-primary">
           <th>주문 번호</th>
-          <th>주문 총 포인트</th>
+          <th>주문 합계 포인트</th>
           <th>구매일</th>
           <th>주문 상태</th>
         </tr>
         </thead>
         <tbody>
-        {orders.map(order => (
-          <tr key={order.orderId}>
-            <td>{order.orderId}</td>
-            <td>{order.totalPrice.toLocaleString()}</td>
-            <td>{new Date(order.orderedAt).toLocaleDateString()}</td>
-            <td data-state={order.orderState}>{order.orderState}</td>
+        {errorMessage ? (
+          <tr>
+            <td colSpan="4">
+              <div className="text-danger text-center"
+                   style={{ padding: '40px 0' }}>
+                {errorMessage}
+              </div>
+            </td>
           </tr>
-        ))}
+        ) : orders === null ? (
+          <tr>
+            <td colSpan="4">
+              <div className="d-flex justify-content-center align-items-center"
+                   style={{ height: '200px' }}>
+                <Spinner animation="border" variant="primary" role="status">
+                  <span className="visually-hidden">로딩 중...</span>
+                </Spinner>
+              </div>
+            </td>
+          </tr>
+        ) : orders.length === 0 ? (
+          <tr>
+            <td colSpan="4">
+              <div className="text-center" style={{ padding: '40px 0' }}>
+                주문 내역이 없습니다.
+              </div>
+            </td>
+          </tr>
+        ) : (
+          orders.map(order => (
+            <tr key={order.orderId}>
+              <td>{order.orderId}</td>
+              <td>{order.totalPrice.toLocaleString()}</td>
+              <td>{new Date(order.orderedAt).toLocaleDateString()}</td>
+              <td data-state={order.orderState}>{order.orderState}</td>
+            </tr>
+          ))
+        )}
         </tbody>
-
       </table>
 
       <div className="pagination">
