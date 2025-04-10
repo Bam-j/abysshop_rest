@@ -12,13 +12,15 @@ const UserAccountSettings = ({ user }) => {
 
   const handleNicknameChange = async e => {
     e.preventDefault();
-    console.log(user);
 
     if (!newNickname.trim()) {
       setNicknameErrorMessage('닉네임을 입력해주세요.');
       return;
     } else if (newNickname.toLowerCase().includes('admin')) {
       setNicknameErrorMessage('닉네임에 "admin"이라는 단어를 포함할 수 없습니다.');
+      return;
+    } else if (newNickname.length < 2) {
+      setNicknameErrorMessage('닉네임은 3글자 이상 입력해주세요.');
       return;
     }
 
@@ -60,7 +62,13 @@ const UserAccountSettings = ({ user }) => {
     e.preventDefault();
 
     if (!newPassword.trim()) {
-      setPasswordErrorMessage('새 비밀번호를 입력해주세요.');
+      setPasswordErrorMessage('변경할 비밀번호를 입력해주세요.');
+      return;
+    } else if (newPassword.length < 8) {
+      setPasswordErrorMessage('비밀번호는 8자 이상이어야 합니다.');
+      return;
+    } else if (!/[A-Za-z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+      setPasswordErrorMessage('비밀번호는 영문자와 숫자를 모두 포함해야 합니다.');
       return;
     }
 
@@ -91,6 +99,7 @@ const UserAccountSettings = ({ user }) => {
 
       alert('비밀번호가 성공적으로 변경되었습니다.');
       setNewPassword('');
+      setPasswordErrorMessage('');
     } catch (error) {
       const message = error.response?.data?.message;
 
@@ -159,7 +168,7 @@ const UserAccountSettings = ({ user }) => {
           <div className="alert alert-warning">
             <strong>반드시 인게임 닉네임과 동일한 닉네임으로 설정해주세요.</strong>
             <br />
-            인게임 닉네임과 상점 페이지 닉네임이 다른 경우 후원 과정에서 문제가 발생할 가능성이 높습니다.
+            인게임 닉네임과 다르게 설정하는 경우 상품 구매 및 전달 과정에서 문제가 발생할 수 있습니다.
           </div>
           <div className="mb-3">
             <input
