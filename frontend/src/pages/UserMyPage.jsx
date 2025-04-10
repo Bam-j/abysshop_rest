@@ -1,16 +1,16 @@
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import useUserStore from '../stores/userUserStore';
 import Spinner from 'react-bootstrap/Spinner';
 
-import '../styles/components/common/Nav.scss';
 import '../styles/pages/UserMyPage.scss';
+import '../styles/components/user/UserMyPageNav.scss';
 
 import UserMyPageNav from '../components/user/UserMyPageNav';
 import UserPointRechargeList from '../components/user/UserPointRechargeList';
 import UserOrderList from '../components/user/UserOrderList';
 import UserAccountSettings from '../components/user/UserAccountSettings';
-import { useEffect } from 'react';
 
 const UserMyPage = () => {
   const [searchParams] = useSearchParams();

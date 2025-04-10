@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 const UserMyPageNav = ({ user }) => {
   const location = useLocation();
 
-  const isMenuActive = (selectedMenu) => {
+  const isMenuActive = selectedMenu => {
     const params = new URLSearchParams(location.search);
     return params.get('menu') === selectedMenu;
   };

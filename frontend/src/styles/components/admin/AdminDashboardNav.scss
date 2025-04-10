@@ -1,0 +1,24 @@
+@import "../../variables";
+
+.dashboard-nav {
+  display: flex;
+  margin: 0.5rem 1.5rem;
+  font-size: 1.5rem;
+  gap: 1rem;
+}
+
+.dashboard-nav .nav-link {
+  text-decoration: none;
+  color: $primary-color;
+  font-weight: normal;
+
+  &:hover {
+    color: $fifth-color;
+    font-weight: 500;
+  }
+
+  &.active {
+    color: mix($fifth-color, $sixth-color, 50);
+    font-weight: bold;
+  }
+}
