@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 import '../../styles/components/user/UserAccountSettings.scss';
 
@@ -30,31 +31,21 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/account/nickname',
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: user.userId,
-            newNickname: newNickname,
-          }),
-        });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setNicknameErrorMessage(errorData.message || '닉네임 변경에 실패했습니다.');
-        return;
-      }
+      await axios.patch('http://localhost:8080/api/account/nickname', {
+        userId: user.userId,
+        newNickname,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       alert('닉네임이 성공적으로 변경되었습니다.');
       setNewNickname('');
       setNicknameErrorMessage('');
     } catch (error) {
-      console.error('네트워크 오류 또는 서버 미응답:', error);
-      setNicknameErrorMessage('서버와의 통신 중 오류가 발생했습니다.');
+      const message = error.response?.data?.message || '닉네임 변경에 실패했습니다.';
+      setNicknameErrorMessage(message);
     }
   };
 
@@ -78,36 +69,21 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/account/password',
-        {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: user.userId,
-            newPassword: newPassword,
-          }),
-        });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setPasswordErrorMessage(errorData.message || '비밀번호 변경에 실패했습니다.');
-        return;
-      }
+      await axios.patch('http://localhost:8080/api/account/password', {
+        userId: user.userId,
+        newPassword,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       alert('비밀번호가 성공적으로 변경되었습니다.');
       setNewPassword('');
       setPasswordErrorMessage('');
     } catch (error) {
-      const message = error.response?.data?.message;
-
-      if (message) {
-        setPasswordErrorMessage(message);
-      } else {
-        setPasswordErrorMessage('비밀번호 변경 요청 중 오류가 발생했습니다.');
-      }
+      const message = error.response?.data?.message || '비밀번호 변경 요청 중 오류가 발생했습니다.';
+      setPasswordErrorMessage(message);
     }
   };
 
@@ -125,37 +101,22 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/account/withdraw',
-        {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: user.userId,
-            password: currentPassword,
-          }),
-        });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setWithdrawErrorMessage(errorData.message || '회원 탈퇴에 실패했습니다.');
-        return;
-      }
+      await axios.delete('http://localhost:8080/api/account/withdraw', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          userId: user.userId,
+          password: currentPassword,
+        },
+      });
 
       alert('정상적으로 탈퇴 처리되었습니다.');
-
       localStorage.removeItem('accessToken');
       window.location.href = '/';
     } catch (error) {
-      const message = error.response?.data?.message;
-
-      if (message) {
-        setWithdrawErrorMessage(message);
-      } else {
-        setWithdrawErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      }
+      const message = error.response?.data?.message || '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+      setWithdrawErrorMessage(message);
     }
   };
 
@@ -166,8 +127,7 @@ const UserAccountSettings = ({ user }) => {
         <form onSubmit={handleNicknameChange}>
           <h3>닉네임 변경</h3>
           <div className="alert alert-warning">
-            <strong>반드시 인게임 닉네임과 동일한 닉네임으로 설정해주세요.</strong>
-            <br />
+            <strong>반드시 인게임 닉네임과 동일한 닉네임으로 설정해주세요.</strong><br />
             인게임 닉네임과 다르게 설정하는 경우 상품 구매 및 전달 과정에서 문제가 발생할 수 있습니다.
           </div>
           <div className="mb-3">
@@ -219,24 +179,17 @@ const UserAccountSettings = ({ user }) => {
         회원 탈퇴
       </button>
 
-      <div
-        className="modal fade"
-        id="withdraw-modal"
-        tabIndex="-1"
-        aria-labelledby="withdraw-modal-label"
-        aria-hidden="true">
+      <div className="modal fade" id="withdraw-modal" tabIndex="-1"
+           aria-labelledby="withdraw-modal-label" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="withdraw-modal-label">
                 회원 탈퇴 확인
               </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" className="btn-close"
+                      data-bs-dismiss="modal" aria-label="Close">
+              </button>
             </div>
             <div className="modal-body">
               <div className="alert alert-warning">
@@ -253,18 +206,12 @@ const UserAccountSettings = ({ user }) => {
                 className="error-message">{withdrawErrorMessage}</p>}
             </div>
             <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
+              <button type="button" className="btn btn-secondary"
+                      data-bs-dismiss="modal">
                 닫기
               </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={handleWithdraw}
-              >
+              <button type="button" className="btn btn-danger"
+                      onClick={handleWithdraw}>
                 회원 탈퇴
               </button>
             </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -17,31 +18,30 @@ const UserOrderList = ({ user }) => {
       const size = 10;
 
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/users/my-page/orders?userId=${user.userId}&page=${page}&size=${size}`,
+        const response = await axios.get(
+          'http://localhost:8080/api/users/my-page/orders',
           {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              userId: user.userId,
+              page,
+              size,
             },
           },
         );
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          setOrders([]);
-          setTotalPages(1);
-          setErrorMessage(errorData.message || '주문 정보를 불러오는 데 실패했습니다.');
-          return;
-        }
-
-        const data = await response.json();
-
+        const data = response.data;
         setOrders(data.orders);
         setTotalPages(data.totalPages);
       } catch (error) {
         console.error('주문 조회 에러:', error);
-        setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        const message = error.response?.data?.message || '주문 정보를 불러오는 데 실패했습니다.';
+        setOrders([]);
+        setTotalPages(1);
+        setErrorMessage(message);
       }
     };
 

@@ -61,7 +61,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     resetUser();
-    navigate('/');
+    window.location.href = '/';
   };
 
   return (

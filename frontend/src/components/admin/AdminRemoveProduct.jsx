@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminRemoveProduct = () => {
   const [productList, setProductList] = useState([]);
@@ -11,13 +12,17 @@ const AdminRemoveProduct = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/admin/dashboard/products?page=${currentPage
-          - 1}&size=10`);
-        if (!response.ok) {
-          throw new Error('상품 데이터를 불러오는 데 실패했습니다.');
-        }
-        const data = await response.json();
+        const response = await axios.get(
+          'http://localhost:8080/api/admin/dashboard/products',
+          {
+            params: {
+              page: currentPage - 1,
+              size: 10,
+            },
+          },
+        );
+
+        const data = response.data;
         setProductList(data.products);
         setTotalPages(data.totalPages);
       } catch (error) {
@@ -38,23 +43,16 @@ const AdminRemoveProduct = () => {
     try {
       const token = localStorage.getItem('accessToken');
 
-      const response = await fetch(
+      const response = await axios.delete(
         'http://localhost:8080/api/admin/products/delete',
         {
-          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ productId }),
+          data: { productId },
         },
       );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || '상품 삭제에 실패했습니다.');
-        return;
-      }
 
       alert('상품이 삭제되었습니다.');
 
@@ -63,7 +61,8 @@ const AdminRemoveProduct = () => {
       );
     } catch (error) {
       console.error('상품 삭제 오류:', error);
-      setErrorMessage('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      const message = error.response?.data?.message || '상품 삭제에 실패했습니다.';
+      setErrorMessage(message);
     }
   };
 

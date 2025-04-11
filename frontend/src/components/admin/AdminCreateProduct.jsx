@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import axios from 'axios';
 
 import '../../styles/components/admin/AdminCreateProduct.scss';
 
@@ -41,23 +42,15 @@ const AdminCreateProduct = () => {
     try {
       const token = localStorage.getItem('accessToken');
 
-      const response = await fetch('http://localhost:8080/api/admin/products/create', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.post(
+        'http://localhost:8080/api/admin/products/create',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-        body: formData,
-      });
-
-      if (!response.ok) {
-        try {
-          const errorData = await response.json();
-          setErrorMessage(errorData.message || '상품 등록에 실패했습니다.');
-        } catch {
-          setErrorMessage('상품 등록 중 알 수 없는 오류가 발생했습니다.');
-        }
-        return;
-      }
+      );
 
       alert('상품이 성공적으로 등록되었습니다.');
 
@@ -68,13 +61,8 @@ const AdminCreateProduct = () => {
         fileInputRef.current.value = null;
       }
     } catch (error) {
-      const message = error.response?.data?.message;
-
-      if (message) {
-        setErrorMessage(message);
-      } else {
-        setErrorMessage('회원가입 중 오류가 발생했습니다.');
-      }
+      const message = error.response?.data?.message || '상품 등록 중 오류가 발생했습니다.';
+      setErrorMessage(message);
     }
   };
 

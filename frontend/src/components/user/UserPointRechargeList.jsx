@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
 import Spinner from 'react-bootstrap/Spinner';
+import axios from 'axios';
 
 const UserPointRechargeList = ({ user }) => {
   const [requests, setRequests] = useState([]);
@@ -17,28 +17,30 @@ const UserPointRechargeList = ({ user }) => {
       const size = 10;
 
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/users/my-page/point-recharges?userId=${user.userId}&page=${page}&size=${size}`,
+        const response = await axios.get(
+          'http://localhost:8080/api/users/my-page/point-recharges',
           {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              userId: user.userId,
+              page,
+              size,
             },
           },
         );
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          setRequests([]);
-          setTotalPages(1);
-          console.error('포인트 요청 조회 실패:', errorData.message);
-          return;
-        }
-
-        const data = await response.json();
+        const data = response.data;
         setRequests(data.pointRecharges);
         setTotalPages(data.totalPages);
       } catch (error) {
+        const message = error.response?.data?.message
+          || '포인트 요청 정보를 불러오는 데 실패했습니다.';
+        setRequests([]);
+        setTotalPages(1);
+        setErrorMessage(message);
         console.error('포인트 요청 조회 에러:', error);
       }
     };
