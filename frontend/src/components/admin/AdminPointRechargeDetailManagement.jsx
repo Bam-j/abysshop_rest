@@ -12,9 +12,14 @@ const AdminPointRechargeDetailManagement = () => {
 
   useEffect(() => {
     const fetchRechargeDetails = async () => {
+      const token = localStorage.getItem('accessToken');
+
       try {
         const response = await axios.get(
           'http://localhost:8080/api/admin/dashboard/point-recharge/details', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             params: {
               page: currentPage - 1,
               size: 10,
@@ -62,9 +67,8 @@ const AdminPointRechargeDetailManagement = () => {
         <tr className="table-primary">
           <th>요청 정보 번호</th>
           <th>요청 번호</th>
-          <th>입금 확인 일</th>
-          <th>입금액</th>
-          <th>은행, 계좌번호</th>
+          <th>입금 확인일</th>
+          <th>은행, 계좌번호, 입금액</th>
         </tr>
         </thead>
         <tbody>
@@ -101,9 +105,11 @@ const AdminPointRechargeDetailManagement = () => {
             <tr key={detail.rechargeDetailId}>
               <td>{detail.rechargeDetailId}</td>
               <td>{detail.rechargeId}</td>
-              <td>{detail.depositAmount.toLocaleString()}</td>
-              <td>{new Date(
-                detail.depositConfirmedTime).toLocaleDateString()}</td>
+              <td>
+                {detail.depositConfirmedTime
+                  ? new Date(detail.depositConfirmedTime).toLocaleDateString()
+                  : ''}
+              </td>
               <td>
                 <form onSubmit={e => handleSubmit(e, detail.rechargeDetailId,
                   index)}>
@@ -120,8 +126,18 @@ const AdminPointRechargeDetailManagement = () => {
                       className="form-control"
                       placeholder="계좌번호"
                       value={detail.accountNumber || ''}
-                      onChange={e => handleInputChange(e, index,
-                        'accountNumber')}
+                      onChange={e => handleInputChange(e, index, 'accountNumber')}
+                    />
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="입금액"
+                      value={
+                        detail.depositAmount !== null && detail.depositAmount !== undefined
+                          ? Number(detail.depositAmount).toLocaleString()
+                          : ''
+                      }
+                      onChange={e => handleInputChange(e, index, 'depositAmount')}
                     />
                     <button type="submit" className="btn btn-success">
                       입력

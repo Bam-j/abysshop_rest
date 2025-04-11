@@ -12,10 +12,14 @@ const AdminRemoveProduct = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const token = localStorage.getItem('accessToken');
+
       try {
         const response = await axios.get(
-          'http://localhost:8080/api/admin/dashboard/products',
-          {
+          'http://localhost:8080/api/admin/dashboard/products', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             params: {
               page: currentPage - 1,
               size: 10,

@@ -12,9 +12,14 @@ const AdminPointRechargeManagement = () => {
 
   useEffect(() => {
     const fetchPointRecharges = async () => {
+      const token = localStorage.getItem('accessToken');
+
       try {
         const response = await axios.get(
           'http://localhost:8080/api/admin/dashboard/point-recharges', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             params: {
               page: currentPage - 1,
               size: 10,
