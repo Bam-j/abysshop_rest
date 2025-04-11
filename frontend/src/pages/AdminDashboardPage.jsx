@@ -37,7 +37,7 @@ const AdminDashboardPage = () => {
         return <AdminPointRechargeManagement />;
       case 'point-recharge-detail':
         return <AdminPointRechargeDetailManagement />;
-      case 'add-product':
+      case 'create-product':
         return <AdminCreateProduct />;
       case 'remove-product':
         return <AdminRemoveProduct />;

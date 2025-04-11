@@ -13,23 +13,28 @@ const AdminCreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!productName.trim()) {
-      alert('상품명을 입력해주세요.');
-      return;
-    }
-    const priceValue = Number(productPrice);
-    if (!productPrice.trim() || isNaN(priceValue) || priceValue <= 0) {
-      alert('유효한 가격(숫자)를 입력해주세요.');
-      return;
-    }
-    if (!productDescription.trim()) {
-      alert('상품 설명을 입력해주세요.');
+    const files = fileInputRef.current?.files;
+    if (!files || files.length === 0) {
+      setErrorMessage('상품 이미지를 선택해주세요.');
       return;
     }
 
-    const files = fileInputRef.current?.files;
-    if (!files || files.length === 0) {
-      alert('상품 이미지를 선택해주세요.');
+    if (!productName.trim()) {
+      setErrorMessage('상품명을 입력해주세요.');
+      return;
+    }
+
+    const priceValue = Number(productPrice);
+    if (isNaN(priceValue)) {
+      setErrorMessage('숫자만 입력 가능합니다.');
+      return;
+    } else if (priceValue <= 0) {
+      setErrorMessage('0 이상의 가격을 입력해주세요.');
+      return;
+    }
+
+    if (!productDescription.trim()) {
+      setErrorMessage('상품 설명을 입력해주세요.');
       return;
     }
 
@@ -100,6 +105,9 @@ const AdminCreateProduct = () => {
           value={productDescription}
           onChange={e => setProductDescription(e.target.value)}
         />
+
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+
         <button type="submit" className="btn btn-success">
           상품 등록
         </button>

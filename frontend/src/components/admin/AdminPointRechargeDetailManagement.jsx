@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 
 const AdminPointRechargeDetailManagement = () => {
@@ -67,41 +68,72 @@ const AdminPointRechargeDetailManagement = () => {
         </tr>
         </thead>
         <tbody>
-        {rechargeDetails.map((detail, index) => (
-          <tr key={detail.rechargeDetailId}>
-            <td>{detail.rechargeDetailId}</td>
-            <td>{detail.rechargeId}</td>
-            <td>{detail.depositAmount.toLocaleString()}</td>
-            <td>{new Date(
-              detail.depositConfirmedTime).toLocaleDateString()}</td>
-            <td>
-              <form onSubmit={e => handleSubmit(e, detail.rechargeDetailId,
-                index)}>
-                <div className="detail-input">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="은행"
-                    value={detail.bank || ''}
-                    onChange={e => handleInputChange(e, index, 'bank')}
-                  />
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="계좌번호"
-                    value={detail.accountNumber || ''}
-                    onChange={e => handleInputChange(e, index,
-                      'accountNumber')}
-                  />
-                  <button type="submit" className="btn btn-success">
-                    입력
-                  </button>
-                </div>
-              </form>
+        {errorMessage ? (
+          <tr>
+            <td colSpan="5">
+              <div className="text-danger text-center"
+                   style={{ padding: '40px 0' }}>
+                {errorMessage}
+              </div>
             </td>
           </tr>
-        ))}
+        ) : rechargeDetails === null ? (
+          <tr>
+            <td colSpan="5">
+              <div className="d-flex justify-content-center align-items-center"
+                   style={{ height: '200px' }}>
+                <Spinner animation="border" variant="primary" role="status">
+                  <span className="visually-hidden">로딩 중...</span>
+                </Spinner>
+              </div>
+            </td>
+          </tr>
+        ) : rechargeDetails.length === 0 ? (
+          <tr>
+            <td colSpan="5">
+              <div className="text-center" style={{ padding: '40px 0' }}>
+                입금 상세 내역이 없습니다.
+              </div>
+            </td>
+          </tr>
+        ) : (
+          rechargeDetails.map((detail, index) => (
+            <tr key={detail.rechargeDetailId}>
+              <td>{detail.rechargeDetailId}</td>
+              <td>{detail.rechargeId}</td>
+              <td>{detail.depositAmount.toLocaleString()}</td>
+              <td>{new Date(
+                detail.depositConfirmedTime).toLocaleDateString()}</td>
+              <td>
+                <form onSubmit={e => handleSubmit(e, detail.rechargeDetailId,
+                  index)}>
+                  <div className="detail-input">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="은행"
+                      value={detail.bank || ''}
+                      onChange={e => handleInputChange(e, index, 'bank')}
+                    />
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="계좌번호"
+                      value={detail.accountNumber || ''}
+                      onChange={e => handleInputChange(e, index,
+                        'accountNumber')}
+                    />
+                    <button type="submit" className="btn btn-success">
+                      입력
+                    </button>
+                  </div>
+                </form>
+              </td>
+            </tr>
+          ))
+        )}
         </tbody>
+
       </table>
 
       <div className="pagination">
