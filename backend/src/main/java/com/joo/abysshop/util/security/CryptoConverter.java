@@ -1,6 +1,7 @@
 package com.joo.abysshop.util.security;
 
 import com.joo.abysshop.config.EncryptionConfig;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import javax.crypto.Cipher;
@@ -20,8 +21,19 @@ public class CryptoConverter implements AttributeConverter<String, String> {
 
     @Autowired
     public CryptoConverter(EncryptionConfig encryptionConfig) {
-        this.secretKey = encryptionConfig.getSecretKey();
-        this.initVector = encryptionConfig.getInitVector();
+        this.secretKey = encryptionConfig.getSecretKey().trim();
+        this.initVector = encryptionConfig.getInitVector().trim();
+    }
+
+    @PostConstruct
+    public void validate() {
+        if (secretKey == null || secretKey.trim().getBytes().length != 16) {
+            throw new IllegalStateException("SecretKey must be 16 bytes");
+        }
+
+        if (initVector == null || initVector.trim().getBytes().length != 16) {
+            throw new IllegalStateException("InitVector must be 16 bytes");
+        }
     }
 
     @Override
@@ -54,4 +66,3 @@ public class CryptoConverter implements AttributeConverter<String, String> {
         }
     }
 }
-
