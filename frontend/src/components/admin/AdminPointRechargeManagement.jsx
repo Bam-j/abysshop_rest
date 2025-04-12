@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Spinner from 'react-bootstrap/Spinner';
+import { Spinner, ButtonGroup, Dropdown } from 'react-bootstrap';
 import axios from 'axios';
 
 const AdminPointRechargeManagement = () => {
   const [pointRequests, setPointRequests] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedState, setSelectedState] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
+
+  const rechargeStateMap = {
+    PENDING_PAYMENT: '송금 확인 대기',
+    PENDING_POINT_DEPOSIT: '포인트 지급 대기',
+    COMPLETED: '포인트 지급 완료',
+    REFUNDED: '환불 처리 완료',
+  };
 
   useEffect(() => {
     const fetchPointRecharges = async () => {
@@ -16,7 +24,8 @@ const AdminPointRechargeManagement = () => {
 
       try {
         const response = await axios.get(
-          'http://localhost:8080/api/admin/dashboard/point-recharges', {
+          'http://localhost:8080/api/admin/dashboard/point-recharges',
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -25,7 +34,8 @@ const AdminPointRechargeManagement = () => {
               size: 10,
               sort: 'requestedAt,desc',
             },
-          });
+          },
+        );
 
         const data = response.data;
 
@@ -54,9 +64,67 @@ const AdminPointRechargeManagement = () => {
   };
 
   const handleChangeState = async (rechargeId, newState) => {
+    const token = localStorage.getItem('accessToken');
+
+    try {
+      await axios.patch(
+        'http://localhost:8080/api/admin/point-recharges/state',
+        {
+          rechargeId,
+          newState,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      setSelectedState(prev => ({
+        ...prev,
+        [rechargeId]: newState,
+      }));
+    } catch (error) {
+      console.error('상태 변경 실패:', error);
+      alert('상태 변경에 실패했습니다.');
+    }
   };
 
-  const handleApprovePoint = async (userId, points, rechargeRequestState) => {
+  const handleApprovePoint = async (userId, points, rechargeRequestState,
+    rechargeId) => {
+    const token = localStorage.getItem('accessToken');
+
+    if (rechargeRequestState === 'COMPLETED' || rechargeRequestState === 'REFUNDED') {
+      alert('이미 처리된 요청입니다.');
+      return;
+    }
+
+    try {
+      await axios.patch(
+        'http://localhost:8080/api/admin/points/provide',
+        {
+          userId,
+          points
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      setSelectedState(prev => ({
+        ...prev,
+        [rechargeId]: 'COMPLETED',
+      }));
+
+      alert('포인트 지급이 완료되었습니다.');
+    } catch (error) {
+      console.error('포인트 지급 실패:', error);
+      alert('포인트 지급 중 오류가 발생했습니다.');
+    }
   };
 
   return (
@@ -88,8 +156,10 @@ const AdminPointRechargeManagement = () => {
         ) : pointRequests === null ? (
           <tr>
             <td colSpan="6">
-              <div className="d-flex justify-content-center align-items-center"
-                   style={{ height: '200px' }}>
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: '200px' }}
+              >
                 <Spinner animation="border" variant="primary" role="status">
                   <span className="visually-hidden">로딩 중...</span>
                 </Spinner>
@@ -105,80 +175,78 @@ const AdminPointRechargeManagement = () => {
             </td>
           </tr>
         ) : (
-          pointRequests.map(request => (
-            <tr key={request.rechargeId}>
-              <td>{request.rechargeId}</td>
-              <td>{request.nickname}</td>
-              <td>{request.points.toLocaleString()}</td>
-              <td>{new Date(request.requestTime).toLocaleDateString()}</td>
-              <td>
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-success dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {request.rechargeRequestState}
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => handleChangeState(request.rechargeId,
-                          'pending_payment')}
+          pointRequests.map(request => {
+            const currentState =
+              selectedState[request.rechargeId] || request.rechargeRequestState;
+
+            const displayState = rechargeStateMap[currentState];
+
+            return (
+              <tr key={request.rechargeId}>
+                <td>{request.rechargeId}</td>
+                <td>{request.nickname}</td>
+                <td>{request.points.toLocaleString()}</td>
+                <td>{new Date(request.requestTime).toLocaleDateString()}</td>
+                <td>
+                  <Dropdown as={ButtonGroup}>
+                    <Dropdown.Toggle
+                      variant="primary"
+                      id={`dropdown-${request.rechargeId}`}
+                      style={{
+                        width: '140px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {displayState}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        onClick={() =>
+                          handleChangeState(request.rechargeId,
+                            'PENDING_PAYMENT')
+                        }
                       >
                         송금 확인 대기
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => handleChangeState(request.rechargeId,
-                          'pending_point_deposit')}
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() =>
+                          handleChangeState(request.rechargeId,
+                            'PENDING_POINT_DEPOSIT')
+                        }
                       >
                         포인트 지급 대기
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
+                      </Dropdown.Item>
+                      <Dropdown.Item
                         onClick={() => handleChangeState(request.rechargeId,
-                          'completed')}
+                          'COMPLETED')}
                       >
                         포인트 지급 완료
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
+                      </Dropdown.Item>
+                      <Dropdown.Item
                         onClick={() => handleChangeState(request.rechargeId,
-                          'refunded')}
+                          'REFUNDED')}
                       >
                         환불 처리 완료
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-              <td>
-                <button
-                  className="btn btn-success"
-                  onClick={() => handleApprovePoint(request.userId,
-                    request.points, request.rechargeRequestState)}
-                  disabled={
-                    request.rechargeRequestState === 'completed' ||
-                    request.rechargeRequestState === 'refunded'
-                  }
-                >
-                  지급 승인
-                </button>
-              </td>
-            </tr>
-          ))
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-success"
+                    onClick={() =>
+                      handleApprovePoint(request.userId, request.points, currentState, request.rechargeId)}
+                    disabled={currentState === 'COMPLETED' || currentState === 'REFUNDED'}
+                  >
+                    지급 승인
+                  </button>
+                </td>
+              </tr>
+            );
+          })
         )}
         </tbody>
-
       </table>
 
       <div className="pagination">
@@ -193,7 +261,8 @@ const AdminPointRechargeManagement = () => {
           <button
             key={i + 1}
             onClick={() => handlePageChange(i + 1)}
-            className={`page-link ${i + 1 === currentPage ? 'active' : ''}`}>
+            className={`page-link ${i + 1 === currentPage ? 'active' : ''}`}
+          >
             {i + 1}
           </button>
         ))}
