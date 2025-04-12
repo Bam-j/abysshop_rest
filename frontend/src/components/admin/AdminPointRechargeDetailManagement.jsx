@@ -23,7 +23,7 @@ const AdminPointRechargeDetailManagement = () => {
             params: {
               page: currentPage - 1,
               size: 10,
-              sort: 'depositConfirmedAt,desc',
+              sort: 'pointRechargeDetailId,desc',
             },
           });
 
@@ -54,10 +54,49 @@ const AdminPointRechargeDetailManagement = () => {
   };
 
   const handleInputChange = (e, index, field) => {
+    const value = e.target.value;
+
+    setRechargeDetails(prevDetails =>
+      prevDetails.map((detail, i) => {
+        if (i === index) {
+          return {
+            ...detail,
+            [field]: field === 'depositAmount'
+              ? value.replace(/,/g, '')
+              : value,
+          };
+        }
+        return detail;
+      }));
   };
 
   const handleSubmit = async (e, rechargeDetailId, index) => {
     e.preventDefault();
+    const token = localStorage.getItem('accessToken');
+    const { bank, accountNumber, depositAmount } = rechargeDetails[index];
+
+    try {
+      await axios.patch(
+        'http://localhost:8080/api/admin/point-recharges/details/update',
+        {
+          pointRechargeDetailId: rechargeDetailId,
+          bank,
+          accountNumber,
+          depositAmount: depositAmount ? Number(depositAmount.toString().replace(/,/g, '')) : 0,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      alert('입금 정보가 성공적으로 저장되었습니다.');
+    } catch (error) {
+      console.error('입금 정보 저장 실패:', error);
+      alert('입금 정보를 저장하는 중 오류가 발생했습니다.');
+    }
   };
 
   return (
@@ -149,7 +188,6 @@ const AdminPointRechargeDetailManagement = () => {
           ))
         )}
         </tbody>
-
       </table>
 
       <div className="pagination">
