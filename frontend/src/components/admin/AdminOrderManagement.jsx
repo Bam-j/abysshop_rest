@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import { Dropdown, ButtonGroup } from 'react-bootstrap';
+import { ORDER_STATE, ORDER_STATE_LABEL } from '../../constants/orderStates';
 import axios from 'axios';
 
 const AdminOrderManagement = () => {
   const [orders, setOrders] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
+  const [selectedOrderState, setSelectedOrderState] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
 
@@ -28,7 +31,6 @@ const AdminOrderManagement = () => {
           });
 
         const data = response.data;
-
         setOrders(data.orders);
         setTotalPages(data.totalPages);
       } catch (error) {
@@ -45,6 +47,31 @@ const AdminOrderManagement = () => {
   };
 
   const handleChangeOrderState = async (orderId, newState) => {
+    const token = localStorage.getItem('accessToken');
+
+    try {
+      await axios.patch(
+        'http://localhost:8080/api/admin/orders/state',
+        {
+          orderId,
+          newState,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      setSelectedOrderState(prev => ({
+        ...prev,
+        [orderId]: newState,
+      }));
+    } catch (error) {
+      console.error('주문 상태 변경 실패:', error);
+      alert('주문 상태 변경에 실패했습니다.');
+    }
   };
 
   return (
@@ -89,58 +116,48 @@ const AdminOrderManagement = () => {
             </td>
           </tr>
         ) : (
-          orders.map(order => (
-            <tr key={order.orderId}>
-              <td>{order.orderId}</td>
-              <td>{order.userId}. {order.nickname}</td>
-              <td>{order.totalPoints.toLocaleString()}</td>
-              <td>{new Date(order.orderDate).toLocaleDateString()}</td>
-              <td>
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-success dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    {order.orderState}
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => handleChangeOrderState(order.orderId,
-                          'shipping')}
-                      >
-                        상품 지급 대기
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => handleChangeOrderState(order.orderId,
-                          'completed')}
-                      >
-                        상품 지급 완료
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => handleChangeOrderState(order.orderId,
-                          'refunded')}
-                      >
-                        환불 처리 완료
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          ))
+          orders.map(order => {
+            const currentState = selectedOrderState[order.orderId]
+              || order.orderState;
+            const displayState = ORDER_STATE_LABEL[currentState]
+              || currentState;
+
+            return (
+              <tr key={order.orderId}>
+                <td>{order.orderId}</td>
+                <td>{order.userId}. {order.nickname}</td>
+                <td>{order.totalPoints.toLocaleString()}</td>
+                <td>{new Date(order.orderDate).toLocaleDateString()}</td>
+                <td>
+                  <Dropdown as={ButtonGroup}>
+                    <Dropdown.Toggle
+                      variant="primary"
+                      id={`dropdown-${order.orderId}`}
+                      style={{
+                        width: '160px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {displayState}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {Object.entries(ORDER_STATE).map(([key, value]) => (
+                        <Dropdown.Item
+                          key={key}
+                          onClick={() => handleChangeOrderState(order.orderId, value)}
+                        >
+                          {ORDER_STATE_LABEL[value]}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </td>
+              </tr>
+            );
+          })
         )}
         </tbody>
-
       </table>
 
       <div className="pagination">

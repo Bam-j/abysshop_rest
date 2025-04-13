@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Spinner, ButtonGroup, Dropdown } from 'react-bootstrap';
+import {
+  POINT_RECHARGE_STATE,
+  POINT_RECHARGE_STATE_LABEL,
+} from '../../constants/pointRechargeStates';
 import axios from 'axios';
 
 const AdminPointRechargeManagement = () => {
@@ -10,13 +14,6 @@ const AdminPointRechargeManagement = () => {
   const [selectedState, setSelectedState] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get('page')) || 1;
-
-  const rechargeStateMap = {
-    PENDING_PAYMENT: '송금 확인 대기',
-    PENDING_POINT_DEPOSIT: '포인트 지급 대기',
-    COMPLETED: '포인트 지급 완료',
-    REFUNDED: '환불 처리 완료',
-  };
 
   useEffect(() => {
     const fetchPointRecharges = async () => {
@@ -38,7 +35,6 @@ const AdminPointRechargeManagement = () => {
         );
 
         const data = response.data;
-
         const mapped = data.pointRecharges.map(item => ({
           rechargeId: item.pointRechargeId,
           userId: item.userId,
@@ -95,7 +91,8 @@ const AdminPointRechargeManagement = () => {
     rechargeId) => {
     const token = localStorage.getItem('accessToken');
 
-    if (rechargeRequestState === 'COMPLETED' || rechargeRequestState === 'REFUNDED') {
+    if (rechargeRequestState === POINT_RECHARGE_STATE.COMPLETED ||
+      rechargeRequestState === POINT_RECHARGE_STATE.REFUNDED) {
       alert('이미 처리된 요청입니다.');
       return;
     }
@@ -105,7 +102,7 @@ const AdminPointRechargeManagement = () => {
         'http://localhost:8080/api/admin/points/provide',
         {
           userId,
-          points
+          points,
         },
         {
           headers: {
@@ -117,7 +114,7 @@ const AdminPointRechargeManagement = () => {
 
       setSelectedState(prev => ({
         ...prev,
-        [rechargeId]: 'COMPLETED',
+        [rechargeId]: POINT_RECHARGE_STATE.COMPLETED,
       }));
 
       alert('포인트 지급이 완료되었습니다.');
@@ -176,10 +173,9 @@ const AdminPointRechargeManagement = () => {
           </tr>
         ) : (
           pointRequests.map(request => {
-            const currentState =
-              selectedState[request.rechargeId] || request.rechargeRequestState;
-
-            const displayState = rechargeStateMap[currentState];
+            const currentState = selectedState[request.rechargeId]
+              || request.rechargeRequestState;
+            const displayState = POINT_RECHARGE_STATE_LABEL[currentState];
 
             return (
               <tr key={request.rechargeId}>
@@ -201,34 +197,16 @@ const AdminPointRechargeManagement = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() =>
-                          handleChangeState(request.rechargeId,
-                            'PENDING_PAYMENT')
-                        }
-                      >
-                        송금 확인 대기
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() =>
-                          handleChangeState(request.rechargeId,
-                            'PENDING_POINT_DEPOSIT')
-                        }
-                      >
-                        포인트 지급 대기
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleChangeState(request.rechargeId,
-                          'COMPLETED')}
-                      >
-                        포인트 지급 완료
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleChangeState(request.rechargeId,
-                          'REFUNDED')}
-                      >
-                        환불 처리 완료
-                      </Dropdown.Item>
+                      {Object.entries(POINT_RECHARGE_STATE).map(
+                        ([key, value]) => (
+                          <Dropdown.Item
+                            key={key}
+                            onClick={() => handleChangeState(request.rechargeId,
+                              value)}
+                          >
+                            {POINT_RECHARGE_STATE_LABEL[value]}
+                          </Dropdown.Item>
+                        ))}
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
@@ -236,8 +214,10 @@ const AdminPointRechargeManagement = () => {
                   <button
                     className="btn btn-success"
                     onClick={() =>
-                      handleApprovePoint(request.userId, request.points, currentState, request.rechargeId)}
-                    disabled={currentState === 'COMPLETED' || currentState === 'REFUNDED'}
+                      handleApprovePoint(request.userId, request.points,
+                        currentState, request.rechargeId)}
+                    disabled={currentState === 'COMPLETED' || currentState
+                      === 'REFUNDED'}
                   >
                     지급 승인
                   </button>
