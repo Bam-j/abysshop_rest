@@ -2,7 +2,6 @@ package com.joo.abysshop.controller.product;
 
 import com.joo.abysshop.dto.product.response.ProductImageResourceResponse;
 import com.joo.abysshop.service.product.ProductImageQueryService;
-//import io.github.cdimascio.dotenv.Dotenv;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +22,7 @@ public class ProductImageController {
 
     public ProductImageController(
         @Value("${image.dir}") String imageDir,
-        ProductImageQueryService productImageQueryService
-    ) {
+        ProductImageQueryService productImageQueryService) {
         this.imageDir = imageDir;
         this.productImageQueryService = productImageQueryService;
     }

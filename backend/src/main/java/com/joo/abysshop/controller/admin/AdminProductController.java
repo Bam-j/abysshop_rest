@@ -26,8 +26,7 @@ public class AdminProductController {
         @RequestParam("image") MultipartFile image,
         @RequestParam("productName") String productName,
         @RequestParam("price") Long price,
-        @RequestParam("description") String description
-    ) {
+        @RequestParam("description") String description) {
         CreateProductRequest createProductRequest = CreateProductRequest
             .of(image, productName, price, description);
         adminProductCommandService.createProduct(createProductRequest);

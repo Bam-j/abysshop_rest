@@ -40,6 +40,8 @@ services:
       IMAGE_DIR: ${IMAGE_DIR}
     ports:
       - ${SPRING_APP_PORT}:8080
+    volumes:
+      - C:/Users/juhyu/abysshop_img:/upload/img
 
   frontend:
     build: ./frontend

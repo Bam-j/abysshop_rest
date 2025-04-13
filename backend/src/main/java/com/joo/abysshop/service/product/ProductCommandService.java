@@ -15,11 +15,15 @@ public class ProductCommandService {
 
     private final ProductRepository productRepository;
     private final ProductQueryService productQueryService;
+    private final ProductImageCommandService productImageCommandService;
 
     @Transactional
     public void createProduct(CreateProductRequest createProductRequest) {
         Product product = ProductFactory.of(createProductRequest);
         productRepository.save(product);
+
+        Long productId = product.getProductId();
+        productImageCommandService.saveProductImage(productId, createProductRequest.image());
     }
 
     @Transactional

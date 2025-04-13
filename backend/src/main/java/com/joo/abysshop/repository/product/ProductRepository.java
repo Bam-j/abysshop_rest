@@ -1,6 +1,9 @@
 package com.joo.abysshop.repository.product;
 
 import com.joo.abysshop.entity.product.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,4 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p.price FROM Product p WHERE p.productId = :productId")
     Long findPriceByProductId(Long productId);
+
+    @EntityGraph(attributePaths = "productImage")
+    Page<Product> findAll(Pageable pageable);
 }
