@@ -15,19 +15,16 @@ management:
     health:
       show-details: always
 
-
 spring:
   application:
     name: abysshop
+  web:
+    resources:
+      static-locations: classpath:/static/, file:${IMAGE_DIR}/
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
     active: dev
-  mvc:
-    static-path-pattern: /resources/static/**
-    view:
-      suffix: .jsp
-      prefix: /WEB-INF/views/
   devtools:
     livereload:
       enabled: true
