@@ -12,7 +12,7 @@ const ProductList = ({ products }) => {
               <img
                 src={
                   product.fileName
-                    ? `/upload/${product.fileName}`
+                    ? `http://localhost:8080/upload/${product.fileName}`
                     : '/product_temp_128x128.png'
                 }
                 alt={product.productName}

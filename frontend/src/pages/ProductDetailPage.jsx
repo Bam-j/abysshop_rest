@@ -85,8 +85,9 @@ const ProductDetailPage = () => {
           <section className={'detail-content'}>
             <img
               src={
-                product.fileName ?
-                  `/upload/${product.fileName}` : '/product_temp_128x128.png'
+                product.fileName
+                  ? `http://localhost:8080/upload/${product.fileName}`
+                  : '/product_temp_128x128.png'
               }
               alt="상품 이미지"
               id="product-detail-image"

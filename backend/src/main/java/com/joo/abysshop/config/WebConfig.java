@@ -1,5 +1,6 @@
 package com.joo.abysshop.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -10,15 +11,20 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private String resourcePath = "/static/**";
-    private String classpath = "classpath:/static/";
-    private String imgResourcePath = "/upload/**";
-    private String imgSavePath = "file:///C:/Users/juhyu/abysshop_img/";
+    private final String resourcePath = "/static/**";
+    private final String classpath = "classpath:/static/";
+
+    @Value("${IMAGE_DIR}")
+    private String imageDir;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(resourcePath).addResourceLocations(classpath);
-        registry.addResourceHandler(imgResourcePath).addResourceLocations(imgSavePath);
+
+        // 💡 imageDir은 뒤에 `/`가 없어도 안전하게 처리하기 위해 붙여줍니다
+        String location = "file:///" + (imageDir.endsWith("/") ? imageDir : imageDir + "/");
+        registry.addResourceHandler("/upload/**")
+            .addResourceLocations(location);
     }
 
     @Override

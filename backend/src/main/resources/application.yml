@@ -18,9 +18,11 @@ management:
 spring:
   application:
     name: abysshop
+  mvc:
+    static-path-pattern: /upload/**
   web:
     resources:
-      static-locations: classpath:/static/, file:${IMAGE_DIR}/
+      static-locations: file:/upload_img/
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
