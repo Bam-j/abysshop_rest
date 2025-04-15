@@ -7,13 +7,11 @@ import '../../styles/components/common/Header.scss';
 import logo from '../../assets/images/abyssblock_square_64x64.png';
 
 const Header = () => {
-  const {
-    user,
-    setUser,
-    cartQuantity,
-    setCartQuantity,
-    resetUser,
-  } = useUserStore();
+  const user = useUserStore(state => state.user);
+  const cartQuantity = useUserStore(state => state.cartQuantity);
+  const setUser = useUserStore(state => state.setUser);
+  const resetUser = useUserStore(state => state.resetUser);
+  const updateCartQuantity = useUserStore(state => state.updateCartQuantity);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,21 +36,13 @@ const Header = () => {
         pointBalance: userInfo.pointBalance,
       });
 
-      return axios.get(
-        `http://localhost:8080/api/carts/${userInfo.cartId}/quantity`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      updateCartQuantity(userInfo);
     })
-    .then(res => {
-      setCartQuantity(res.data.quantity);
-    })
-    .catch(error => {
-      console.error('유저 또는 장바구니 정보 가져오기 실패:', error);
+    .catch(err => {
+      console.error('유저 정보 가져오기 실패:', err);
       resetUser();
     });
-  }, [resetUser, setUser, setCartQuantity]);
+  }, [setUser, resetUser, updateCartQuantity]);
 
   const handleLoginClick = () => {
     navigate('/auth/sign-in');
@@ -94,7 +84,7 @@ const Header = () => {
                         className="btn btn-primary">
                     <i className="bi bi-cart"></i> 장바구니
                     <span className="badge bg-secondary ms-2 px-2">
-                      {String(cartQuantity ?? 0)}
+                      {typeof cartQuantity === 'number' ? String(cartQuantity) : '0'}
                     </span>
                   </Link>
                 </li>
@@ -108,13 +98,15 @@ const Header = () => {
               </>
             )}
             <li>
-              <button onClick={handleLogout} className="btn btn-primary">로그아웃
+              <button onClick={handleLogout} className="btn btn-primary">
+                로그아웃
               </button>
             </li>
           </>
         ) : (
           <li>
-            <button onClick={handleLoginClick} className="btn btn-primary">로그인
+            <button onClick={handleLoginClick} className="btn btn-primary">
+              로그인
             </button>
           </li>
         )}

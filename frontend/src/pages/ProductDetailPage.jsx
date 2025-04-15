@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Spinner from 'react-bootstrap/Spinner';
-import axios from 'axios';
-
 import useUserStore from '../stores/userUserStore';
+import axios from 'axios';
 
 import '../styles/pages/ProductDetail.scss';
 
@@ -12,13 +11,14 @@ const ProductDetailPage = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const { user } = useUserStore();
+  const { user, updateCartQuantity } = useUserStore();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/products/${productId}`);
+          `http://localhost:8080/api/products/${productId}`,
+        );
         setProduct(response.data);
       } catch (error) {
         console.error('상품 정보를 불러오는 중 오류 발생: ', error);
@@ -54,6 +54,8 @@ const ProductDetailPage = () => {
           },
         },
       );
+      alert('장바구니에 상품이 추가되었습니다.');
+      await updateCartQuantity(user);
     } catch (error) {
       console.error('장바구니 추가 중 오류 발생:', error);
       alert('장바구니 담기에 실패했습니다. 잠시후 다시 시도해주세요.');
@@ -68,23 +70,27 @@ const ProductDetailPage = () => {
         </title>
       </Helmet>
 
-      <nav className={'detail-nav-menu'}>
-        <button onClick={() => navigate('/')}
-                className="btn btn-outline-primary btn-sm">
+      <nav className="detail-nav-menu">
+        <button
+          onClick={() => navigate('/')}
+          className="btn btn-outline-primary btn-sm"
+        >
           <i className="bi bi-arrow-left"></i> 목록으로
         </button>
       </nav>
 
-      <div className={'detail-wrapper'}>
+      <div className="detail-wrapper">
         {!product ? (
-          <div className="d-flex justify-content-center align-items-center"
-               style={{ height: '300px' }}>
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: '300px' }}
+          >
             <Spinner animation="border" variant="primary" role="status">
               <span className="visually-hidden">로딩 중...</span>
             </Spinner>
           </div>
         ) : (
-          <section className={'detail-content'}>
+          <section className="detail-content">
             <img
               src={
                 product.fileName
@@ -96,7 +102,9 @@ const ProductDetailPage = () => {
             />
             <ul id="product-detail-info">
               <li>
-                <h2><strong>{product.productName}</strong></h2>
+                <h2>
+                  <strong>{product.productName}</strong>
+                </h2>
               </li>
               <li>
                 <h3>
