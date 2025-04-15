@@ -32,7 +32,7 @@ public class CartItemController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        cartItemCommandService.addOrUpdateCartItem(addItemToCartRequest);
+        cartItemCommandService.addOrUpdateCartItem(customUserDetails.getUserId(), addItemToCartRequest.productId());
         return ResponseEntity.noContent().build();
     }
 

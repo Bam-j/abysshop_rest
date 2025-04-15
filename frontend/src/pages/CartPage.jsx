@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import Spinner from 'react-bootstrap/Spinner';
+import useUserStore from '../stores/userUserStore';
 import axios from 'axios';
 
 import '../styles/pages/CartPage.scss';
 
 const ShoppingCartPage = () => {
-  const [userId, setUserId] = useState(null);
-  const [cartId, setCartId] = useState(null);
+  const { user } = useUserStore();
+  const userId = user?.userId;
+  const cartId = user?.cartId;
   const [cartItems, setCartItems] = useState([]);
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
@@ -18,24 +21,19 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    if (!token) {
+    if (!token || !userId) {
       return;
     }
 
     const fetchCart = async () => {
       try {
-        const userRes = await axios.get('http://localhost:8080/api/users/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUserId(userRes.data.userId);
-
         const cartRes = await axios.get(
-          `http://localhost:8080/api/carts/${userId}`);
-        const cartData = cartRes.data;
+          `http://localhost:8080/api/carts/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          });
 
-        setCartId(cartData.cart.cartId || 0);
+        const cartData = cartRes.data;
         setCartItems(cartData.cartItems || []);
         setTotalPoints(cartData.cart.totalPoints || 0);
         setTotalQuantity(cartData.cart.totalQuantity || 0);
@@ -45,7 +43,7 @@ const ShoppingCartPage = () => {
     };
 
     fetchCart();
-  }, []);
+  }, [userId]);
 
   const updateQuantity = (productId, action) => {
     setCartItems(prevItems =>
@@ -199,46 +197,71 @@ const ShoppingCartPage = () => {
           </tr>
           </thead>
           <tbody>
-          {cartItems.map(item => (
-            <tr key={item.productId}>
-              <td>{item.productName}</td>
-              <td>
-                <div className="quantity-controller">
-                  <button className="btn btn-primary"
-                          onClick={() => updateQuantity(item.productId,
-                            'increase')}>+
-                  </button>
-                  <p id="quantity"><strong>{item.quantity}</strong></p>
-                  <button className="btn btn-primary"
-                          onClick={() => updateQuantity(item.productId,
-                            'decrease')}>-
-                  </button>
+          {cartItems === null ? (
+            <tr>
+              <td colSpan="4">
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ height: '200px' }}>
+                  <Spinner animation="border" variant="primary" role="status">
+                    <span className="visually-hidden">로딩 중...</span>
+                  </Spinner>
                 </div>
               </td>
-              <td>{item.price.toLocaleString()} 포인트</td>
-              <td>
-                <button className="btn btn-danger"
-                        onClick={() => removeItem(item.productId)}>X
+            </tr>
+          ) : cartItems.length === 0 ? (
+            <tr>
+              <td colSpan="4">
+                <div className="text-center" style={{ padding: '40px 0' }}>
+                  장바구니가 비어있습니다.
+                </div>
+              </td>
+            </tr>
+          ) : (
+            cartItems.map(item => (
+              <tr key={item.productId}>
+                <td>{item.productName}</td>
+                <td>
+                  <div className="quantity-controller">
+                    <button className="btn btn-primary"
+                            onClick={() => updateQuantity(item.productId,
+                              'increase')}>+
+                    </button>
+                    <p id="quantity"><strong>{item.quantity}</strong></p>
+                    <button className="btn btn-primary"
+                            onClick={() => updateQuantity(item.productId,
+                              'decrease')}>-
+                    </button>
+                  </div>
+                </td>
+                <td>{item.price.toLocaleString()} 포인트</td>
+                <td>
+                  <button className="btn btn-danger"
+                          onClick={() => removeItem(item.productId)}>X
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
+          </tbody>
+
+          {cartItems && cartItems.length > 0 && (
+            <tfoot>
+            <tr>
+              <td>주문 합계 포인트: {totalPoints.toLocaleString()} 포인트</td>
+              <td>총 수량: {totalQuantity}</td>
+              <td colSpan="2">
+                <button
+                  className="btn btn-success"
+                  onClick={handlePurchase}
+                  disabled={isPurchasing}
+                >
+                  구매하기
                 </button>
               </td>
             </tr>
-          ))}
-          </tbody>
-          <tfoot>
-          <tr>
-            <td>주문 합계 포인트: {totalPoints.toLocaleString()} 포인트</td>
-            <td>총 수량: {totalQuantity}</td>
-            <td>
-              <button
-                className="btn btn-success"
-                onClick={handlePurchase}
-                disabled={isPurchasing}
-              >
-                구매하기
-              </button>
-            </td>
-          </tr>
-          </tfoot>
+            </tfoot>
+          )}
         </table>
       </section>
     </div>
