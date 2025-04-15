@@ -6,7 +6,9 @@ import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import java.security.Key;
 import java.util.Date;
 
@@ -43,33 +45,32 @@ public class JwtUtil {
     }
 
     public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-            .setSigningKey(key)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
+        return extractAllClaims(token).getSubject();
     }
 
-    public boolean isTokenValid(String token) {
+    public Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
+
+    public boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        } catch (ExpiredJwtException e) {
-            log.error("JWT expired", e);
+            String usernameFromToken = extractUsername(token);
+            return usernameFromToken.equals(userDetails.getUsername()) && !isTokenExpired(token);
         } catch (Exception e) {
-            log.error("JWT validation failed", e);
+            log.error("Token validation error", e);
+            return false;
         }
-        return false;
     }
 
-    public long extractExpiration(String token) {
+    private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
             .setSigningKey(key)
             .build()
             .parseClaimsJws(token)
-            .getBody()
-            .getExpiration()
-            .getTime();
+            .getBody();
     }
 }

@@ -61,7 +61,7 @@ public class AccountCommandService {
 
         userRepository.delete(user);
 
-        long remainingExpiration = jwtUtil.extractExpiration(token) - System.currentTimeMillis();
+        long remainingExpiration = jwtUtil.extractExpiration(token).getTime() - System.currentTimeMillis();
         jwtBlacklistService.addToBlacklist(token, remainingExpiration);
     }
 }

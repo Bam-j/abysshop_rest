@@ -39,6 +39,8 @@ const ProductDetailPage = () => {
       return;
     }
 
+    const token = localStorage.getItem('accessToken');
+
     try {
       await axios.post(
         'http://localhost:8080/api/carts/items/add',
@@ -48,7 +50,7 @@ const ProductDetailPage = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         },
       );
