@@ -41,7 +41,7 @@ services:
     ports:
       - ${SPRING_APP_PORT}:8080
     volumes:
-      - C:/Users/Public/abysshop_img:/upload_img
+      - /c/Users/Public/abysshop_img:/upload_img
 
   frontend:
     build: ./frontend

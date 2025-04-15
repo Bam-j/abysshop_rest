@@ -19,10 +19,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(resourcePath).addResourceLocations(classpath);
+        registry.addResourceHandler(resourcePath)
+            .addResourceLocations(classpath);
 
-        // 💡 imageDir은 뒤에 `/`가 없어도 안전하게 처리하기 위해 붙여줍니다
-        String location = "file:///" + (imageDir.endsWith("/") ? imageDir : imageDir + "/");
+        String location = "file:" + (imageDir.endsWith("/") ? imageDir : imageDir + "/");
         registry.addResourceHandler("/upload/**")
             .addResourceLocations(location);
     }
