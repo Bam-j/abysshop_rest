@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Spinner from 'react-bootstrap/Spinner';
@@ -8,96 +8,87 @@ import axios from 'axios';
 import '../styles/pages/CartPage.scss';
 
 const ShoppingCartPage = () => {
-  const { user } = useUserStore();
+  const { user, updateCartQuantity } = useUserStore();
   const userId = user?.userId;
   const cartId = user?.cartId;
   const [cartItems, setCartItems] = useState([]);
   const [totalPoints, setTotalPoints] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const [quantityBuffer, setQuantityBuffer] = useState({});
   const [isPurchasing, setIsPurchasing] = useState(false);
-  const debounceTimer = useRef({});
   const navigate = useNavigate();
+
+  const payload = { cartId, userId };
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    if (!token || !userId) {
+    if (!token || !user?.userId || !user?.cartId) {
       return;
     }
 
     const fetchCart = async () => {
       try {
-        const cartRes = await axios.get(
-          `http://localhost:8080/api/carts/${userId}`,
+        const res = await axios.get(
+          `http://localhost:8080/api/carts/${user.userId}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
 
-        const cartData = cartRes.data;
-        setCartItems(cartData.cartItems || []);
-        setTotalPoints(cartData.cart.totalPoints || 0);
-        setTotalQuantity(cartData.cart.totalQuantity || 0);
+        const data = res.data;
+        setCartItems(data.cartItems || []);
+        setTotalPoints(data.cart.totalPoints || 0);
+        setTotalQuantity(data.cart.totalQuantity || 0);
+
+        updateCartQuantity(user);
       } catch (error) {
         console.error('장바구니 정보 불러오기 실패:', error);
       }
     };
 
     fetchCart();
-  }, [userId]);
+  }, [user, updateCartQuantity]);
 
-  const updateQuantity = (productId, action) => {
-    setCartItems(prevItems =>
-      prevItems.map(item => {
-        if (item.productId === productId) {
-          const newQuantity =
-            action === 'increase' ? item.quantity + 1 : Math.max(1,
-              item.quantity - 1);
-
-          setQuantityBuffer(prev => ({
-            ...prev,
-            [productId]: newQuantity,
-          }));
-
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      }),
-    );
-
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
-
-    debounceTimer.current = setTimeout(() => {
-      sendAllQuantityUpdates();
-    }, 3000);
-  };
-
-  const sendAllQuantityUpdates = async () => {
+  const updateQuantity = async (productId, action) => {
     const token = localStorage.getItem('accessToken');
     if (!token || !cartId) {
       return;
     }
 
-    const requestList = Object.entries(quantityBuffer).map(
-      ([productId, quantity]) => ({
-        cartId,
-        productId: Number(productId),
-        quantity,
-      }));
-
-    if (requestList.length === 0) {
+    const currentItem = cartItems.find(item => item.productId === productId);
+    if (!currentItem) {
       return;
     }
 
+    const newQuantity =
+      action === 'increase' ? currentItem.quantity + 1 : Math.max(1,
+        currentItem.quantity - 1);
+
     try {
-      await axios.patch('http://localhost:8080/api/carts/quantity', requestList,
+      await axios.patch(
+        'http://localhost:8080/api/carts/items/quantity',
+        [
+          {
+            cartId,
+            productId,
+            quantity: newQuantity,
+          },
+        ],
         {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-        });
+        },
+      );
+
+      setCartItems(prevItems =>
+        prevItems.map(item =>
+          item.productId === productId ? { ...item, quantity: newQuantity }
+            : item,
+        ),
+      );
 
       const res = await axios.get(`http://localhost:8080/api/carts/${userId}`, {
         headers: {
@@ -109,10 +100,9 @@ const ShoppingCartPage = () => {
       setCartItems(data.cartItems || []);
       setTotalPoints(data.cart.totalPoints || 0);
       setTotalQuantity(data.cart.totalQuantity || 0);
-      setQuantityBuffer({});
-
+      updateCartQuantity(user);
     } catch (error) {
-      console.error('수량 업데이트 또는 재조회 실패:', error);
+      console.error('수량 업데이트 실패:', error);
     }
   };
 
@@ -123,20 +113,24 @@ const ShoppingCartPage = () => {
     }
 
     try {
-      await axios.delete('http://localhost:8080/api/carts/delete', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      const res = await axios.delete(
+        'http://localhost:8080/api/carts/items/delete',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          data: {
+            cartId,
+            productId,
+          },
         },
-        data: {
-          cartId,
-          productId,
-        },
-      });
+      );
 
       setCartItems(prevItems =>
         prevItems.filter(item => item.productId !== productId),
       );
+      updateCartQuantity(user);
     } catch (error) {
       console.error('장바구니 아이템 삭제 실패:', error);
     }
@@ -151,24 +145,18 @@ const ShoppingCartPage = () => {
     setIsPurchasing(true);
 
     try {
-      await axios.post(
-        'http://localhost:8080/api/orders/create',
-        {
-          cartId,
-          userId,
+      await axios.post('http://localhost:8080/api/orders/create', { cartId, userId }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+      });
 
       navigate('/order/complete');
     } catch (error) {
+      const message = error?.response?.data?.message || '주문에 실패했습니다.';
+      alert(message);
       console.error('주문 실패:', error);
-      alert('주문에 실패했습니다. 잠시후 다시 시도해주세요.');
     } finally {
       setIsPurchasing(false);
     }
@@ -234,7 +222,9 @@ const ShoppingCartPage = () => {
                     </button>
                   </div>
                 </td>
-                <td>{item.price.toLocaleString()} 포인트</td>
+                <td>
+                  {(item.price * item.quantity).toLocaleString()} 포인트
+                </td>
                 <td>
                   <button className="btn btn-danger"
                           onClick={() => removeItem(item.productId)}>X
@@ -244,18 +234,18 @@ const ShoppingCartPage = () => {
             ))
           )}
           </tbody>
-
           {cartItems && cartItems.length > 0 && (
             <tfoot>
             <tr>
-              <td>주문 합계 포인트: {totalPoints.toLocaleString()} 포인트</td>
-              <td>총 수량: {totalQuantity}</td>
+              <td>
+                주문 합계 포인트: <strong>{totalPoints.toLocaleString()} 포인트</strong>
+              </td>
+              <td>
+                총 수량: <strong>{totalQuantity}</strong>
+              </td>
               <td colSpan="2">
-                <button
-                  className="btn btn-success"
-                  onClick={handlePurchase}
-                  disabled={isPurchasing}
-                >
+                <button className="btn btn-success" onClick={handlePurchase}
+                        disabled={isPurchasing}>
                   구매하기
                 </button>
               </td>

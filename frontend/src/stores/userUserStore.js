@@ -9,7 +9,10 @@ const initialState = {
 const useUserStore = create((set, get) => ({
   ...initialState,
 
-  setUser: user => set({ user }),
+  setUser: user => {
+    set({ user });
+    get().updateCartQuantity(user);
+  },
   setCartQuantity: quantity => set({ cartQuantity: quantity }),
   resetUser: () => set(initialState),
 
@@ -17,7 +20,8 @@ const useUserStore = create((set, get) => ({
     const token = localStorage.getItem('accessToken');
     const user = userParam || get().user;
 
-    if (!token || !user) {
+    if (!token || !user || !user.cartId) {
+      console.warn('updateCartQuantity 차단됨: user 또는 cartId 누락');
       return;
     }
 
