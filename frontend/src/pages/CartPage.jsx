@@ -17,8 +17,6 @@ const ShoppingCartPage = () => {
   const [isPurchasing, setIsPurchasing] = useState(false);
   const navigate = useNavigate();
 
-  const payload = { cartId, userId };
-
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (!token || !user?.userId || !user?.cartId) {
@@ -145,14 +143,18 @@ const ShoppingCartPage = () => {
     setIsPurchasing(true);
 
     try {
-      await axios.post('http://localhost:8080/api/orders/create', { cartId, userId }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      await axios.post('http://localhost:8080/api/orders/create',
+        {
+          cartId, userId,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
-      navigate('/order/complete');
+      navigate('/orders/complete');
     } catch (error) {
       const message = error?.response?.data?.message || '주문에 실패했습니다.';
       alert(message);
