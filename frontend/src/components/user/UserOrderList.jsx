@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ORDER_STATE_LABEL } from '../../constants/orderStates';
 import axios from 'axios';
 
 import Spinner from 'react-bootstrap/Spinner';
@@ -38,7 +39,8 @@ const UserOrderList = ({ user }) => {
         setTotalPages(data.totalPages);
       } catch (error) {
         console.error('주문 조회 에러:', error);
-        const message = error.response?.data?.message || '주문 정보를 불러오는 데 실패했습니다.';
+        const message = error.response?.data?.message
+          || '주문 정보를 불러오는 데 실패했습니다.';
         setOrders([]);
         setTotalPages(1);
         setErrorMessage(message);
@@ -46,7 +48,7 @@ const UserOrderList = ({ user }) => {
     };
 
     fetchOrders();
-  }, [currentPage]);
+  }, [user?.userId, currentPage]);
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'order-management', page: newPage });
@@ -98,7 +100,9 @@ const UserOrderList = ({ user }) => {
               <td>{order.orderId}</td>
               <td>{order.totalPrice.toLocaleString()}</td>
               <td>{new Date(order.orderedAt).toLocaleDateString()}</td>
-              <td data-state={order.orderState}>{order.orderState}</td>
+              <td data-state={order.orderState}>
+                {ORDER_STATE_LABEL[order.orderState] || order.orderState}
+              </td>
             </tr>
           ))
         )}

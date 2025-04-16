@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import { POINT_RECHARGE_STATE_LABEL } from '../../constants/pointRechargeStates';
 import axios from 'axios';
 
 const UserPointRechargeList = ({ user }) => {
@@ -46,7 +47,7 @@ const UserPointRechargeList = ({ user }) => {
     };
 
     fetchPointRecharges();
-  }, [currentPage]);
+  }, [user?.userId, currentPage]);
 
   const handlePageChange = newPage => {
     setSearchParams({ menu: 'point-request', page: newPage });
@@ -99,7 +100,7 @@ const UserPointRechargeList = ({ user }) => {
               <td>{request.requestedPoints.toLocaleString()}</td>
               <td>{new Date(request.requestedAt).toLocaleDateString()}</td>
               <td data-state={request.rechargeState}>
-                {request.rechargeState}
+                {POINT_RECHARGE_STATE_LABEL[request.rechargeState] || request.rechargeState}
               </td>
             </tr>
           ))
