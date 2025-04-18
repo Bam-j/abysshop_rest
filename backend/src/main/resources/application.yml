@@ -39,7 +39,7 @@ spring:
       connection-timeout: 30000
   jpa:
     hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:}
     properties:
       hibernate:
         format_sql: true
@@ -50,6 +50,7 @@ spring:
         cache:
           use_second_level_cache: false
           use_query_cache: false
+    open-in-view: false
 
 logging:
   level:
