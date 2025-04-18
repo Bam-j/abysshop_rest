@@ -4,6 +4,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { ORDER_STATE, ORDER_STATE_LABEL } from '../../constants/orderStates';
 import axios from 'axios';
+import Pagination from '../common/Pagination';
 
 const AdminOrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -160,31 +161,11 @@ const AdminOrderManagement = () => {
         </tbody>
       </table>
 
-      <div className="pagination">
-        {currentPage > 1 && (
-          <button onClick={() => handlePageChange(currentPage - 1)}
-                  className="page-link">
-            &laquo;
-          </button>
-        )}
-
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => handlePageChange(i + 1)}
-            className={`page-link ${i + 1 === currentPage ? 'active' : ''}`}
-          >
-            {i + 1}
-          </button>
-        ))}
-
-        {currentPage < totalPages && (
-          <button onClick={() => handlePageChange(currentPage + 1)}
-                  className="page-link">
-            &raquo;
-          </button>
-        )}
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 };

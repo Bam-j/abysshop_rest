@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import axios from 'axios';
 import useUserStore from '../stores/userUserStore';
-
-import '../styles/pages/Homepage.scss';
-
 import Carousel from '../components/home/Carousel';
 import PointRecharge from '../components/home/PointRecharge';
 import TransferAndRefundInfo from '../components/home/TransferAndRefundInfo';
 import ProductList from '../components/product/ProductList';
 import Pagination from '../components/common/Pagination';
+import axios from 'axios';
+
+import '../styles/pages/Homepage.scss';
 
 /* 캐러셀 이미지 관련 import */
 import abyssblockLogo from '../assets/images/abyssblock_logo.png';
 import abyssblockMark from '../assets/images/abyssblock_mark.png';
+import { useSearchParams } from 'react-router-dom';
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(1);
-
+  const currentPage = parseInt(searchParams.get('page')) || 1;
   const { user, setUser, resetUser } = useUserStore();
 
   const carouselImages = [abyssblockLogo, abyssblockMark];
@@ -48,7 +48,7 @@ export const HomePage = () => {
     axios
     .get('http://localhost:8080/api/home', {
       params: {
-        page,
+        page: currentPage - 1,
         size: 12,
         sort: 'productId,desc',
       },
@@ -61,7 +61,13 @@ export const HomePage = () => {
     .catch(error => {
       console.error('Failed to fetch products:', error);
     });
-  }, [page]);
+  }, [currentPage]);
+
+  const handlePageChange = newPage => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', newPage);
+    setSearchParams(newParams);
+  };
 
   return (
     <div className="homepage-wrapper">
@@ -84,9 +90,9 @@ export const HomePage = () => {
 
       {totalPages > 1 && (
         <Pagination
-          currentPage={page}
+          currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={setPage}
+          onPageChange={handlePageChange}
         />
       )}
     </div>

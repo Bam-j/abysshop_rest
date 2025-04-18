@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
+import Pagination from '../common/Pagination';
 
 const AdminRemoveProduct = () => {
   const [productList, setProductList] = useState([]);
@@ -136,31 +137,11 @@ const AdminRemoveProduct = () => {
         </tbody>
       </table>
 
-      <div className="pagination">
-        {currentPage > 1 && (
-          <button onClick={() => handlePageChange(currentPage - 1)}
-                  className="page-link">
-            &laquo;
-          </button>
-        )}
-
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => handlePageChange(i + 1)}
-            className={`page-link ${i + 1 === currentPage ? 'active' : ''}`}
-          >
-            {i + 1}
-          </button>
-        ))}
-
-        {currentPage < totalPages && (
-          <button onClick={() => handlePageChange(currentPage + 1)}
-                  className="page-link">
-            &raquo;
-          </button>
-        )}
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </section>
   );
 };

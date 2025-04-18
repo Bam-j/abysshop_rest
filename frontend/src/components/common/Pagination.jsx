@@ -1,24 +1,40 @@
-import '../../styles/components/common/Pagination.scss';
-
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  if (totalPages <= 1) return null;
+
+  const handleClick = page => {
+    if (page > totalPages) return;
+    onPageChange(page);
+  };
+
   return (
     <div className="pagination">
-      {currentPage > 0 && (
-        <button className="page-link" onClick={() => onPageChange(currentPage - 1)}>
+      {currentPage > 1 && (
+        <button
+          onClick={() => handleClick(currentPage - 1)}
+          className="page-link"
+        >
           &laquo;
         </button>
       )}
-      {Array.from({ length: totalPages }, (_, i) => (
+
+      {[...Array(totalPages)].map((_, i) => {
+        const pageNumber = i + 1;
+        return (
+          <button
+            key={pageNumber}
+            onClick={() => handleClick(pageNumber)}
+            className={`page-link ${currentPage === pageNumber ? 'active' : ''}`}
+          >
+            {pageNumber}
+          </button>
+        );
+      })}
+
+      {currentPage < totalPages && (
         <button
-          key={i}
-          className={`page-link ${currentPage === i ? 'active' : ''}`}
-          onClick={() => onPageChange(i)}
+          onClick={() => handleClick(currentPage + 1)}
+          className="page-link"
         >
-          {i + 1}
-        </button>
-      ))}
-      {currentPage < totalPages - 1 && (
-        <button className="page-link" onClick={() => onPageChange(currentPage + 1)}>
           &raquo;
         </button>
       )}
