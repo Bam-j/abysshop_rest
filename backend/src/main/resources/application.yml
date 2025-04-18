@@ -1,6 +1,6 @@
 # Railway 배포 테스트 버전 application.yml
 server:
-  port: ${SPRING_APP_PORT:8080}
+  port: ${SPRING_APP_PORT:80}
   servlet:
     session:
       timeout: 60m

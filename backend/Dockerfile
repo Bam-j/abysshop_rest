@@ -26,4 +26,4 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
 
 # 컨테이너가 사용하는 포트
-EXPOSE 8080
+EXPOSE 80
