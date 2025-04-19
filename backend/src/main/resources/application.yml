@@ -1,6 +1,6 @@
 # Railway 배포 테스트 버전 application.yml
 server:
-  port: ${PORT}
+  port: ${PORT:8080}
   servlet:
     session:
       timeout: 60m
