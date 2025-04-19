@@ -1,11 +1,13 @@
 # Railway 배포 테스트 버전 application.yml
 server:
-  port: ${PORT:80}
+  port: ${PORT}
   servlet:
     session:
       timeout: 60m
 
 management:
+  server:
+    port: ${PORT}
   endpoints:
     web:
       exposure:
