@@ -26,6 +26,8 @@ spring:
   devtools:
     livereload:
       enabled: true
+    restart:
+      exclude: logs/**
   mvc:
     static-path-pattern: /upload/**
   web:
