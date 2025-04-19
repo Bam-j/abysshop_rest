@@ -19,8 +19,8 @@ management:
 spring:
   application:
     name: abysshop
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
   devtools:
     livereload:
       enabled: true
