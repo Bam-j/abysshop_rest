@@ -1,60 +1,39 @@
 # Railway 배포 테스트 버전 application.yml
 server:
   port: ${PORT:8080}
-  servlet:
-    session:
-      timeout: 60m
-
-management:
-  server:
-    port: ${PORT}
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-    access:
-      default: unrestricted
-  endpoint:
-    health:
-      show-details: always
 
 spring:
-  application:
-    name: abysshop
-#  profiles:
-#    active: dev
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      exclude: logs/**
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        show_sql: true
   mvc:
     static-path-pattern: /upload/**
   web:
     resources:
       static-locations: file:${IMAGE_DIR:/upload_img}/
-  datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    hikari:
-      initialization-fail-timeout: -1
-      connection-timeout: 30000
-  jpa:
-    hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:}
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-        default_batch_fetch_size: 100
-        jdbc:
-          batch_size: 30
-        cache:
-          use_second_level_cache: false
-          use_query_cache: false
-        dialect: org.hibernate.dialect.MySQLDialect
-    open-in-view: false
+
+custom:
+  encrypt:
+    secret-key: ${SECRET_KEY}
+    init-vector: ${INIT_VECTOR}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:

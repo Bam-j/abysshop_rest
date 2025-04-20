@@ -1,28 +1,15 @@
 package com.joo.abysshop.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Getter
+@Setter
+@Configuration
 @ConfigurationProperties(prefix = "custom.encrypt")
 public class EncryptionConfig {
     private String secretKey;
     private String initVector;
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public String getInitVector() {
-        return initVector;
-    }
-
-    public void setInitVector(String initVector) {
-        this.initVector = initVector;
-    }
 }
-
