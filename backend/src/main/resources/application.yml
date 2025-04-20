@@ -54,6 +54,7 @@ spring:
         cache:
           use_second_level_cache: false
           use_query_cache: false
+        dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
 logging:
