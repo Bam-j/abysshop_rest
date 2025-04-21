@@ -13,6 +13,6 @@ WORKDIR /app
 COPY --from=build /app/build ./build
 
 EXPOSE 8080
-ENV PORT=80
+ENV PORT=8080
 
 CMD ["sh", "-c", "serve -s /app/build -l $PORT"]
