@@ -15,5 +15,4 @@ COPY --from=build /app/build ./build
 EXPOSE 8080
 ENV PORT=80
 
-CMD ["sh", "-c", "serve -s build -l $PORT"]
-
+CMD ["sh", "-c", "serve -s /app/build -l $PORT"]
