@@ -12,5 +12,8 @@ RUN npm install -g serve
 WORKDIR /app
 COPY --from=build /app/build ./build
 
-EXPOSE 80
-CMD ["serve", "-s", "build", "-l", "80"]
+EXPOSE 8080
+ENV PORT=80
+
+CMD ["sh", "-c", "serve -s build -l $PORT"]
+
