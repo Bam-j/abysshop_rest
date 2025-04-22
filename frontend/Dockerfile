@@ -14,4 +14,4 @@ COPY --from=build /app/build ./build
 
 EXPOSE 8080
 
-CMD ["serve", "-s", "build", "-l", "8080"]
+CMD ["sh", "-c", "serve -s build -l ${PORT}"]
