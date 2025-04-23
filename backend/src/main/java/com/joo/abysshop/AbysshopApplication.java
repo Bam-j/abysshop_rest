@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-@EnableJpaRepositories(basePackages = "com.joo.abysshop.repository")
-@EntityScan(basePackages = "com.joo.abysshop.entity")
+//@EnableJpaRepositories(basePackages = "com.joo.abysshop.repository")
+//@EntityScan(basePackages = "com.joo.abysshop.entity")
 public class AbysshopApplication {
 
     public static void main(String[] args) {
