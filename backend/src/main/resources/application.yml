@@ -3,6 +3,11 @@ server:
   port: ${PORT}
 
 spring:
+  data:
+    jpa:
+      repositories:
+        shared-em:
+          enabled: false
   datasource:
     url: >
       jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQL_DATABASE}?
