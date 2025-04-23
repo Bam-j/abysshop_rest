@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import axios from 'axios';
 import Pagination from '../common/Pagination';
+import api from '../../api/axiosInstance';
 
 const AdminRemoveProduct = () => {
   const [productList, setProductList] = useState([]);
@@ -16,8 +16,9 @@ const AdminRemoveProduct = () => {
       const token = localStorage.getItem('accessToken');
 
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/admin/dashboard/products', {
+        const response = await api.get(
+          '/admin/dashboard/products',
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -49,8 +50,8 @@ const AdminRemoveProduct = () => {
     try {
       const token = localStorage.getItem('accessToken');
 
-      const response = await axios.delete(
-        'http://localhost:8080/api/admin/products/delete',
+      const response = await api.delete(
+        '/admin/products/delete',
         {
           headers: {
             'Content-Type': 'application/json',

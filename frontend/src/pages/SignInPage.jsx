@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 
 import '../styles/pages/SignInPage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
@@ -24,10 +24,11 @@ const SignInPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/sign-in', {
-        username,
-        password,
-      });
+      const response = await api.post('/auth/sign-in',
+        {
+          username,
+          password,
+        });
 
       const token = response.data.token;
 

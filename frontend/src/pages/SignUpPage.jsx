@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Tooltip } from 'bootstrap';
 import { Helmet } from 'react-helmet-async';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 
 import '../styles/pages/SignUpPage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';
@@ -60,11 +60,12 @@ const SignUpPage = () => {
     }
 
     try {
-      await axios.post('http://localhost:8080/api/auth/sign-up', {
-        username,
-        nickname,
-        password,
-      });
+      await api.post('/auth/sign-up',
+        {
+          username,
+          nickname,
+          password,
+        });
 
       navigate('/auth/sign-in');
     } catch (error) {

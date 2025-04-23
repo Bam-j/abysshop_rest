@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from '../../stores/userUserStore';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
 
 import '../../styles/components/common/Header.scss';
 import logo from '../../assets/images/abyssblock_square_64x64.png';
@@ -20,11 +20,12 @@ const Header = () => {
       return;
     }
 
-    axios.get('http://localhost:8080/api/users/me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    api.get('/users/me',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     .then(res => {
       const userInfo = res.data;
       setUser({

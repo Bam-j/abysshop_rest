@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ORDER_STATE_LABEL } from '../../constants/orderStates';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
 
 import Spinner from 'react-bootstrap/Spinner';
 import Pagination from '../common/Pagination';
@@ -20,8 +20,8 @@ const UserOrderList = ({ user }) => {
       const size = 10;
 
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/users/my-page/orders',
+        const response = await api.get(
+          '/users/my-page/orders',
           {
             headers: {
               'Content-Type': 'application/json',

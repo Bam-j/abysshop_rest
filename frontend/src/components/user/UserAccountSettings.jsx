@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
 
 import '../../styles/components/user/UserAccountSettings.scss';
 
@@ -31,14 +31,15 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      await axios.patch('http://localhost:8080/api/account/nickname', {
-        userId: user.userId,
-        newNickname,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.patch('/account/nickname',
+        {
+          userId: user.userId,
+          newNickname,
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       alert('닉네임이 성공적으로 변경되었습니다.');
       setNewNickname('');
@@ -69,25 +70,27 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      await axios.patch('http://localhost:8080/api/account/password', {
-        userId: user.userId,
-        newPassword,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.patch('/account/password',
+        {
+          userId: user.userId,
+          newPassword,
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       alert('비밀번호가 성공적으로 변경되었습니다.');
       setNewPassword('');
       setPasswordErrorMessage('');
     } catch (error) {
-      const message = error.response?.data?.message || '비밀번호 변경 요청 중 오류가 발생했습니다.';
+      const message = error.response?.data?.message
+        || '비밀번호 변경 요청 중 오류가 발생했습니다.';
       setPasswordErrorMessage(message);
     }
   };
 
-  const handleWithdraw = async (e) => {
+  const handleWithdraw = async e => {
     e.preventDefault();
 
     if (!currentPassword.trim()) {
@@ -101,21 +104,23 @@ const UserAccountSettings = ({ user }) => {
     }
 
     try {
-      await axios.delete('http://localhost:8080/api/account/withdraw', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          userId: user.userId,
-          password: currentPassword,
-        },
-      });
+      await api.delete('/account/withdraw',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            userId: user.userId,
+            password: currentPassword,
+          },
+        });
 
       alert('정상적으로 탈퇴 처리되었습니다.');
       localStorage.removeItem('accessToken');
       window.location.href = '/';
     } catch (error) {
-      const message = error.response?.data?.message || '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+      const message = error.response?.data?.message
+        || '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
       setWithdrawErrorMessage(message);
     }
   };

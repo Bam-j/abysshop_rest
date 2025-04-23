@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Spinner from 'react-bootstrap/Spinner';
 import useUserStore from '../stores/userUserStore';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 
 import '../styles/pages/CartPage.scss';
 
@@ -25,8 +25,8 @@ const ShoppingCartPage = () => {
 
     const fetchCart = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8080/api/carts/${user.userId}`,
+        const res = await api.get(
+          `/carts/${user.userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,8 +64,8 @@ const ShoppingCartPage = () => {
         currentItem.quantity - 1);
 
     try {
-      await axios.patch(
-        'http://localhost:8080/api/carts/items/quantity',
+      await api.patch(
+        '/carts/items/quantity',
         [
           {
             cartId,
@@ -88,11 +88,12 @@ const ShoppingCartPage = () => {
         ),
       );
 
-      const res = await axios.get(`http://localhost:8080/api/carts/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await api.get(`/carts/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
       const data = res.data;
       setCartItems(data.cartItems || []);
@@ -111,8 +112,8 @@ const ShoppingCartPage = () => {
     }
 
     try {
-      const res = await axios.delete(
-        'http://localhost:8080/api/carts/items/delete',
+      const res = await api.delete(
+        '/carts/items/delete',
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -143,7 +144,7 @@ const ShoppingCartPage = () => {
     setIsPurchasing(true);
 
     try {
-      await axios.post('http://localhost:8080/api/orders/create',
+      await api.post('/orders/create',
         {
           cartId, userId,
         },

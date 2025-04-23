@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
 
 import '../../styles/components/admin/AdminCreateProduct.scss';
 
@@ -10,7 +10,7 @@ const AdminCreateProduct = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const fileInputRef = useRef(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const files = fileInputRef.current?.files;
@@ -47,9 +47,8 @@ const AdminCreateProduct = () => {
     try {
       const token = localStorage.getItem('accessToken');
 
-      const response = await axios.post(
-        'http://localhost:8080/api/admin/products/create',
-        formData,
+      const response = await api.post(
+        '/admin/products/create', formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,7 +57,6 @@ const AdminCreateProduct = () => {
       );
 
       alert('상품이 성공적으로 등록되었습니다.');
-
       setProductName('');
       setProductPrice('');
       setProductDescription('');

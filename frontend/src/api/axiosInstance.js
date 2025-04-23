@@ -1,20 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
-//todo: 모든 요청 작성 완료 후 instance로 교체하기
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080',
-  timeout: 5000,
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
+const api = axios.create({
+  //localBaseURL: `${LOCAL_BASE_URL}/api` 로컬 실행 테스트용
+  baseURL: `${baseURL}/api`,
 });
 
-axiosInstance.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  error => Promise.reject(error)
-);
-
-export default axiosInstance;
+export default api;

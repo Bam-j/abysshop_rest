@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-import axios from 'axios';
 import Pagination from '../common/Pagination';
+import api from '../../api/axiosInstance';
 
 const AdminPointRechargeDetailManagement = () => {
   const [rechargeDetails, setRechargeDetails] = useState([]);
@@ -16,8 +16,9 @@ const AdminPointRechargeDetailManagement = () => {
       const token = localStorage.getItem('accessToken');
 
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/admin/dashboard/point-recharge/details', {
+        const response = await api.get(
+          '/admin/dashboard/point-recharge/details',
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -77,20 +78,21 @@ const AdminPointRechargeDetailManagement = () => {
     const { bank, accountNumber, depositAmount } = rechargeDetails[index];
 
     try {
-      await axios.patch(
-        'http://localhost:8080/api/admin/point-recharges/details/update',
+      await api.patch(
+        '/admin/point-recharges/details/update',
         {
           pointRechargeDetailId: rechargeDetailId,
           bank,
           accountNumber,
-          depositAmount: depositAmount ? Number(depositAmount.toString().replace(/,/g, '')) : 0,
+          depositAmount: depositAmount ? Number(
+            depositAmount.toString().replace(/,/g, '')) : 0,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
-        }
+        },
       );
 
       alert('입금 정보가 성공적으로 저장되었습니다.');
@@ -166,18 +168,21 @@ const AdminPointRechargeDetailManagement = () => {
                       className="form-control"
                       placeholder="계좌번호"
                       value={detail.accountNumber || ''}
-                      onChange={e => handleInputChange(e, index, 'accountNumber')}
+                      onChange={e => handleInputChange(e, index,
+                        'accountNumber')}
                     />
                     <input
                       type="text"
                       className="form-control"
                       placeholder="입금액"
                       value={
-                        detail.depositAmount !== null && detail.depositAmount !== undefined
+                        detail.depositAmount !== null && detail.depositAmount
+                        !== undefined
                           ? Number(detail.depositAmount).toLocaleString()
                           : ''
                       }
-                      onChange={e => handleInputChange(e, index, 'depositAmount')}
+                      onChange={e => handleInputChange(e, index,
+                        'depositAmount')}
                     />
                     <button type="submit" className="btn btn-success">
                       입력

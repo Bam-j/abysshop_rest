@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import useUserStore from '../stores/userUserStore';
 import Spinner from 'react-bootstrap/Spinner';
+import api from '../api/axiosInstance';
 
 import '../styles/pages/UserMyPage.scss';
 import '../styles/components/user/UserMyPageNav.scss';
@@ -23,14 +24,18 @@ const UserMyPage = () => {
     const token = localStorage.getItem('accessToken');
 
     if (token) {
-      fetch('http://localhost:8080/api/users/me', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+      api.get('/users/me',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      .then(res => {
+        setUser(res.data);
       })
-      .then(res => res.json())
-      .then(data => setUser(data))
-      .catch(() => navigate('/'));
+      .catch(() => {
+        navigate('/');
+      });
     }
   }, []);
 

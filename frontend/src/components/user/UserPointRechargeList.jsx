@@ -4,8 +4,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import {
   POINT_RECHARGE_STATE_LABEL,
 } from '../../constants/pointRechargeStates';
-import axios from 'axios';
 import Pagination from '../common/Pagination';
+import api from '../../api/axiosInstance';
 
 const UserPointRechargeList = ({ user }) => {
   const [requests, setRequests] = useState([]);
@@ -21,8 +21,8 @@ const UserPointRechargeList = ({ user }) => {
       const size = 10;
 
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/users/my-page/point-recharges',
+        const response = await api.get(
+          '/users/my-page/point-recharges',
           {
             headers: {
               'Content-Type': 'application/json',

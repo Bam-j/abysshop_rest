@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Spinner from 'react-bootstrap/Spinner';
 import useUserStore from '../stores/userUserStore';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 
 import '../styles/pages/ProductDetail.scss';
 
@@ -16,9 +16,7 @@ const ProductDetailPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/api/products/${productId}`,
-        );
+        const response = await api.get(`/products/${productId}`);
         setProduct(response.data);
       } catch (error) {
         console.error('상품 정보를 불러오는 중 오류 발생: ', error);
@@ -42,8 +40,8 @@ const ProductDetailPage = () => {
     const token = localStorage.getItem('accessToken');
 
     try {
-      await axios.post(
-        'http://localhost:8080/api/carts/items/add',
+      await api.post(
+        '/carts/items/add',
         {
           productId: product.productId,
           quantity: 1,

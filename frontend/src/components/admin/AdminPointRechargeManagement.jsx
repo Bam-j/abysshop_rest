@@ -5,8 +5,8 @@ import {
   POINT_RECHARGE_STATE,
   POINT_RECHARGE_STATE_LABEL,
 } from '../../constants/pointRechargeStates';
-import axios from 'axios';
 import Pagination from '../common/Pagination';
+import api from '../../api/axiosInstance';
 
 const AdminPointRechargeManagement = () => {
   const [pointRequests, setPointRequests] = useState([]);
@@ -21,8 +21,8 @@ const AdminPointRechargeManagement = () => {
       const token = localStorage.getItem('accessToken');
 
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/admin/dashboard/point-recharges',
+        const response = await api.get(
+          '/admin/dashboard/point-recharges',
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,8 +64,8 @@ const AdminPointRechargeManagement = () => {
     const token = localStorage.getItem('accessToken');
 
     try {
-      await axios.patch(
-        'http://localhost:8080/api/admin/point-recharges/state',
+      await api.patch(
+        '/admin/point-recharges/state',
         {
           rechargeId,
           newState,
@@ -99,8 +99,8 @@ const AdminPointRechargeManagement = () => {
     }
 
     try {
-      await axios.patch(
-        'http://localhost:8080/api/admin/points/provide',
+      await api.patch(
+        '/admin/points/provide',
         {
           userId,
           points,

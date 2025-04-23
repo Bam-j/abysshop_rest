@@ -6,7 +6,7 @@ import PointRecharge from '../components/home/PointRecharge';
 import TransferAndRefundInfo from '../components/home/TransferAndRefundInfo';
 import ProductList from '../components/product/ProductList';
 import Pagination from '../components/common/Pagination';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 
 import '../styles/pages/Homepage.scss';
 
@@ -28,8 +28,7 @@ export const HomePage = () => {
     const token = localStorage.getItem('accessToken');
 
     if (token) {
-      axios
-      .get('http://localhost:8080/api/users/me', {
+      api.get('/users/me', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,8 +44,7 @@ export const HomePage = () => {
   }, [setUser, resetUser]);
 
   useEffect(() => {
-    axios
-    .get('http://localhost:8080/api/home', {
+    api.get('/home', {
       params: {
         page: currentPage - 1,
         size: 12,

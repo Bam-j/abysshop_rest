@@ -3,8 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { ORDER_STATE, ORDER_STATE_LABEL } from '../../constants/orderStates';
-import axios from 'axios';
 import Pagination from '../common/Pagination';
+import api from '../../api/axiosInstance';
 
 const AdminOrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -19,8 +19,9 @@ const AdminOrderManagement = () => {
       const token = localStorage.getItem('accessToken');
 
       try {
-        const response = await axios.get(
-          'http://localhost:8080/api/admin/dashboard/orders', {
+        const response = await api.get(
+          '/admin/dashboard/orders',
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -51,8 +52,8 @@ const AdminOrderManagement = () => {
     const token = localStorage.getItem('accessToken');
 
     try {
-      await axios.patch(
-        'http://localhost:8080/api/admin/orders/state',
+      await api.patch(
+        '/admin/orders/state',
         {
           orderId,
           newState,
@@ -146,7 +147,8 @@ const AdminOrderManagement = () => {
                       {Object.entries(ORDER_STATE).map(([key, value]) => (
                         <Dropdown.Item
                           key={key}
-                          onClick={() => handleChangeOrderState(order.orderId, value)}
+                          onClick={() => handleChangeOrderState(order.orderId,
+                            value)}
                         >
                           {ORDER_STATE_LABEL[value]}
                         </Dropdown.Item>

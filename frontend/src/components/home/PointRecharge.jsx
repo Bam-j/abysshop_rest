@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as bootstrap from 'bootstrap';
-import axios from 'axios';
+import api from '../../api/axiosInstance';
 
 import '../../styles/components/home/PointRecharge.scss';
 
@@ -43,8 +43,8 @@ const PointRecharge = ({ user }) => {
     }
 
     try {
-      await axios.post(
-        'http://localhost:8080/api/users/points/recharge',
+      await api.post(
+        '/users/points/recharge',
         {
           userId: user.userId,
           requestedPoints: pointValue,
