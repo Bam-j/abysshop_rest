@@ -1,12 +1,18 @@
 # Railway 배포 테스트 버전 application.yml
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
 
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: >
+      jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQL_DATABASE}?
+      useSSL=false
+      &allowPublicKeyRetrieval=true
+      &serverTimezone=Asia/Seoul
+      &characterEncoding=UTF-8
+    username: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
@@ -20,11 +26,6 @@ spring:
   web:
     resources:
       static-locations: file:${IMAGE_DIR:/upload_img}/
-
-custom:
-  encrypt:
-    secret-key: ${SECRET_KEY}
-    init-vector: ${INIT_VECTOR}
 
 management:
   endpoints:
