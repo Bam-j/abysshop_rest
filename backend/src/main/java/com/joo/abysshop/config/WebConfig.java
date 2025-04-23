@@ -38,7 +38,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/api/**")
-            .allowedOrigins("http://localhost:3000")
+            //.allowedOrigins("http://localhost:3000") 로컬 배포 테스트용
+            .allowedOrigins("https://abysshoprestfrontend-production.up.railway.app")
             .allowedMethods("*")
             .allowedHeaders("*")
             .allowCredentials(true);
