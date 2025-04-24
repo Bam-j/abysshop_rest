@@ -59,6 +59,6 @@ sourceSets {
     }
 }
 
-bootJar {
-    enabled = true
+springBoot {
+    mainClass = 'com.joo.abysshop.AbysshopApplication'
 }
