@@ -44,13 +44,14 @@ export const HomePage = () => {
   }, [setUser, resetUser]);
 
   useEffect(() => {
-    api.get('/home', {
-      params: {
-        page: currentPage - 1,
-        size: 12,
-        sort: 'productId,desc',
-      },
-    })
+    api.get('/home',
+      {
+        params: {
+          page: currentPage - 1,
+          size: 12,
+          sort: 'productId,desc',
+        },
+      })
     .then(response => {
       const data = response.data.productList;
       setProducts(data.content);
