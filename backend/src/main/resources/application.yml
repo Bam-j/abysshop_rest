@@ -38,3 +38,9 @@ management:
 logging:
   level:
     org.springframework.security: DEBUG
+
+#배포 테스트용 admin 계정 정보
+app:
+  admin:
+    username: testadmin
+    password: superadmin

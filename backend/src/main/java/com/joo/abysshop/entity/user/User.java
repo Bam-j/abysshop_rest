@@ -73,10 +73,15 @@ public class User {
     }
 
     @Builder
-    public User(String username, String nickname, String password, Long pointBalance) {
+    public User(String username,
+        String nickname,
+        String password,
+        UserType userType,
+        Long pointBalance) {
         this.username = username;
         this.nickname = nickname;
         this.password = password;
+        this.userType = userType;
         this.pointBalance = pointBalance;
     }
 
