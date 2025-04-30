@@ -1,34 +1,14 @@
 # Abysshop
-- 어비스 블록 후원 상점 웹 페이지
+- `Abysshop`의 백엔드 리포지토리입니다.
 
 ---
-## 프로젝트 개요
-- 포인트를 결제수단으로 사용하는 쇼핑몰 웹 페이지
-- 디자인 & 동작 매커니즘은 네이버 쇼핑 페이지를 벤치마킹
-- 회원제를 통한 회원과 포인트 관리
-- 관리자가 포인트 지급, 결제 확인, 상품 전달, 상품 등록의 역할을 수행
-- 결제 방식은 실시간 계좌 이체 -> 이체 확인 후 포인트 지급 -> 품목 구매 (1,000원 -> 100포인트) 
 
-## 사용기술 
-- 프론트: `HTML5, CSS3, JSP, BootStrap`
-- 서버: `Java, Spring & SpringBoot, MyBatis, MySQL, Apache Tomcat`
-- 버전 관리: `Git & GitHub`
-- 배포: 로컬(개인 노트북)에서 아파치 톰캣을 실행시켜서 배포
+## 사용기술
+- 서버: `Java, Spring & SpringBoot, Speing Data Jpa, MySQL)`
 
-## 개발 순서
-1. 프론트 엔드 구성
-2. 쇼핑몰 시스템 구현
-3. 회원 & 관리자 시스템 구현
-4. 최종 디자인 입히기
-
----
 # DB
-## 테이블
-- 상품, 회원, 주문, 장바구니, 포인트 충전 요청, 포인트 요청 상세 정보(입금자 계좌 정보)
-- 테이블 생성, 테스트를 위한 더미 데이터 삽입은 [sql 디렉토리](https://github.com/Bam-j/abysshop/tree/main/sql)의 `abysshop.sql 및 insertXxxxxDummyData.sql` 파일을 참조해주세요.
-
 ## ERD
-![abysshop_erd](https://github.com/user-attachments/assets/52f49b4c-9092-47fc-bda6-d4abbca32e33)
+![abysshop_erd](https://github.com/user-attachments/assets/10c541da-4606-441c-b2d9-2b680ca8696a)
 
 ---
 # 사용법
