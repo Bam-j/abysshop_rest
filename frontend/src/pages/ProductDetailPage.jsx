@@ -92,7 +92,7 @@ const ProductDetailPage = () => {
             <img
               src={
                 product.fileName
-                  ? `http://localhost:8080/upload/${product.fileName}`
+                  ? `${process.env.REACT_APP_API_BASE_URL}/upload/${product.fileName}`
                   : '/product_temp_128x128.png'
               }
               alt="상품 이미지"
