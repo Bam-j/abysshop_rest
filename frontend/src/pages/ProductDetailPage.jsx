@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Spinner from 'react-bootstrap/Spinner';
-import useUserStore from '../stores/userUserStore';
+import useUserStore from '../stores/useUserStore';
 import api from '../api/axiosInstance';
 
 import '../styles/pages/ProductDetail.scss';

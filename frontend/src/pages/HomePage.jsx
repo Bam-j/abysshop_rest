@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import useUserStore from '../stores/userUserStore';
+import useUserStore from '../stores/useUserStore';
 import Carousel from '../components/home/Carousel';
 import PointRecharge from '../components/home/PointRecharge';
 import TransferAndRefundInfo from '../components/home/TransferAndRefundInfo';

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import useUserStore from '../stores/userUserStore';
+import useUserStore from '../stores/useUserStore';
 
 import '../styles/pages/OrderCompletePage.scss';
 import logo from '../assets/images/abyssblock_mark_sd.png';

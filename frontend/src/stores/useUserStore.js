@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
+import api from '../api/axiosInstance';
 
 const initialState = {
   user: null,
@@ -26,14 +26,13 @@ const useUserStore = create((set, get) => ({
     }
 
     try {
-      const res = await axios.get(
-        `http://localhost:8080/api/carts/${user.cartId}/quantity`,
+      const res = await api.get(
+        `/carts/${user.cartId}/quantity`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
-        },
-      );
+        });
       const quantity = typeof res.data === 'number' ? res.data : res.data.quantity;
       set({ cartQuantity: quantity });
     } catch (error) {

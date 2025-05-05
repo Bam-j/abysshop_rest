@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import useUserStore from '../stores/userUserStore';
+import useUserStore from '../stores/useUserStore';
 import Spinner from 'react-bootstrap/Spinner';
 import api from '../api/axiosInstance';
 

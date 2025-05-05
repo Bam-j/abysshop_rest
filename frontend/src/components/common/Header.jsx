@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useUserStore from '../../stores/userUserStore';
+import useUserStore from '../../stores/useUserStore';
 import api from '../../api/axiosInstance';
 
 import '../../styles/components/common/Header.scss';
