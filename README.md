@@ -2,6 +2,7 @@
 
 - `Stateful`하게 작성되었던 기존의 [Abysshop 프로젝트](https://github.com/Bam-j/abysshop)를 리팩토링하여 `Stateless(REST API 사용)`한 방식으로 재개발된 프로젝트입니다.
 
+![Image](https://github.com/user-attachments/assets/72dccc69-29e9-4e72-b654-7bf11b334524)
 
 - `Abysshop`은 **온라인 쇼핑몰** 페이지로, `마인크래프트 사설 멀티플레이 서버`에서 사용되는 후원 물품들을 판매하는 쇼핑몰 페이지입니다.
 
@@ -38,4 +39,4 @@
 
 <hr>
 
-- `abysshop`에 대한 더욱 자세한 설명은 [블로그](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9B%B9-%EC%87%BC%ED%95%91%EB%AA%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)에서 확인하실 수 있습니다. (현재 작성중!)
+- `abysshop`에 대한 더욱 자세한 설명은 [블로그](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9B%B9-%EC%87%BC%ED%95%91%EB%AA%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)에서 확인하실 수 있습니다.
