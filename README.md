@@ -1,12 +1,13 @@
-# Abysshop (REST API) <hr>
+# Abysshop (REST API)
 
-- `Stateful`하게 작성되었던 기존의 [Abysshop 프로젝트](https://github.com/Bam-j/abysshop)를 리팩토링하여 `Stateless(REST API 사용)`한 방식으로 재개발된 프로젝트입니다.
+- `Abysshop`은 **포인트제 온라인 쇼핑몰**로 마인크래프트 사설 멀티플레이 서버 `Abyssblock`의 후원 및 유료 재화 판매를 위한 웹 쇼핑몰입니다.
+
+- 기존 세션 기반 인증 방식을 사용하던 구버전의 페이지를 JWT 웹 토큰 인증 기반으로 변경하고 REST API, React 도입 등을 통해 사용자에게 더 좋은 경험을 제공하고자 하였습니다. 
+
+<hr>
 
 ![Image](https://github.com/user-attachments/assets/72dccc69-29e9-4e72-b654-7bf11b334524)
 
-- `Abysshop`은 **온라인 쇼핑몰** 페이지로, `마인크래프트 사설 멀티플레이 서버`에서 사용되는 후원 물품들을 판매하는 쇼핑몰 페이지입니다.
-
-<hr>
 
 ## 무엇이 바뀌었나?
 
