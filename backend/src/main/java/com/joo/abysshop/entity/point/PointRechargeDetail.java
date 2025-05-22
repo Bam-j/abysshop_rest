@@ -4,6 +4,7 @@ import com.joo.abysshop.util.security.CryptoConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +29,7 @@ public class PointRechargeDetail {
     @Column(name = "point_recharge_detail_id", nullable = false)
     private Long pointRechargeDetailId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "point_recharge_id", referencedColumnName = "point_recharge_id", nullable = false)
     private PointRecharge pointRecharge;
 
