@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,6 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p.price FROM Product p WHERE p.productId = :productId")
     Long findPriceByProductId(Long productId);
 
+    @NonNull
     @EntityGraph(attributePaths = "productImage")
-    Page<Product> findAll(Pageable pageable);
+    Page<Product> findAll(@NonNull Pageable pageable);
 }

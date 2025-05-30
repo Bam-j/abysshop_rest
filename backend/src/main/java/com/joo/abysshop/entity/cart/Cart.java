@@ -30,9 +30,6 @@ public class Cart {
     @Column(name = "cart_id", nullable = false)
     private Long cartId;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, unique = true)
-    private User user;
 
     @Check(constraints = "total_quantity >= 0")
     @Column(name = "total_quantity")
@@ -41,6 +38,10 @@ public class Cart {
     @Check(constraints = "total_price >= 0")
     @Column(name = "total_price")
     private Long totalPrice = 0L;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, unique = true)
+    private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems;
