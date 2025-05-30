@@ -40,4 +40,4 @@
 
 <hr>
 
-- `abysshop`에 대한 더욱 자세한 설명은 [블로그](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9B%B9-%EC%87%BC%ED%95%91%EB%AA%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)에서 확인하실 수 있습니다.
+- `abysshop`에 대한 더욱 자세한 설명은 [블로그](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API)에서 확인하실 수 있습니다.
