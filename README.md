@@ -41,3 +41,4 @@
 <hr>
 
 - `abysshop`에 대한 더욱 자세한 설명은 [블로그](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API)에서 확인하실 수 있습니다.
+- **API, Domain 모델링**은 [노션 링크](https://motley-broker-ff4.notion.site/Abysshop-Domain-API-2040e305159480cba510ea7b938df75d)에 정리되어 있습니다.
