@@ -2,6 +2,7 @@ package com.joo.abysshop.util.exception;
 
 import com.joo.abysshop.util.exception.account.DuplicateNicknameException;
 import com.joo.abysshop.util.exception.account.DuplicateUsernameException;
+import com.joo.abysshop.util.exception.account.SamePasswordException;
 import com.joo.abysshop.util.exception.auth.InvalidPasswordException;
 import com.joo.abysshop.util.exception.auth.InvalidUsernameException;
 import com.joo.abysshop.util.exception.point.InsufficientPointBalanceException;
@@ -39,6 +40,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateUsernameException.class)
     public ResponseEntity<Map<String, String>> handleDuplicateUsernameException(
         DuplicateNicknameException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
+    }
+
+    @ExceptionHandler(SamePasswordException.class)
+    public ResponseEntity<Map<String, String>> handleSamePasswordException(
+        SamePasswordException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
     }
 
