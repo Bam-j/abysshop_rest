@@ -40,5 +40,12 @@
 
 <hr>
 
-- `abysshop`에 대한 더욱 자세한 설명은 [블로그](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API)에서 확인하실 수 있습니다.
-- **API, Domain 모델링**은 [노션 링크](https://motley-broker-ff4.notion.site/Abysshop-Domain-API-2040e305159480cba510ea7b938df75d)에 정리되어 있습니다.
+## Docs
+- [프로젝트에 대한 전체적인 설명(개인 블로그)](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API) <br/>
+- [프로젝트 구현(개인 블로그)](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%ED%98%84) <br/>
+- [API 명세(Notion)](https://motley-broker-ff4.notion.site/API-2040e305159480ffa11af06b04b479de) <br/>
+- [도메인 모델링(Notion)](https://motley-broker-ff4.notion.site/JPA-2040e3051594802aae09ca8325f1e4e3) <br/>
+
+구버전에 대한 내용은 다음 링크에서 확인하실 수 있습니다.
+- [구버전 프로젝트 설명(개인 블로그)](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9B%B9-%EC%87%BC%ED%95%91%EB%AA%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) <br/>
+- [구버전 GitHub Repository](https://github.com/Bam-j/abysshop) <br/>
