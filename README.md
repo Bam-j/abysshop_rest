@@ -34,12 +34,6 @@
 
 <hr>
 
-## ERD
-
-![Image](https://github.com/user-attachments/assets/10c541da-4606-441c-b2d9-2b680ca8696a)
-
-<hr>
-
 ## Docs
 - [프로젝트에 대한 전체적인 설명(개인 블로그)](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API) <br/>
 - [프로젝트 구현(개인 블로그)](https://velog.io/@bami/abysshop-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%99%84%EC%84%B1-With-REST-API#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%ED%98%84) <br/>
