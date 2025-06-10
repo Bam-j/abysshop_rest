@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import '../../styles/components/product/ProductList.scss';
+import SearchForm from '../common/SearchForm';
 
 const ProductList = ({ products }) => {
   return (
     <section>
+      <SearchForm />
       <div className="item-list">
         {products.map(product => (
           <div className="item" key={product.productId}>
