@@ -1,6 +1,9 @@
 import '../../styles/components/common/SearchForm.scss';
 
-const SearchForm = () => {
+const SearchForm = ({searchType}) => {
+  {/* searchType에 맞는 컨트롤러로 search 요청. product, adminXxxxxList, UserXxxxxList */}
+
+
   return (
     <div className="form-search-wrapper">
       <form className="form-search">

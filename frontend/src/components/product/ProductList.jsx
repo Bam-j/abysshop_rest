@@ -6,7 +6,7 @@ import SearchForm from '../common/SearchForm';
 const ProductList = ({ products }) => {
   return (
     <section>
-      <SearchForm />
+      <SearchForm searchType={'product'} />
       <div className="item-list">
         {products.map(product => (
           <div className="item" key={product.productId}>
