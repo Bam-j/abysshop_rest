@@ -1,5 +1,6 @@
 package com.joo.abysshop.repository.product;
 
+import com.joo.abysshop.dto.product.response.ProductListResponse;
 import com.joo.abysshop.entity.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @NonNull
     @EntityGraph(attributePaths = "productImage")
     Page<Product> findAll(@NonNull Pageable pageable);
+
+    Page<ProductListResponse> findByProductNameContaining(String productName, Pageable pageable);
 }

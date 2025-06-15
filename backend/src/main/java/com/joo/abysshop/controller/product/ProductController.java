@@ -32,9 +32,12 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<HomeResponse> searchProducts(Pageable pageable, @RequestParam("productName") String productName) {
-        Page<ProductListResponse> pagedProductSearchList = productQueryService.getPagedProductSearchList(pageable, productName);
-        ProductSearchResultResponse response = new ProductSearchResultResponse(pagedProductSearchList);
+    public ResponseEntity<ProductSearchResultResponse> searchProducts(Pageable pageable,
+        @RequestParam("productName") String keyword) {
+        Page<ProductListResponse> pagedProductSearchList = productQueryService.getPagedProductSearchList(
+            pageable, keyword);
+        ProductSearchResultResponse response = new ProductSearchResultResponse(
+            pagedProductSearchList);
         return ResponseEntity.ok(response);
     }
 }

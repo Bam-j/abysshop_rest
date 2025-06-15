@@ -44,4 +44,9 @@ public class ProductQueryService {
         Product product = findById(productId);
         return new ProductDetailResponse(product);
     }
+
+    public Page<ProductListResponse> getPagedProductSearchList(Pageable pageable,
+        String keyword) {
+        return productRepository.findByProductNameContaining(keyword, pageable);
+    }
 }
