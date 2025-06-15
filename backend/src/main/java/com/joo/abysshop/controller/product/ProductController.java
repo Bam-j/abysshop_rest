@@ -33,7 +33,7 @@ public class ProductController {
 
     @GetMapping("/search")
     public ResponseEntity<ProductSearchResultResponse> searchProducts(Pageable pageable,
-        @RequestParam("productName") String keyword) {
+        @RequestParam("keyword") String keyword) {
         Page<ProductListResponse> pagedProductSearchList = productQueryService.getPagedProductSearchList(
             pageable, keyword);
         ProductSearchResultResponse response = new ProductSearchResultResponse(

@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
-
-import '../../styles/components/product/ProductList.scss';
 import SearchForm from '../common/SearchForm';
 
+import '../../styles/components/product/ProductList.scss';
+import { useState } from 'react';
+
 const ProductList = ({ products }) => {
+  const [products, setProducts] = useState([]);
+
   return (
     <section>
       <SearchForm searchType={'product'} />
